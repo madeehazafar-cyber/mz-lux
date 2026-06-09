@@ -34,27 +34,17 @@
     <a href="favourites.html">Favourites</a>
 </nav>
 
-<section class="hero">
-
-    <h2>Discover Your Signature Style</h2>
-
-    <p>
-        Create stylish outfit combinations, explore fashion themes,
-        and save your favourite looks with MZ LUX.
-    </p>
-
-    <button>Start Styling</button>
-
+<section class="hero reveal">
+    <div class="hero-copy">
+        <h2>Discover Your Signature Style</h2>
+        <p>Create stylish outfit combinations, explore fashion themes, and save your favourite looks with MZ LUX.</p>
+        <a href="categories.html" class="hero-button">Start Styling</a>
+    </div>
 </section>
 
-<section class="featured">
-
+<section class="featured reveal">
     <h2>Featured Collection</h2>
-
-    <div class="featured-box">
-        Luxury Fashion Preview
-    </div>
-
+    <div class="featured-box">Luxury Fashion Preview</div>
 </section>
 
 <footer>
@@ -67,31 +57,4 @@
 
 </html>
 ```
-<!-- 1. THEME FILTER SELECTION CONTAINER -->
-<div class="theme-filters-container" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center;">
-<button class="theme-toggle-btn active" onclick="activeTheme='old-money'; renderOutfitPreview();">Old Money</button>
-<button class="theme-toggle-btn" onclick="activeTheme='streetwear'; renderOutfitPreview();">Streetwear</button>
-<button class="theme-toggle-btn" onclick="activeTheme='minimalist'; renderOutfitPreview();">Minimalist</button>
-</div>
-
-<!-- 2. MAIN LAYOUT GRID -->
-<div class="app-main-layout" style="display: flex; gap: 30px; align-items: flex-start; justify-content: center;">
-
-<!-- CENTRAL MZ PREVIEW WINDOW -->
-<div class="preview-card-box" style="flex: 1; min-height: 400px; padding: 20px; border-radius: 15px; border: 1px solid #e2dcd5; text-align: center;">
-<div id="preview-text">
-<h2 style="font-family: 'Montserrat', sans-serif; font-size: 28px; letter-spacing: 3px; margin-bottom: 10px;">MZ</h2>
-<p style="color: #a19a91; font-size: 14px;">Preview your luxury look and refine your style with effortless controls.</p>
-</div>
-</div>
-
-<!-- RIGHT SIDEBAR CATEGORY BUTTONS -->
-<div class="sidebar-buttons-group" style="display: flex; flex-direction: column; gap: 15px; width: 250px;">
-<button id="btn-tops" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">TOPS</button>
-<button id="btn-bottoms" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">BOTTOMS</button>
-<button id="btn-shoes" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">SHOES</button>
-<button id="btn-accessories" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">ACCESSORIES</button>
-
-<button id="btn-save" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px; margin-top: 20px; background-color: #000; color: #fff;">SAVE OUTFIT</button>
-</div>
 
