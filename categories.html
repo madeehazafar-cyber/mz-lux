@@ -6,12 +6,9 @@
     <title>MZ LUX | Categories</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <header>
     <div class="logo">M<span>Z</span></div>
-
     <div>
         <h1 class="brand-name">MZ LUX</h1>
         <p class="tagline">Your Personal Outfit Stylist</p>
@@ -27,47 +24,46 @@
 </nav>
 
 <main class="builder-page">
-
     <section class="builder-intro">
         <h2>Outfit Builder</h2>
-        <p>Select a fashion theme, choose clothing pieces, and preview your outfit.</p>
+        <p>Select a luxury theme, explore five curated pieces in each category, and preview your final look.</p>
     </section>
 
-```html
-<section class="controls">
-    <label for="themeSelect">Choose a theme:</label>
-
-  
-</section>
-```
+    <section class="controls">
+        <label for="themeSelect">Choose a theme</label>
+        <select id="themeSelect">
+            <option value="">Select a theme</option>
+            <option value="oldMoney">Old Money</option>
+            <option value="streetwear">Streetwear</option>
+            <option value="minimalist">Minimalist</option>
+            <option value="casual">Casual</option>
+            <option value="formal">Formal</option>
+        </select>
+    </section>
 
     <section id="instructionBox" class="instruction-box">
-        Please select a theme to view clothing options.
+        Pick a theme to reveal five tops, bottoms, shoes, and accessories for your look.
     </section>
 
-    <section id="clothingDisplay"></section>
+    <section id="clothingDisplay" class="clothing-display"></section>
 
     <section class="preview-box">
-        <h2>Outfit Preview</h2>
+        <div class="preview-box-header">
+            <h2>Current Look</h2>
+            <button id="previewBtn" type="button">Preview Outfit</button>
+        </div>
 
         <div class="preview-grid">
-            <div class="preview-card" id="previewTop">Top</div>
-            <div class="preview-card" id="previewBottom">Bottom</div>
-            <div class="preview-card" id="previewShoes">Shoes</div>
-            <div class="preview-card" id="previewAccessory">Accessory</div>
+            <div class="preview-card" id="previewTop"><span class="preview-label">Top</span></div>
+            <div class="preview-card" id="previewBottom"><span class="preview-label">Bottom</span></div>
+            <div class="preview-card" id="previewShoes"><span class="preview-label">Shoes</span></div>
+            <div class="preview-card" id="previewAccessory"><span class="preview-label">Accessory</span></div>
         </div>
-    </section>
 
+        <div id="previewResult" class="preview-result"></div>
+    </section>
 </main>
 
 <script src="main.js"></script>
 </body>
 </html>
-<select id="themeSelect">
-    <option value="">Select Theme</option>
-    <option value="oldMoney">Old Money</option>
-    <option value="streetwear">Streetwear</option>
-    <option value="minimalist">Minimalist</option>
-    <option value="casual">Casual</option>
-    <option value="formal">Formal</option>
-</select>
