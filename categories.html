@@ -1,9 +1,21 @@
-<h2>Categories</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MZ LUX | Categories</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
 
 <header>
-    <h1>MZ LUX</h1>
-    <p>Build Your Outfit</p>
+    <div class="logo">M<span>Z</span></div>
+
+    <div>
+        <h1 class="brand-name">MZ LUX</h1>
+        <p class="tagline">Your Personal Outfit Stylist</p>
+    </div>
 </header>
 
 <nav>
@@ -14,78 +26,49 @@
     <a href="favourites.html">Favourites</a>
 </nav>
 
-<section class="builder">
+<main class="builder-page">
 
-    <h2>Choose a Fashion Theme</h2>
+    <section class="builder-intro">
+        <h2>Outfit Builder</h2>
+        <p>Select a fashion theme, choose clothing pieces, and preview your outfit.</p>
+    </section>
 
-    <select>
-        <option>Old Money</option>
-        <option>Streetwear</option>
-        <option>Minimalist</option>
-        <option>Casual</option>
-        <option>Formal</option>
-    </select>
+    <section class="controls">
+        <label for="themeSelect">Choose a theme:</label>
 
-    <h2>Tops</h2>
+        <select id="themeSelect">
+            <option value="">Select Theme</option>
+            <option value="oldMoney">Old Money</option>
+        </select>
+    </section>
 
-    <div class="category-row">
-        <button>White Shirt</button>
-        <button>Black Sweater</button>
-        <button>Beige Blazer</button>
-    </div>
+    <section id="instructionBox" class="instruction-box">
+        Please select a theme to view clothing options.
+    </section>
 
-    <h2>Bottoms</h2>
+    <section id="clothingDisplay"></section>
 
-    <div class="category-row">
-        <button>Black Trousers</button>
-        <button>Blue Jeans</button>
-        <button>Beige Pants</button>
-    </div>
+    <section class="preview-box">
+        <h2>Outfit Preview</h2>
 
-    <h2>Shoes</h2>
+        <div class="preview-grid">
+            <div class="preview-card" id="previewTop">Top</div>
+            <div class="preview-card" id="previewBottom">Bottom</div>
+            <div class="preview-card" id="previewShoes">Shoes</div>
+            <div class="preview-card" id="previewAccessory">Accessory</div>
+        </div>
+    </section>
 
-    <div class="category-row">
-        <button>Loafers</button>
-        <button>Sneakers</button>
-        <button>Boots</button>
-    </div>
-
-    <h2>Accessories</h2>
-
-    <div class="category-row">
-        <button>Watch</button>
-        <button>Sunglasses</button>
-        <button>Necklace</button>
-    </div>
-
-    <br><br>
-
-    <button class="generate-btn">
-        Generate Outfit
-    </button>
-
-</section>
+</main>
 
 <script src="main.js"></script>
-
 </body>
-<h2>Tops</h2>
-
-<div class="item-grid">
-
-    <div class="item-card">
-        <img src="images/tops/white-shirt.jpg" alt="White Shirt">
-        <p>White Shirt</p>
-    </div>
-
-    <div class="item-card">
-        <img src="images/tops/black-sweater.jpg" alt="Black Sweater">
-        <p>Black Sweater</p>
-    </div>
-
-    <div class="item-card">
-        <img src="images/tops/beige-blazer.jpg" alt="Beige Blazer">
-        <p>Beige Blazer</p>
-    </div>
-
-</div>
+</html>
+<select id="themeSelect">
+    <option value="">Select Theme</option>
+    <option value="oldMoney">Old Money</option>
+    <option value="streetwear">Streetwear</option>
+    <option value="minimalist">Minimalist</option>
+    <option value="casual">Casual</option>
+    <option value="formal">Formal</option>
+</select>

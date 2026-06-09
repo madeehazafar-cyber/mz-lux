@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,63 +8,90 @@
     <title>MZ LUX</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <header>
+<header>
+    <div class="logo">
+        M<span>Z</span>
+    </div>
 
-        <div class="logo">
-            MZ LUX
-        </div>
+    <div class="brand-details">
+        <h1 class="brand-name">MZ LUX</h1>
+        <p class="tagline">Your Personal Outfit Stylist</p>
+    </div>
+</header>
 
-        <div class="tagline">
-            Luxury Fashion Stylist
-        </div>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="themes.html">Themes</a>
+    <a href="categories.html">Categories</a>
+    <a href="preview.html">Preview</a>
+    <a href="favourites.html">Favourites</a>
+</nav>
 
-    </header>
+<section class="hero">
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="themes.html">Themes</a>
-        <a href="categories.html">Categories</a>
-        <a href="preview.html">Preview</a>
-        <a href="favourites.html">Favourites</a>
-    </nav>
+    <h2>Discover Your Signature Style</h2>
 
-    <section class="hero">
+    <p>
+        Create stylish outfit combinations, explore fashion themes,
+        and save your favourite looks with MZ LUX.
+    </p>
 
-        <h1>DISCOVER YOUR SIGNATURE STYLE</h1>
+    <button>Start Styling</button>
 
-        <p>
-            Create stylish outfit combinations, explore fashion themes,
-            and save your favourite looks with MZ LUX.
-        </p>
+</section>
 
-        <button>Start Styling</button>
+<section class="featured">
 
-    </section>
+    <h2>Featured Collection</h2>
 
-    <section class="featured">
+    <div class="featured-box">
+        Luxury Fashion Preview
+    </div>
 
-        <h2>Featured Collection</h2>
+</section>
 
-        <div class="featured-box">
+<footer>
+    <p>MZ LUX © 2026</p>
+</footer>
 
-            Fashion Preview Area
-
-        </div>
-
-    </section>
-
-    <footer>
-
-        <p>MZ LUX © 2026</p>
-
-    </footer>
-
-    <script src="main.js"></script>
+<script src="main.js"></script>
 
 </body>
 
 </html>
+```
+<!-- 1. THEME FILTER SELECTION CONTAINER -->
+<div class="theme-filters-container" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center;">
+<button class="theme-toggle-btn active" onclick="activeTheme='old-money'; renderOutfitPreview();">Old Money</button>
+<button class="theme-toggle-btn" onclick="activeTheme='streetwear'; renderOutfitPreview();">Streetwear</button>
+<button class="theme-toggle-btn" onclick="activeTheme='minimalist'; renderOutfitPreview();">Minimalist</button>
+</div>
+
+<!-- 2. MAIN LAYOUT GRID -->
+<div class="app-main-layout" style="display: flex; gap: 30px; align-items: flex-start; justify-content: center;">
+
+<!-- CENTRAL MZ PREVIEW WINDOW -->
+<div class="preview-card-box" style="flex: 1; min-height: 400px; padding: 20px; border-radius: 15px; border: 1px solid #e2dcd5; text-align: center;">
+<div id="preview-text">
+<h2 style="font-family: 'Montserrat', sans-serif; font-size: 28px; letter-spacing: 3px; margin-bottom: 10px;">MZ</h2>
+<p style="color: #a19a91; font-size: 14px;">Preview your luxury look and refine your style with effortless controls.</p>
+</div>
+</div>
+
+<!-- RIGHT SIDEBAR CATEGORY BUTTONS -->
+<div class="sidebar-buttons-group" style="display: flex; flex-direction: column; gap: 15px; width: 250px;">
+<button id="btn-tops" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">TOPS</button>
+<button id="btn-bottoms" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">BOTTOMS</button>
+<button id="btn-shoes" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">SHOES</button>
+<button id="btn-accessories" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px;">ACCESSORIES</button>
+
+<button id="btn-save" class="action-style-btn" style="padding: 15px; border-radius: 25px; cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 2px; margin-top: 20px; background-color: #000; color: #fff;">SAVE OUTFIT</button>
+</div>
+
