@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MZ LUX | Camera</title>
+    <link rel="stylesheet" href="style.css?v=20260609-12">
+</head>
+<body>
+<header>
+    <div class="logo"><span class="logo-initials">MZ</span></div>
+    <div>
+        <h1 class="brand-name">MZ LUX</h1>
+        <p class="tagline">Wardrobe Camera</p>
+    </div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="themes.html">Themes</a>
+    <a href="categories.html">Categories</a>
+    <a href="camera.html">Camera</a>
+    <a href="preview.html">Preview</a>
+    <a href="favourites.html">Favourites</a>
+</nav>
+
+<main class="camera-page">
+    <section class="camera-hero">
+        <h2>Smart Wardrobe Pairing</h2>
+        <p>Snap or upload 3 different tops and 2 different bottoms. We’ll suggest polished outfit combinations and hat accessories that fit your vibe.</p>
+    </section>
+
+    <section class="camera-upload-grid">
+        <div class="camera-panel">
+            <h3>Top Pieces</h3>
+            <div class="camera-inputs">
+                <label class="camera-field">
+                    <span>Top 1</span>
+                    <input type="file" accept="image/*" capture="environment" data-role="top-input" data-label="Top 1">
+                </label>
+                <label class="camera-field">
+                    <span>Top 2</span>
+                    <input type="file" accept="image/*" capture="environment" data-role="top-input" data-label="Top 2">
+                </label>
+                <label class="camera-field">
+                    <span>Top 3</span>
+                    <input type="file" accept="image/*" capture="environment" data-role="top-input" data-label="Top 3">
+                </label>
+            </div>
+        </div>
+
+        <div class="camera-panel">
+            <h3>Bottom Pieces</h3>
+            <div class="camera-inputs">
+                <label class="camera-field">
+                    <span>Bottom 1</span>
+                    <input type="file" accept="image/*" capture="environment" data-role="bottom-input" data-label="Bottom 1">
+                </label>
+                <label class="camera-field">
+                    <span>Bottom 2</span>
+                    <input type="file" accept="image/*" capture="environment" data-role="bottom-input" data-label="Bottom 2">
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <div class="camera-actions">
+        <button id="generateCameraOutfits" type="button">Generate outfit pairings</button>
+    </div>
+
+    <section class="camera-chat-panel" aria-label="Style assistant chat">
+        <div class="camera-chat-header">
+            <h3>Style Assistant</h3>
+            <p>Ask anything like “Would a pleated skirt work with a beige top?”</p>
+        </div>
+        <div id="chatMessages" class="camera-chat-messages">
+            <div class="chat-bubble assistant">
+                <p>Hi! I can help you style your wardrobe pieces and suggest what works best.</p>
+            </div>
+        </div>
+        <form id="chatForm" class="camera-chat-form">
+            <input id="chatInput" type="text" placeholder="Ask about your outfit..." autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <section id="cameraResults" class="camera-results"></section>
+</main>
+
+<script src="main.js?v=20260609-13"></script>
+</body>
+</html>

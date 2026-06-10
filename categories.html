@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260609-8">
 </head>
 <body>
 <header>
-    <div class="logo">M<span>Z</span></div>
+    <div class="logo"><span class="logo-initials">MZ</span></div>
     <div>
         <h1 class="brand-name">MZ LUX</h1>
         <p class="tagline">Your Personal Outfit Stylist</p>
@@ -19,6 +19,7 @@
     <a href="index.html">Home</a>
     <a href="themes.html">Themes</a>
     <a href="categories.html">Categories</a>
+    <a href="camera.html">Camera</a>
     <a href="preview.html">Preview</a>
     <a href="favourites.html">Favourites</a>
 </nav>
@@ -30,15 +31,20 @@
     </section>
 
     <section class="controls">
-        <label for="themeSelect">Choose a theme</label>
-        <select id="themeSelect">
-            <option value="">Select a theme</option>
-            <option value="oldMoney">Old Money</option>
-            <option value="streetwear">Streetwear</option>
-            <option value="minimalist">Minimalist</option>
-            <option value="casual">Casual</option>
-            <option value="formal">Formal</option>
-        </select>
+        <div class="controls-row">
+            <button id="uploadWardrobeBtn" class="upload-wardrobe-btn" type="button">Upload Your Outfits</button>
+            <div class="theme-control">
+                <label for="themeSelect">Choose a theme</label>
+                <select id="themeSelect">
+                    <option value="">Select a theme</option>
+                    <option value="oldMoney" selected>Old Money</option>
+                    <option value="streetwear">Streetwear</option>
+                    <option value="minimalist">Minimalist</option>
+                    <option value="casual">Casual</option>
+                    <option value="formal">Formal</option>
+                </select>
+            </div>
+        </div>
     </section>
 
     <section id="instructionBox" class="instruction-box">
@@ -64,6 +70,33 @@
     </section>
 </main>
 
-<script src="main.js"></script>
+<script src="main.js?v=20260609-12"></script>
+<script>
+(function () {
+    function revealCategorySections() {
+        const display = document.getElementById("clothingDisplay");
+        if (!display) return;
+
+        display.querySelectorAll(".category-section").forEach((section, index) => {
+            section.classList.add("is-visible");
+            section.style.opacity = "1";
+            section.style.transform = "translateY(0)";
+            section.style.transitionDelay = `${index * 0.06}s`;
+        });
+    }
+
+    const originalShowThemeItems = window.showThemeItems;
+    if (typeof originalShowThemeItems === "function") {
+        window.showThemeItems = function () {
+            originalShowThemeItems();
+            setTimeout(revealCategorySections, 0);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(revealCategorySections, 0);
+    });
+})();
+</script>
 </body>
 </html>

@@ -191,15 +191,22 @@ function initBuilder() {
         previewButton.addEventListener("click", showPreviewSummary);
     }
 
+    const uploadButton = document.getElementById("uploadWardrobeBtn");
+    if (uploadButton) {
+        uploadButton.addEventListener("click", handleWardrobeUpload);
+    }
+
     if (clothingDisplay) {
         clothingDisplay.addEventListener("click", handleClothingCardSelection);
     }
 
-    initScrollEffects();
+    initCameraMode();
 
     if (themeSelect && themeSelect.value) {
         showThemeItems();
     }
+
+    initScrollEffects();
 }
 
 function initScrollEffects() {
@@ -221,8 +228,10 @@ function initScrollEffects() {
             const rect = item.getBoundingClientRect();
             const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > 80;
 
-            if (inView) {
+            if (inView || item.classList.contains("category-section")) {
                 item.classList.add("is-visible");
+                item.style.opacity = "1";
+                item.style.transform = "translateY(0)";
                 item.style.transitionDelay = `${index * 0.06}s`;
             }
         });
@@ -251,24 +260,100 @@ function showThemeItems() {
         instructionBox.style.display = "none";
     }
 
-    const themeItems = outfits[theme];
-    clothingDisplay.innerHTML = `
-        ${createCategory("Tops", "top", themeItems.tops)}
-        ${createCategory("Bottoms", "bottom", themeItems.bottoms)}
-        ${createCategory("Shoes", "shoes", themeItems.shoes)}
-        ${createCategory("Accessories", "accessory", themeItems.accessories)}
-    `;
+    const themeItems = outfits[theme] || outfits.oldMoney;
+    const categoryData = [
+        { title: "Tops", type: "top", items: themeItems.tops || [] },
+        { title: "Bottoms", type: "bottom", items: themeItems.bottoms || [] },
+        { title: "Shoes", type: "shoes", items: themeItems.shoes || [] },
+        { title: "Accessories", type: "accessory", items: themeItems.accessories || [] }
+    ];
+
+    clothingDisplay.innerHTML = categoryData.map(({ title, type, items }) => createCategory(title, type, items)).join("");
+
+    clothingDisplay.querySelectorAll(".category-section").forEach((section, index) => {
+        section.classList.add("is-visible");
+        section.style.opacity = "1";
+        section.style.transform = "translateY(0)";
+        section.style.transitionDelay = `${index * 0.06}s`;
+    });
 }
 
+function getImageCandidates(item, type) {
+    const fallback = "images/models/model-1.svg";
+    const safeItem = item || {};
+    const name = (safeItem.name || "").trim();
+    const normalized = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const spaced = name.replace(/\s+/g, " ").trim();
+    const roots = {
+        top: ["images/models", "images/tops"],
+        bottom: ["images/models", "images/bottoms"],
+        shoes: ["images/models", "images/shoes"],
+        accessory: ["images/models", "images/accessories"]
+    };
+    const extensions = [".webp", ".jpg", ".jpeg", ".png", ".svg"];
+    const baseNames = [normalized, normalized.replace(/-/g, " "), normalized.replace(/-/g, "_"), spaced];
+    const candidates = [];
+
+    if (safeItem.image) {
+        candidates.push(safeItem.image);
+    }
+
+    roots[type] && roots[type].forEach((root) => {
+        baseNames.forEach((baseName) => {
+            extensions.forEach((ext) => {
+                if (baseName) {
+                    candidates.push(`${root}/${baseName}${ext}`);
+                }
+            });
+        });
+    });
+
+    return Array.from(new Set(candidates.filter(Boolean).concat([fallback])));
+}
+
+function tryImageFallback(img, fallbackChain) {
+    if (!img) return false;
+
+    const parts = (fallbackChain || "").split(",").filter(Boolean);
+    const currentSrc = img.getAttribute("data-current-src") || img.src;
+    const nextCandidate = parts.find((candidate) => candidate && candidate !== currentSrc);
+
+    if (nextCandidate) {
+        img.setAttribute("data-current-src", nextCandidate);
+        img.src = nextCandidate;
+        return true;
+    }
+
+    const fallback = "images/models/model-1.svg";
+    if ((img.getAttribute("data-current-src") || img.src) !== fallback) {
+        img.setAttribute("data-current-src", fallback);
+        img.src = fallback;
+    }
+
+    if (img.parentElement) {
+        img.parentElement.classList.add("image-placeholder");
+    }
+
+    return false;
+}
+
+window.tryImageFallback = tryImageFallback;
+
 function createCategory(title, type, items) {
-    const cards = items.map((item) => {
+    const safeItems = Array.isArray(items) ? items : [];
+    const cards = safeItems.map((item) => {
+        const imageCandidates = getImageCandidates(item, type);
+        const imageSrc = imageCandidates[0];
+        const fallbackChain = imageCandidates.slice(1).join(",");
         const isSelected = type === "accessory"
             ? selectedOutfit.accessories.some((selectedItem) => selectedItem.name === item.name)
             : selectedOutfit[type] && selectedOutfit[type].name === item.name;
 
         return `
-            <button type="button" class="clothing-card ${isSelected ? "selected" : ""}" data-type="${type}" data-name="${item.name}" data-image="${item.image}">
-                <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
+            <button type="button" class="clothing-card ${isSelected ? "selected" : ""}" data-type="${type}" data-name="${item.name}" data-image="${imageSrc}">
+                <div class="clothing-card-media">
+                    <img src="${imageSrc}" alt="${item.name}" onerror="this.onerror=null;window.tryImageFallback(this,'${fallbackChain}');">
+                </div>
                 <p>${item.name}</p>
             </button>
         `;
@@ -293,6 +378,237 @@ function handleClothingCardSelection(event) {
         name: card.dataset.name,
         image: card.dataset.image
     });
+}
+
+let chatHistory = [];
+
+function initCameraMode() {
+    const generateButton = document.getElementById("generateCameraOutfits");
+    if (!generateButton) return;
+
+    generateButton.addEventListener("click", generateCameraOutfits);
+
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+    const chatMessages = document.getElementById("chatMessages");
+
+    if (chatForm && chatInput && chatMessages) {
+        chatForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const question = chatInput.value.trim();
+
+            if (!question) return;
+
+            const userBubble = document.createElement("div");
+            userBubble.className = "chat-bubble user";
+            userBubble.innerHTML = `<p>${question}</p>`;
+            chatMessages.appendChild(userBubble);
+
+            const answer = getChatAnswer(question, chatHistory);
+            const assistantBubble = document.createElement("div");
+            assistantBubble.className = "chat-bubble assistant";
+            assistantBubble.innerHTML = `<p>${answer.replace(/\n/g, "<br>")}</p>`;
+            chatMessages.appendChild(assistantBubble);
+            chatHistory.push({ question, answer });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatInput.value = "";
+        });
+    }
+}
+
+function getChatAnswer(question, history = []) {
+    const normalized = question.toLowerCase().trim();
+
+    if (normalized.includes('bag') || normalized.includes('colo')) {
+        return `[Direct Verdict]: For a neutral base, a bag can anchor the outfit or add a pop.\n\n[How to Style It]:\n- Tan or Cognac: Adds a classic, warm finish.\n- Black: Instantly builds high contrast.\n- Olive Green: Introduces rich color without clashing.`;
+    }
+
+    if (normalized.includes('shoe') || normalized.includes('boot') || normalized.includes('heel') || normalized.includes('loafer')) {
+        return `[Direct Verdict]: Footwear completely defines the final vibe.\n\n[How to Style It]:\n- White Sneakers / Loafers: Ideal for a relaxed, casual smart appearance.\n- Nude or Black Heels: Instantly elevates the outfit for work or dinner events.`;
+    }
+
+    if (/^(hi|hello|hey|hey there|good morning|hi there)/.test(normalized)) {
+        return `Hi! I can help you style your wardrobe pieces and suggest what accessories or options work best. What are you styling today?`;
+    }
+
+    return `[Direct Verdict]: Yes, this combination can work well when the shape and texture are balanced.\n\n[How to Style It]:\n- Style top with a clean, well-fitted base layer.\n- Add one strong accessory like a belt, bag, or jewelry.\n- Finish with shoes that match the mood, such as loafers, boots, or heels.`;
+}
+
+function createPreviewUrl(file) {
+    if (!file) return "images/models/model-1.svg";
+    return window.URL.createObjectURL(file);
+}
+
+function getCameraItems(selector, type) {
+    const inputs = Array.from(document.querySelectorAll(selector));
+
+    return inputs.map((input, index) => {
+        const file = input.files && input.files[0] ? input.files[0] : null;
+        const label = input.dataset.label || `${type} ${index + 1}`;
+        return {
+            label,
+            type,
+            preview: createPreviewUrl(file),
+            fileName: file ? file.name : "placeholder"
+        };
+    }).filter((item) => item.label);
+}
+
+function getOutfitMood(top, bottom) {
+    const text = `${top.label} ${bottom.label}`.toLowerCase();
+    if (text.includes("blazer") || text.includes("satin") || text.includes("tailored") || text.includes("trouser") || text.includes("linen")) {
+        return "luxury tailoring";
+    }
+    if (text.includes("denim") || text.includes("jean") || text.includes("cargo") || text.includes("casual")) {
+        return "casual cool";
+    }
+    if (text.includes("sweater") || text.includes("knit") || text.includes("cream") || text.includes("white")) {
+        return "soft elegance";
+    }
+    return "polished street style";
+}
+
+function getHatOptions(mood) {
+    if (mood === "luxury tailoring") {
+        return ["Structured Fedora", "Panama Hat", "Vintage Beret"];
+    }
+    if (mood === "casual cool") {
+        return ["Bucket Hat", "Baseball Cap", "Canvas Cap"];
+    }
+    if (mood === "soft elegance") {
+        return ["Wide-Brim Sun Hat", "Soft Wool Hat", "Minimal Trilby"];
+    }
+    return ["Classic Fedora", "Trilby", "Satin Headband"];
+}
+
+function getOutfitStyleProfile(top, bottom) {
+    const combined = `${top.label || top.name || ""} ${bottom.label || bottom.name || ""}`.toLowerCase();
+    const menswearKeywords = /blazer|suit|shirt|tie|trouser|trousers|jean|denim|cargo|jacket|sweater|knit|hoodie|polo|overshirt|bomber|jogger|chino|coat|overcoat/;
+    const womenswearKeywords = /dress|skirt|blouse|camisole|mini|maxi|satin|heel|heels|silk|gown|wrap|slip|peplum|flare/;
+
+    if (menswearKeywords.test(combined) && !womenswearKeywords.test(combined)) {
+        return "menswear";
+    }
+
+    if (womenswearKeywords.test(combined) && !menswearKeywords.test(combined)) {
+        return "womenswear";
+    }
+
+    return "neutral";
+}
+
+function getOutfitStyleComments(outfit, mood, tone) {
+    const topName = (outfit.top && (outfit.top.label || outfit.top.name)) || "this top";
+    const bottomName = (outfit.bottom && (outfit.bottom.label || outfit.bottom.name)) || "these bottoms";
+    const shoeName = (outfit.shoes && (outfit.shoes.label || outfit.shoes.name)) || "";
+    const accessoryNames = Array.isArray(outfit.accessories)
+        ? outfit.accessories.map((item) => item.name || item.label || "accessory").filter(Boolean)
+        : [];
+    const profile = getOutfitStyleProfile({ label: topName }, { label: bottomName });
+    const templates = [];
+
+    const topPhrase = topName.toLowerCase();
+    const bottomPhrase = bottomName.toLowerCase();
+    const comboPhrase = `${topName} + ${bottomName}`;
+
+    if (tone === "luxurious") {
+        templates.push(`${comboPhrase} feels especially polished because the ${topPhrase} and ${bottomPhrase} balance each other beautifully.`);
+        templates.push(`A sleek watch, structured bag, or sculptural jewelry would make this feel more high-end.`);
+        templates.push(`This version is stronger if you keep the styling refined and intentional.`);
+    } else if (tone === "fun") {
+        templates.push(`${comboPhrase} has a playful edge, and the ${topPhrase} gives it a confident lift.`);
+        templates.push(`A bright accessory or a more relaxed layer would make this feel more youthful and energetic.`);
+        templates.push(`This one works best when the styling feels a little more expressive.`);
+    } else {
+        if (profile === "menswear") {
+            templates.push(`${comboPhrase} reads sharp and modern, especially with a clean silhouette.`);
+            templates.push(`A simple belt or watch would make the outfit feel more complete.`);
+        } else if (profile === "womenswear") {
+            templates.push(`${comboPhrase} feels chic and balanced, with a soft but elevated finish.`);
+            templates.push(`Delicate jewelry or a sleek bag would make it look even more refined.`);
+        } else {
+            templates.push(`${comboPhrase} feels easy to style and very wearable.`);
+            templates.push(`A polished accessory would make the whole look feel more curated.`);
+        }
+    }
+
+    if (accessoryNames.length) {
+        templates.push(`The ${accessoryNames.join(" and ").toLowerCase()} already gives this outfit personality, so the rest can stay simple.`);
+    }
+
+    if (shoeName) {
+        templates.push(`It would look especially strong with ${shoeName.toLowerCase()} to finish the look.`);
+    } else if (profile === "womenswear") {
+        templates.push(`Heels would work beautifully here for a more elevated silhouette.`);
+    } else {
+        templates.push(`Clean loafers or sleek sneakers would work really well with this outfit.`);
+    }
+
+    return templates.slice(0, 4);
+}
+
+function generateCameraOutfits() {
+    const tops = getCameraItems('[data-role="top-input"]', "top");
+    const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom");
+    const resultsContainer = document.getElementById("cameraResults");
+
+    if (!resultsContainer) return;
+
+    const pairs = [];
+    tops.slice(0, 3).forEach((top) => {
+        bottoms.slice(0, 2).forEach((bottom) => {
+            const mood = getOutfitMood(top, bottom);
+            pairs.push({ top, bottom, mood, hats: getHatOptions(mood) });
+        });
+    });
+
+    const rankedPairs = pairs
+        .sort((a, b) => {
+            const moodScore = (mood) => mood === "luxury tailoring" ? 3 : mood === "soft elegance" ? 2 : mood === "casual cool" ? 1 : 0;
+            return moodScore(b.mood) - moodScore(a.mood);
+        })
+        .slice(0, 2)
+        .map((pair, index) => {
+            const tone = index === 0 ? "luxurious" : "fun";
+            const comments = getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, tone);
+            return { ...pair, comments };
+        });
+
+    if (!rankedPairs.length) {
+        resultsContainer.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>';
+        return;
+    }
+
+    resultsContainer.innerHTML = `
+        <div class="camera-results-grid">
+            ${rankedPairs.map(({ top, bottom, mood, hats, comments }) => `
+                <article class="camera-outfit-card">
+                    <div class="camera-outfit-media">
+                        <img src="${top.preview}" alt="${top.label}">
+                        <img src="${bottom.preview}" alt="${bottom.label}">
+                    </div>
+                    <div class="camera-outfit-copy">
+                        <h4>${top.label} + ${bottom.label}</h4>
+                        <p class="camera-mood">${mood}</p>
+                        <p class="camera-description">A refined pairing with balanced structure and effortless confidence.</p>
+                        <div class="camera-ai-comments">
+                            ${comments.map((comment) => `<p>${comment}</p>`).join("")}
+                        </div>
+                        <div class="camera-hats">
+                            <span>Hat options</span>
+                            <ul>
+                                ${hats.map((hat) => `<li>${hat}</li>`).join("")}
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            `).join("")}
+        </div>
+    `;
+}
+
+function handleWardrobeUpload() {
+    window.location.href = "camera.html";
 }
 
 function selectItem(type, item) {
@@ -340,10 +656,14 @@ function updatePreview(type, item) {
         return;
     }
 
+    const imageCandidates = getImageCandidates(item, type);
+    const imageSrc = imageCandidates[0];
+    const fallbackChain = imageCandidates.slice(1).join(",");
+
     previewBox.innerHTML = `
         <div class="preview-card-content preview-card-visual">
             <p class="preview-label">${getLabel(type)}</p>
-            <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
+            <img class="preview-img ${type}-img" src="${imageSrc}" alt="${item.name}" onerror="this.onerror=null;window.tryImageFallback(this,'${fallbackChain}');">
             <h3>${item.name}</h3>
         </div>
     `;
@@ -421,32 +741,52 @@ function buildVisualPreviewMarkup(outfit, themeName) {
         `).join("")
         : '<span class="preview-empty-text">No accessories selected</span>';
 
+    const topLabel = outfit.top ? outfit.top.name : "Top";
+    const bottomLabel = outfit.bottom ? outfit.bottom.name : "Bottom";
+    const mood = getOutfitMood({ label: topLabel }, { label: bottomLabel });
+    const profile = getOutfitStyleProfile({ label: topLabel }, { label: bottomLabel });
+    const styleLabel = profile === "menswear" ? "Structured finish" : profile === "womenswear" ? "Elevated finish" : "Versatile finish";
+    const styleNotes = getOutfitStyleComments(outfit, mood);
+
     return `
         <div class="preview-summary visual-preview-card">
             <div class="visual-preview-title">
                 <h3>${themeName} Look</h3>
-                <p>Editorial outfit preview</p>
+                <p>${mood} • ${styleLabel}</p>
+            </div>
+            <div class="preview-hero-row">
+                <div class="preview-chip-row">
+                    ${previewChip("Top", outfit.top)}
+                    ${previewChip("Bottom", outfit.bottom)}
+                    ${previewChip("Shoes", outfit.shoes)}
+                </div>
+                <div class="preview-notes-card">
+                    <h4>Styling notes</h4>
+                    <ul>
+                        ${styleNotes.map((note) => `<li>${note}</li>`).join("")}
+                    </ul>
+                </div>
             </div>
             <div class="editorial-preview-layout">
                 <div class="editorial-preview-stack">
                     ${outfit.top ? `
                         <div class="editorial-preview-card">
                             <p class="item-label">Top</p>
-                            <img src="${outfit.top.image}" alt="${outfit.top.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
+                            <img class="preview-img top-img" src="${outfit.top.image}" alt="${outfit.top.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
                             <p class="item-name">${outfit.top.name}</p>
                         </div>
                     ` : ""}
                     ${outfit.bottom ? `
                         <div class="editorial-preview-card">
                             <p class="item-label">Bottom</p>
-                            <img src="${outfit.bottom.image}" alt="${outfit.bottom.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
+                            <img class="preview-img bottom-img" src="${outfit.bottom.image}" alt="${outfit.bottom.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
                             <p class="item-name">${outfit.bottom.name}</p>
                         </div>
                     ` : ""}
                     ${outfit.shoes ? `
                         <div class="editorial-preview-card">
                             <p class="item-label">Shoes</p>
-                            <img src="${outfit.shoes.image}" alt="${outfit.shoes.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
+                            <img class="preview-img shoes-img" src="${outfit.shoes.image}" alt="${outfit.shoes.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
                             <p class="item-name">${outfit.shoes.name}</p>
                         </div>
                     ` : ""}
@@ -471,3 +811,49 @@ function previewChip(label, item) {
 }
 
 window.addEventListener("load", loadPreviewPage);
+// =========================================================================
+// MZ LUX REAL-TIME LIVE AI CHAT ENGINE
+// =========================================================================
+
+// 1. PASTE YOUR GROQ KEY INSIDE THESE QUOTES
+const GROQ_API_SECRET_KEY = "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";
+
+// 2. The Core Function that talks to the live AI model
+
+return "Stylist connection error. Double check your API key connection!";
+}
+}
+
+// 3. Connect to your actual website UI elements
+// (Make sure these selectors or IDs match your HTML layout!)
+const chatInputBox = document.querySelector('.chat-card input') || document.getElementById('chat-input');
+const chatSendButton = document.querySelector('.chat-card button') || document.getElementById('btn-send');
+const chatMessageArea = document.querySelector('.chat-card div') || document.getElementById('chat-box-display');
+
+if (chatSendButton && chatInputBox && chatMessageArea) {
+chatSendButton.addEventListener('click', async () => {
+const messageText = chatInputBox.value.trim();
+if (!messageText) return;
+
+// Display user's text on the screen instantly
+chatMessageArea.innerHTML += `<div style="text-align: right; background: #e2dcd5; padding: 10px; border-radius: 12px; margin-bottom: 10px; display: inline-block; float: right; clear: both; font-family: 'Montserrat'; max-width: 80%;">${messageText}</div>`;
+chatInputBox.value = ''; // Clear out the input bar
+
+// Display a sleek luxury loading message
+const temporaryLoaderId = "loader-" + Date.now();
+chatMessageArea.innerHTML += `<div id="${temporaryLoaderId}" style="text-align: left; background: #fff; border: 1px solid #e2dcd5; padding: 10px; border-radius: 12px; margin-bottom: 10px; display: inline-block; float: left; clear: both; font-family: 'Montserrat'; max-width: 80%; color: #888; font-style: italic;">MZ Stylist is curation layout...</div>`;
+chatMessageArea.scrollTop = chatMessageArea.scrollHeight;
+
+// Get live custom answer back from the real AI
+const realAiAnswer = await fetchStylistResponse(messageText);
+
+// Swap out the placeholder text with the actual stylish response
+const loaderContainer = document.getElementById(temporaryLoaderId);
+if (loaderContainer) {
+loaderContainer.style.color = "#000";
+loaderContainer.style.fontStyle = "normal";
+loaderContainer.innerHTML = realAiAnswer;
+}
+chatMessageArea.scrollTop = chatMessageArea.scrollHeight;
+});
+}

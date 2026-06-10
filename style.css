@@ -52,19 +52,19 @@ body > * {
 .intro-logo {
     width: min(42vw, 300px);
     aspect-ratio: 1;
-    border: 2px solid rgba(212, 175, 55, 0.9);
-    border-radius: 50%;
+    border: 2px solid rgba(212, 175, 55, 0.95);
+    border-radius: 32px;
     display: grid;
     place-items: center;
     background:
-        radial-gradient(circle at 30% 20%, rgba(255, 251, 240, 0.98), transparent 28%),
-        linear-gradient(145deg, #fff7e4 0%, #f1d487 35%, #c89b2d 100%);
+        linear-gradient(145deg, #fff8e8 0%, #f1d487 38%, #b98920 100%);
     box-shadow:
         0 24px 55px rgba(63, 41, 21, 0.26),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78),
         inset 0 -12px 24px rgba(92, 61, 18, 0.18);
     overflow: hidden;
     position: relative;
+    transform: rotate(-7deg);
     animation: introLogoPop 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
@@ -72,6 +72,15 @@ body > * {
     content: "";
     position: absolute;
     inset: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 24px;
+    pointer-events: none;
+}
+
+.intro-logo::after {
+    content: "";
+    position: absolute;
+    inset: 24px;
     border: 1px solid rgba(255, 255, 255, 0.45);
     border-radius: 50%;
     pointer-events: none;
@@ -185,25 +194,43 @@ header {
     width: 100px;
     height: 100px;
     border: 2px solid rgba(212, 175, 55, 0.95);
-    border-radius: 50%;
+    border-radius: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     background:
-        radial-gradient(circle at 30% 20%, rgba(255, 251, 240, 0.98), transparent 28%),
-        linear-gradient(145deg, #fff7e4 0%, #f1d487 35%, #c89b2d 100%);
+        linear-gradient(145deg, #fff8e8 0%, #f1d487 38%, #b98920 100%);
     box-shadow:
         0 10px 24px rgba(63, 41, 21, 0.22),
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
         inset 0 -10px 20px rgba(92, 61, 18, 0.18);
     overflow: hidden;
     position: relative;
+    transform: rotate(-7deg);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.logo:hover {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow:
+        0 16px 32px rgba(63, 41, 21, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.82),
+        inset 0 -10px 22px rgba(92, 61, 18, 0.2);
 }
 
 .logo::before {
     content: "";
     position: absolute;
     inset: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 24px;
+    pointer-events: none;
+}
+
+.logo::after {
+    content: "";
+    position: absolute;
+    inset: 22px;
     border: 1px solid rgba(255, 255, 255, 0.45);
     border-radius: 50%;
     pointer-events: none;
@@ -213,12 +240,13 @@ header {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.15rem;
     font-weight: 800;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.3em;
     color: #3a2818;
     text-transform: uppercase;
     display: inline-block;
     position: relative;
     z-index: 1;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.68);
 }
 
 .brand-details {
@@ -1230,6 +1258,252 @@ button:hover {
     box-shadow: 0 18px 34px rgba(0, 0, 0, 0.14);
 }
 
+.camera-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+}
+
+.camera-hero {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.camera-hero h2 {
+    color: #4a2f1b;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.camera-hero p {
+    color: #6b5747;
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.camera-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.camera-panel {
+    background: rgba(255, 250, 242, 0.8);
+    border: 1px solid rgba(176, 141, 87, 0.25);
+    border-radius: 24px;
+    padding: 20px;
+}
+
+.camera-panel h3 {
+    color: #4a2f1b;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 14px;
+}
+
+.camera-inputs {
+    display: grid;
+    gap: 12px;
+}
+
+.camera-field {
+    display: grid;
+    gap: 6px;
+    color: #5b4324;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.camera-field input {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(176, 141, 87, 0.35);
+    background: #fffdf8;
+}
+
+.camera-actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.camera-actions button {
+    padding: 14px 24px;
+    border-radius: 999px;
+}
+
+.camera-chat-panel {
+    max-width: 780px;
+    margin: 0 auto 28px;
+    border-radius: 24px;
+    border: 1px solid rgba(176, 141, 87, 0.25);
+    background: rgba(255, 250, 242, 0.9);
+    padding: 18px;
+    box-shadow: 0 12px 30px rgba(95, 66, 32, 0.08);
+}
+
+.camera-chat-header {
+    margin-bottom: 12px;
+}
+
+.camera-chat-header h3 {
+    color: #4a2f1b;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 6px;
+}
+
+.camera-chat-header p {
+    color: #6b5747;
+    line-height: 1.6;
+}
+
+.camera-chat-messages {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 12px;
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.chat-bubble {
+    max-width: 88%;
+    padding: 10px 12px;
+    border-radius: 14px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.chat-bubble.assistant {
+    background: rgba(212, 175, 55, 0.14);
+    color: #5b4324;
+    border: 1px solid rgba(176, 141, 87, 0.16);
+}
+
+.chat-bubble.user {
+    background: linear-gradient(135deg, #3d2d21, #5f4329);
+    color: #fffaf2;
+    margin-left: auto;
+}
+
+.camera-chat-form {
+    display: flex;
+    gap: 10px;
+}
+
+.camera-chat-form input {
+    flex: 1;
+    border-radius: 999px;
+    border: 1px solid rgba(176, 141, 87, 0.35);
+    padding: 12px 14px;
+    background: #fffdf8;
+}
+
+.camera-chat-form button {
+    padding: 12px 18px;
+    border-radius: 999px;
+}
+
+.camera-results-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.camera-outfit-card {
+    display: grid;
+    gap: 14px;
+    border-radius: 24px;
+    border: 1px solid rgba(176, 141, 87, 0.25);
+    background: rgba(255, 250, 242, 0.85);
+    padding: 18px;
+}
+
+.camera-outfit-media {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.camera-outfit-media img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8efe0, #e8cf8f);
+}
+
+.camera-outfit-copy h4 {
+    color: #4a2f1b;
+    margin-bottom: 6px;
+}
+
+.camera-mood {
+    color: #8a623a;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+}
+
+.camera-description {
+    color: #6b5747;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.camera-ai-comments {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.camera-ai-comments p {
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(176, 141, 87, 0.16);
+    border-radius: 12px;
+    padding: 8px 10px;
+    color: #6b5747;
+    line-height: 1.6;
+}
+
+.camera-hats span {
+    display: inline-block;
+    color: #4a2f1b;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.camera-hats ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.camera-hats li {
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #3d2d21, #5f4329);
+    color: #fffaf2;
+    font-size: 0.8rem;
+}
+
+.camera-empty {
+    text-align: center;
+    color: #6b5747;
+    padding: 24px;
+    border-radius: 20px;
+    background: rgba(255, 250, 242, 0.8);
+}
+
 .featured {
     text-align: center;
     padding: 70px 20px;
@@ -1310,13 +1584,46 @@ body.builder-scrolled .builder-intro p {
 }
 
 .controls {
-    max-width: 450px;
+    max-width: 640px;
     margin: 0 auto 28px;
     display: grid;
     gap: 10px;
     opacity: 0;
     transform: translateY(14px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.controls-row {
+    display: flex;
+    gap: 14px;
+    align-items: end;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.theme-control {
+    display: grid;
+    gap: 8px;
+    min-width: 220px;
+}
+
+.upload-wardrobe-btn {
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(176, 141, 87, 0.4);
+    background: linear-gradient(135deg, #3d2d21, #5f4329);
+    color: #fffaf2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.upload-wardrobe-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #8a6a3f, #b08d57);
 }
 
 .controls.is-visible,
@@ -1411,27 +1718,65 @@ body.builder-scrolled .builder-intro p {
     background: linear-gradient(135deg, rgba(240, 226, 191, 0.9), rgba(255, 247, 233, 0.95));
 }
 
+.clothing-card-media {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f8efe0, #e8cf8f);
+    min-height: 160px;
+}
+
 .clothing-card img {
     width: 100%;
     height: 160px;
     object-fit: cover;
     object-position: center center;
     border-radius: 14px;
+    background: linear-gradient(135deg, #f8efe0, #e8cf8f);
+    display: block;
+}
+
+.clothing-card.image-placeholder {
+    background: linear-gradient(135deg, rgba(248, 239, 224, 0.95), rgba(232, 207, 143, 0.9));
+}
+
+.clothing-card.image-placeholder p {
+    color: #5b4324;
 }
 
 .clothing-card[data-type="top"] img {
-    object-position: center 18%;
+    object-position: center 22%;
 }
 
-.clothing-card[data-type="bottom"] img {
-    object-position: center 82%;
-}
-
+.clothing-card[data-type="bottom"] img,
 .clothing-card[data-type="shoes"] img {
-    object-position: center 82%;
+    object-position: center 88%;
 }
 
 .clothing-card[data-type="accessory"] img {
+    object-position: center center;
+}
+
+.preview-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 14px;
+    object-position: center center;
+    transition: transform 0.25s ease;
+}
+
+.preview-img.top-img {
+    object-position: center 18%;
+}
+
+.preview-img.bottom-img,
+.preview-img.shoes-img {
+    object-position: center 88%;
+}
+
+.preview-img.accessory-img {
     object-position: center center;
 }
 
@@ -1524,6 +1869,75 @@ body.builder-scrolled .builder-intro p {
     font-size: 0.9rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+}
+
+.preview-hero-row {
+    display: grid;
+    gap: 14px;
+}
+
+.preview-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.preview-item-chip {
+    flex: 1 1 180px;
+    min-width: 140px;
+    border-radius: 14px;
+    border: 1px solid rgba(176, 141, 87, 0.2);
+    background: linear-gradient(135deg, rgba(255, 250, 242, 0.95), rgba(247, 235, 208, 0.95));
+    padding: 10px 12px;
+}
+
+.preview-item-chip .item-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8a623a;
+    margin-bottom: 4px;
+}
+
+.preview-item-chip .item-name {
+    color: #4a2f1b;
+    font-size: 0.96rem;
+    font-weight: 600;
+}
+
+.preview-notes-card {
+    border-radius: 18px;
+    border: 1px solid rgba(176, 141, 87, 0.2);
+    background: rgba(255, 247, 233, 0.82);
+    padding: 14px 16px;
+}
+
+.preview-notes-card h4 {
+    color: #4a2f1b;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.9rem;
+}
+
+.preview-notes-card ul {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.preview-notes-card li {
+    color: #5b4324;
+    line-height: 1.6;
+    padding-left: 14px;
+    position: relative;
+}
+
+.preview-notes-card li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #b98920;
 }
 
 .editorial-preview-layout {
@@ -1622,6 +2036,10 @@ body.builder-scrolled .builder-intro p {
 
     .editorial-preview-layout {
         grid-template-columns: 1fr;
+    }
+
+    .preview-chip-row {
+        flex-direction: column;
     }
 
     .builder-page {
