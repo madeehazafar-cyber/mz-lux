@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Top placeholder">
+  <rect width="800" height="1000" rx="48" fill="#f8efe0"/>
+  <rect x="180" y="170" width="440" height="560" rx="220" fill="#c78f49" opacity="0.9"/>
+  <rect x="260" y="320" width="280" height="360" rx="140" fill="#6b4b2a" opacity="0.95"/>
+  <rect x="260" y="680" width="280" height="80" rx="40" fill="#8f6540"/>
+  <text x="400" y="900" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="48" fill="#5b4324">Top Preview</text>
+</svg>

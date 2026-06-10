@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Accessory placeholder">
+  <rect width="800" height="1000" rx="48" fill="#f8efe0"/>
+  <circle cx="400" cy="390" r="150" fill="#b08d57"/>
+  <rect x="250" y="560" width="300" height="120" rx="60" fill="#6b4b2a"/>
+  <text x="400" y="900" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="48" fill="#5b4324">Accessory Preview</text>
+</svg>

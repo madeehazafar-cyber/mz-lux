@@ -279,20 +279,25 @@ function showThemeItems() {
 }
 
 function getImageCandidates(item, type) {
-    const fallback = "images/models/model-1.svg";
     const safeItem = item || {};
     const name = (safeItem.name || "").trim();
     const normalized = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     const spaced = name.replace(/\s+/g, " ").trim();
     const roots = {
-        top: ["images/models", "images/tops"],
-        bottom: ["images/models", "images/bottoms"],
-        shoes: ["images/models", "images/shoes"],
-        accessory: ["images/models", "images/accessories"]
+        top: ["images/models", "images/tops", "images/placeholders"],
+        bottom: ["images/models", "images/bottoms", "images/placeholders"],
+        shoes: ["images/models", "images/shoes", "images/placeholders"],
+        accessory: ["images/models", "images/accessories", "images/placeholders"]
     };
     const extensions = [".webp", ".jpg", ".jpeg", ".png", ".svg"];
     const baseNames = [normalized, normalized.replace(/-/g, " "), normalized.replace(/-/g, "_"), spaced];
     const candidates = [];
+    const placeholders = {
+        top: "images/placeholders/top-placeholder.svg",
+        bottom: "images/placeholders/bottom-placeholder.svg",
+        shoes: "images/placeholders/shoe-placeholder.svg",
+        accessory: "images/placeholders/accessory-placeholder.svg"
+    };
 
     if (safeItem.image) {
         candidates.push(safeItem.image);
@@ -308,7 +313,7 @@ function getImageCandidates(item, type) {
         });
     });
 
-    return Array.from(new Set(candidates.filter(Boolean).concat([fallback])));
+    return Array.from(new Set(candidates.filter(Boolean).concat([placeholders[type] || placeholders.top])));
 }
 
 function tryImageFallback(img, fallbackChain) {
@@ -324,7 +329,15 @@ function tryImageFallback(img, fallbackChain) {
         return true;
     }
 
-    const fallback = "images/models/model-1.svg";
+    const card = img.closest(".clothing-card");
+    const placeholderByType = {
+        top: "images/placeholders/top-placeholder.svg",
+        bottom: "images/placeholders/bottom-placeholder.svg",
+        shoes: "images/placeholders/shoe-placeholder.svg",
+        accessory: "images/placeholders/accessory-placeholder.svg"
+    };
+    const fallback = placeholderByType[card && card.dataset.type] || placeholderByType.top;
+
     if ((img.getAttribute("data-current-src") || img.src) !== fallback) {
         img.setAttribute("data-current-src", fallback);
         img.src = fallback;
@@ -811,49 +824,3 @@ function previewChip(label, item) {
 }
 
 window.addEventListener("load", loadPreviewPage);
-// =========================================================================
-// MZ LUX REAL-TIME LIVE AI CHAT ENGINE
-// =========================================================================
-
-// 1. PASTE YOUR GROQ KEY INSIDE THESE QUOTES
-
-
-// 2. The Core Function that talks to the live AI model
-
-return "Stylist connection error. Double check your API key connection!";
-}
-}
-
-// 3. Connect to your actual website UI elements
-// (Make sure these selectors or IDs match your HTML layout!)
-const chatInputBox = document.querySelector('.chat-card input') || document.getElementById('chat-input');
-const chatSendButton = document.querySelector('.chat-card button') || document.getElementById('btn-send');
-const chatMessageArea = document.querySelector('.chat-card div') || document.getElementById('chat-box-display');
-
-if (chatSendButton && chatInputBox && chatMessageArea) {
-chatSendButton.addEventListener('click', async () => {
-const messageText = chatInputBox.value.trim();
-if (!messageText) return;
-
-// Display user's text on the screen instantly
-chatMessageArea.innerHTML += `<div style="text-align: right; background: #e2dcd5; padding: 10px; border-radius: 12px; margin-bottom: 10px; display: inline-block; float: right; clear: both; font-family: 'Montserrat'; max-width: 80%;">${messageText}</div>`;
-chatInputBox.value = ''; // Clear out the input bar
-
-// Display a sleek luxury loading message
-const temporaryLoaderId = "loader-" + Date.now();
-chatMessageArea.innerHTML += `<div id="${temporaryLoaderId}" style="text-align: left; background: #fff; border: 1px solid #e2dcd5; padding: 10px; border-radius: 12px; margin-bottom: 10px; display: inline-block; float: left; clear: both; font-family: 'Montserrat'; max-width: 80%; color: #888; font-style: italic;">MZ Stylist is curation layout...</div>`;
-chatMessageArea.scrollTop = chatMessageArea.scrollHeight;
-
-// Get live custom answer back from the real AI
-const realAiAnswer = await fetchStylistResponse(messageText);
-
-// Swap out the placeholder text with the actual stylish response
-const loaderContainer = document.getElementById(temporaryLoaderId);
-if (loaderContainer) {
-loaderContainer.style.color = "#000";
-loaderContainer.style.fontStyle = "normal";
-loaderContainer.innerHTML = realAiAnswer;
-}
-chatMessageArea.scrollTop = chatMessageArea.scrollHeight;
-});
-}

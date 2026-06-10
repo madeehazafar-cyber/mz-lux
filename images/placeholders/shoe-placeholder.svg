@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Shoe placeholder">
+  <rect width="800" height="1000" rx="48" fill="#f8efe0"/>
+  <path d="M190 670c80-87 170-145 280-145h120c38 0 70 30 70 68v80c0 38-30 68-68 68H260c-45 0-70-16-70-71Z" fill="#4e342e"/>
+  <path d="M230 590c65-61 132-89 218-89h95c25 0 45 20 45 45v52c0 25-20 45-45 45H270c-25 0-40-7-40-53Z" fill="#8f6540"/>
+  <text x="400" y="900" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="48" fill="#5b4324">Shoes Preview</text>
+</svg>
