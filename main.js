@@ -816,7 +816,7 @@ window.addEventListener("load", loadPreviewPage);
 // =========================================================================
 
 // 1. PASTE YOUR GROQ KEY INSIDE THESE QUOTES
-const GROQ_API_SECRET_KEY = "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";
+
 
 // 2. The Core Function that talks to the live AI model
 
