@@ -1,281 +1,313 @@
+// ── PROXY URL ──
+const PROXY_URL = "https://mz-3i9crjfoy-mz5.vercel.app/api/proxy";
+
 const outfits = {
     oldMoney: {
         tops: [
             { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
-            { name: "Cream Sweater", image: "images/models/cream sweater cropped.webp" },
-            { name: "Navy Polo", image: "images/models/navy polo.webp" },
-            { name: "Beige Blazer", image: "images/models/beige blazer.webp" },
-            { name: "Striped Shirt", image: "images/models/striped shirt.webp" }
+            { name: "Cream Sweater",          image: "images/models/cream sweater cropped.webp" },
+            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
+            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" },
+            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" }
         ],
         bottoms: [
-            { name: "Black Pants", image: "images/models/black pants.webp" },
-            { name: "Beige Trousers", image: "images/models/beige trousers.webp" },
+            { name: "Black Pants",       image: "images/models/black pants.webp" },
+            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
             { name: "White Linen Pants", image: "images/models/white linen pants.webp" },
-            { name: "Navy Dress Pants", image: "images/models/navy dress pants.webp" },
-            { name: "Pleated Skirt", image: "images/models/pleated skirt.webp" }
+            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
+            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" }
         ],
         shoes: [
-            { name: "Brown Loafers", image: "images/models/brown loafers.webp" },
-            { name: "Black Loafers", image: "images/models/black loafers.webp" },
+            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
+            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
             { name: "White Sneakers", image: "images/models/white sneakers.webp" },
-            { name: "Ballet Flats", image: "images/models/ballet flats.webp" },
-            { name: "Leather Boots", image: "images/models/leather boots.webp" }
+            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
+            { name: "Leather Boots",  image: "images/models/leather boots.webp" }
         ],
         accessories: [
-            { name: "Gold Watch", image: "images/models/gold watch.webp" },
+            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
             { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" },
-            { name: "Sunglasses", image: "images/models/sunglasses.webp" },
-            { name: "Leather Belt", image: "images/models/leather belt.webp" },
-            { name: "Silk Scarf", image: "images/models/silk scarf.webp" }
+            { name: "Sunglasses",     image: "images/models/sunglasses.webp" },
+            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
+            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" }
         ]
     },
-
     streetwear: {
         tops: [
-            { name: "Oversized Hoodie", image: "images/tops/oversized-hoodie.jpg" },
-            { name: "Graphic Tee", image: "images/tops/graphic-tee.jpg" },
-            { name: "Denim Jacket", image: "images/tops/denim-jacket.jpg" },
-            { name: "Crop Hoodie", image: "images/tops/crop-hoodie.jpg" },
-            { name: "Varsity Jacket", image: "images/tops/varsity-jacket.jpg" }
+            { name: "Oversized Hoodie", image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&q=80" },
+            { name: "Graphic Tee",      image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&q=80" },
+            { name: "Denim Jacket",     image: "https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=400&q=80" },
+            { name: "Crop Hoodie",      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" },
+            { name: "Varsity Jacket",   image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80" }
         ],
         bottoms: [
-            { name: "Cargo Pants", image: "images/bottoms/cargo-pants.jpg" },
-            { name: "Baggy Jeans", image: "images/bottoms/baggy-jeans.jpg" },
-            { name: "Joggers", image: "images/bottoms/joggers.jpg" },
-            { name: "Denim Skirt", image: "images/bottoms/denim-skirt.jpg" },
-            { name: "Wide Leg Jeans", image: "images/bottoms/wide-leg-jeans.jpg" }
+            { name: "Cargo Pants",    image: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=400&q=80" },
+            { name: "Baggy Jeans",    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80" },
+            { name: "Joggers",        image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&q=80" },
+            { name: "Denim Skirt",    image: "https://images.unsplash.com/photo-1604176424472-17cd740f0197?w=400&q=80" },
+            { name: "Wide Leg Jeans", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&q=80" }
         ],
         shoes: [
-            { name: "Chunky Sneakers", image: "images/shoes/chunky-sneakers.jpg" },
-            { name: "High Tops", image: "images/shoes/high-tops.jpg" },
-            { name: "Platform Sneakers", image: "images/shoes/platform-sneakers.jpg" },
-            { name: "Combat Boots", image: "images/shoes/combat-boots.jpg" },
-            { name: "Skate Shoes", image: "images/shoes/skate-shoes.jpg" }
+            { name: "Chunky Sneakers",   image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80" },
+            { name: "High Tops",         image: "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=400&q=80" },
+            { name: "Platform Sneakers", image: "https://images.unsplash.com/photo-1607522370275-f6fd0d31a94a?w=400&q=80" },
+            { name: "Combat Boots",      image: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=400&q=80" },
+            { name: "Skate Shoes",       image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80" }
         ],
         accessories: [
-            { name: "Baseball Cap", image: "images/accessories/baseball-cap.jpg" },
-            { name: "Shoulder Bag", image: "images/accessories/shoulder-bag.jpg" },
-            { name: "Silver Chain", image: "images/accessories/silver-chain.jpg" },
-            { name: "Beanie", image: "images/accessories/beanie.jpg" },
-            { name: "Hoop Earrings", image: "images/accessories/hoop-earrings.jpg" }
+            { name: "Baseball Cap",  image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&q=80" },
+            { name: "Shoulder Bag",  image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" },
+            { name: "Silver Chain",  image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" },
+            { name: "Beanie",        image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&q=80" },
+            { name: "Hoop Earrings", image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" }
         ]
     },
-
     minimalist: {
         tops: [
-            { name: "White Tee", image: "images/tops/white-tee.jpg" },
-            { name: "Black Tank Top", image: "images/tops/black-tank.jpg" },
-            { name: "Grey Sweater", image: "images/tops/grey-sweater.jpg" },
-            { name: "Cream Blouse", image: "images/tops/cream-blouse.jpg" },
-            { name: "Basic Cardigan", image: "images/tops/basic-cardigan.jpg" }
+            { name: "White Tee",      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80" },
+            { name: "Black Tank Top", image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80" },
+            { name: "Grey Sweater",   image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=80" },
+            { name: "Cream Blouse",   image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" },
+            { name: "Basic Cardigan", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&q=80" }
         ],
         bottoms: [
-            { name: "Straight Jeans", image: "images/bottoms/straight-jeans.jpg" },
-            { name: "Black Trousers", image: "images/bottoms/black-trousers.jpg" },
-            { name: "Neutral Skirt", image: "images/bottoms/neutral-skirt.jpg" },
-            { name: "Cream Pants", image: "images/bottoms/cream-pants.jpg" },
-            { name: "Grey Wide Pants", image: "images/bottoms/grey-wide-pants.jpg" }
+            { name: "Straight Jeans",  image: "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?w=400&q=80" },
+            { name: "Black Trousers",  image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80" },
+            { name: "Neutral Skirt",   image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=400&q=80" },
+            { name: "Cream Pants",     image: "https://images.unsplash.com/photo-1594938298603-c8148c4b4d04?w=400&q=80" },
+            { name: "Grey Wide Pants", image: "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=400&q=80" }
         ],
         shoes: [
-            { name: "White Flats", image: "images/shoes/white-flats.jpg" },
-            { name: "Simple Sneakers", image: "images/shoes/simple-sneakers.jpg" },
-            { name: "Black Flats", image: "images/shoes/black-flats.jpg" },
-            { name: "Neutral Sandals", image: "images/shoes/neutral-sandals.jpg" },
-            { name: "Clean Loafers", image: "images/shoes/clean-loafers.jpg" }
+            { name: "White Flats",     image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80" },
+            { name: "Simple Sneakers", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80" },
+            { name: "Black Flats",     image: "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=400&q=80" },
+            { name: "Neutral Sandals", image: "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?w=400&q=80" },
+            { name: "Clean Loafers",   image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=400&q=80" }
         ],
         accessories: [
-            { name: "Simple Tote", image: "images/accessories/simple-tote.jpg" },
-            { name: "Gold Studs", image: "images/accessories/gold-studs.jpg" },
-            { name: "Thin Belt", image: "images/accessories/thin-belt.jpg" },
-            { name: "Minimal Watch", image: "images/accessories/minimal-watch.jpg" },
-            { name: "Small Necklace", image: "images/accessories/small-necklace.jpg" }
+            { name: "Simple Tote",    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&q=80" },
+            { name: "Gold Studs",     image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
+            { name: "Thin Belt",      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80" },
+            { name: "Minimal Watch",  image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" },
+            { name: "Small Necklace", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" }
         ]
     },
-
     casual: {
         tops: [
-            { name: "Basic Hoodie", image: "images/tops/basic-hoodie.jpg" },
-            { name: "Plain Tee", image: "images/tops/plain-tee.jpg" },
-            { name: "Flannel Shirt", image: "images/tops/flannel-shirt.jpg" },
-            { name: "Zip-Up Sweater", image: "images/tops/zip-up-sweater.jpg" },
-            { name: "Casual Blouse", image: "images/tops/casual-blouse.jpg" }
+            { name: "Basic Hoodie",   image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&q=80" },
+            { name: "Plain Tee",      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80" },
+            { name: "Flannel Shirt",  image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?w=400&q=80" },
+            { name: "Zip-Up Sweater", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=80" },
+            { name: "Casual Blouse",  image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" }
         ],
         bottoms: [
-            { name: "Blue Jeans", image: "images/bottoms/blue-jeans.jpg" },
-            { name: "Leggings", image: "images/bottoms/leggings.jpg" },
-            { name: "Joggers", image: "images/bottoms/joggers.jpg" },
-            { name: "Denim Shorts", image: "images/bottoms/denim-shorts.jpg" },
-            { name: "Casual Skirt", image: "images/bottoms/casual-skirt.jpg" }
+            { name: "Blue Jeans",   image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80" },
+            { name: "Leggings",     image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400&q=80" },
+            { name: "Joggers",      image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&q=80" },
+            { name: "Denim Shorts", image: "https://images.unsplash.com/photo-1591195853828-11db59a44f43?w=400&q=80" },
+            { name: "Casual Skirt", image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400&q=80" }
         ],
         shoes: [
-            { name: "White Sneakers", image: "images/shoes/white-sneakers.jpg" },
-            { name: "Slip Ons", image: "images/shoes/slip-ons.jpg" },
-            { name: "Casual Boots", image: "images/shoes/casual-boots.jpg" },
-            { name: "Canvas Shoes", image: "images/shoes/canvas-shoes.jpg" },
-            { name: "Running Shoes", image: "images/shoes/running-shoes.jpg" }
+            { name: "White Sneakers", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80" },
+            { name: "Slip Ons",       image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80" },
+            { name: "Casual Boots",   image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&q=80" },
+            { name: "Canvas Shoes",   image: "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=400&q=80" },
+            { name: "Running Shoes",  image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80" }
         ],
         accessories: [
-            { name: "Backpack", image: "images/accessories/backpack.jpg" },
-            { name: "Scrunchie", image: "images/accessories/scrunchie.jpg" },
-            { name: "Crossbody Bag", image: "images/accessories/crossbody-bag.jpg" },
-            { name: "Casual Cap", image: "images/accessories/casual-cap.jpg" },
-            { name: "Simple Bracelet", image: "images/accessories/simple-bracelet.jpg" }
+            { name: "Backpack",        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80" },
+            { name: "Scrunchie",       image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80" },
+            { name: "Crossbody Bag",   image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" },
+            { name: "Casual Cap",      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&q=80" },
+            { name: "Simple Bracelet", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" }
         ]
     },
-
     formal: {
         tops: [
-            { name: "White Blouse", image: "images/tops/white-blouse.jpg" },
-            { name: "Black Blazer", image: "images/tops/black-blazer.jpg" },
-            { name: "Satin Shirt", image: "images/tops/satin-shirt.jpg" },
-            { name: "Dressy Top", image: "images/tops/dressy-top.jpg" },
-            { name: "Tailored Jacket", image: "images/tops/tailored-jacket.jpg" }
+            { name: "White Blouse",    image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" },
+            { name: "Black Blazer",    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80" },
+            { name: "Satin Shirt",     image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&q=80" },
+            { name: "Dressy Top",      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" },
+            { name: "Tailored Jacket", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80" }
         ],
         bottoms: [
-            { name: "Dress Pants", image: "images/bottoms/dress-pants.jpg" },
-            { name: "Pencil Skirt", image: "images/bottoms/pencil-skirt.jpg" },
-            { name: "Black Trousers", image: "images/bottoms/black-trousers.jpg" },
-            { name: "Midi Skirt", image: "images/bottoms/midi-skirt.jpg" },
-            { name: "Wide Leg Trousers", image: "images/bottoms/wide-leg-trousers.jpg" }
+            { name: "Dress Pants",       image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&q=80" },
+            { name: "Pencil Skirt",      image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=400&q=80" },
+            { name: "Black Trousers",    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80" },
+            { name: "Midi Skirt",        image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400&q=80" },
+            { name: "Wide Leg Trousers", image: "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=400&q=80" }
         ],
         shoes: [
-            { name: "Black Heels", image: "images/shoes/black-heels.jpg" },
-            { name: "Nude Heels", image: "images/shoes/nude-heels.jpg" },
-            { name: "Pointed Flats", image: "images/shoes/pointed-flats.jpg" },
-            { name: "Dress Loafers", image: "images/shoes/dress-loafers.jpg" },
-            { name: "Ankle Boots", image: "images/shoes/ankle-boots.jpg" }
+            { name: "Black Heels",   image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80" },
+            { name: "Nude Heels",    image: "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=400&q=80" },
+            { name: "Pointed Flats", image: "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?w=400&q=80" },
+            { name: "Dress Loafers", image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=400&q=80" },
+            { name: "Ankle Boots",   image: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=400&q=80" }
         ],
         accessories: [
-            { name: "Pearl Earrings", image: "images/accessories/pearl-earrings.jpg" },
-            { name: "Clutch Bag", image: "images/accessories/clutch-bag.jpg" },
-            { name: "Gold Bracelet", image: "images/accessories/gold-bracelet.jpg" },
-            { name: "Elegant Watch", image: "images/accessories/elegant-watch.jpg" },
-            { name: "Silk Scarf", image: "images/accessories/silk-scarf.jpg" }
+            { name: "Pearl Earrings", image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" },
+            { name: "Clutch Bag",     image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" },
+            { name: "Gold Bracelet",  image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" },
+            { name: "Elegant Watch",  image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" },
+            { name: "Silk Scarf",     image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80" }
         ]
     }
 };
 
-const selectedOutfit = {
-    top: null,
-    bottom: null,
-    shoes: null,
-    accessories: []
-};
-
-const themeLabels = {
-    oldMoney: "Old Money",
-    streetwear: "Streetwear",
-    minimalist: "Minimalist",
-    casual: "Casual",
-    formal: "Formal"
-};
-
-const themeSelect = document.getElementById("themeSelect");
+const selectedOutfit = { top: null, bottom: null, shoes: null, accessories: [] };
+const themeLabels = { oldMoney: "Old Money", streetwear: "Streetwear", minimalist: "Minimalist", casual: "Casual", formal: "Formal" };
+const themeSelect     = document.getElementById("themeSelect");
 const clothingDisplay = document.getElementById("clothingDisplay");
-const instructionBox = document.getElementById("instructionBox");
-const previewButton = document.getElementById("previewBtn");
-const previewResult = document.getElementById("previewResult");
+const instructionBox  = document.getElementById("instructionBox");
+const previewButton   = document.getElementById("previewBtn");
+const previewResult   = document.getElementById("previewResult");
 const previewBoxes = {
-    top: document.getElementById("previewTop"),
-    bottom: document.getElementById("previewBottom"),
-    shoes: document.getElementById("previewShoes"),
+    top:       document.getElementById("previewTop"),
+    bottom:    document.getElementById("previewBottom"),
+    shoes:     document.getElementById("previewShoes"),
     accessory: document.getElementById("previewAccessory")
 };
 
+function getLocalStylistReply(question = "", history = []) {
+    const text = (question || "").toLowerCase().trim();
+
+    if (!text) {
+        return "I’m here — tell me what you want to style and I’ll make it feel sharper and more intentional.";
+    }
+
+    if (/^(erm|erh|uh|um|hmm|hm|idk|i don'?t know|not sure|maybe|sort of|kind of)$/.test(text)) {
+        return "No worries — tell me what you’re trying to style and I’ll turn it into something polished and elevated.";
+    }
+
+    if (/hello|hi|hey|good morning|good evening/.test(text)) {
+        return "Hello — I’m your MZ LUX stylist. Tell me what you’re wearing and I’ll sharpen it into something more polished and elevated.";
+    }
+
+    if (/bag|purse|handbag|tote/.test(text)) {
+        return "A structured bag in cognac, black, or deep chocolate will feel richer than a loud color. Keep it sleek and polished.";
+    }
+
+    if (/shoe|shoes|loafers|sneakers|boots|heels/.test(text)) {
+        return "Choose shoes that echo the outfit’s tone: loafers for tailoring, clean sneakers for relaxed polish, and sleek heels for a sculpted finish.";
+    }
+
+    if (/color|colour|match|works with|pair|pairing/.test(text)) {
+        return "For a luxe look, pair one rich neutral with one soft contrast — cream with camel, navy with ivory, or black with chocolate.";
+    }
+
+    if (/accessory|jewelry|jewellery|watch|belt|necklace/.test(text)) {
+        return "One strong accessory does the most: a gold watch, sculptural earrings, or a slim belt instantly sharpens the whole look.";
+    }
+
+    if (/what should i wear|outfit|styling|style/.test(text)) {
+        return "Build the outfit around one anchor piece, then add one elevated contrast: a blazer with relaxed trousers, or a crisp shirt with a sharp skirt.";
+    }
+
+    if (/thank|thanks/.test(text)) {
+        return "You’re welcome — I’m here to make your wardrobe feel sharper, calmer, and more effortless.";
+    }
+
+    return "This is the kind of look that works best when it feels intentional: one strong silhouette, one rich tone, and one polished finish.";
+}
+
+async function callAI(systemPrompt, messages) {
+    const lastMessage = messages[messages.length - 1]?.content || "";
+
+    try {
+        const res = await fetch(PROXY_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages })
+        });
+
+        if (!res.ok) throw new Error("Proxy unavailable");
+
+        const data = await res.json();
+        const text = data.content?.find((b) => b.type === "text")?.text;
+        if (text) return text;
+        throw new Error("No ai response");
+    } catch {
+        return getLocalStylistReply(lastMessage, chatHistory);
+    }
+}
+
 function initBuilder() {
-    if (themeSelect) {
-        themeSelect.addEventListener("change", showThemeItems);
-    }
-
-    if (previewButton) {
-        previewButton.addEventListener("click", showPreviewSummary);
-    }
-
-    const uploadButton = document.getElementById("uploadWardrobeBtn");
-    if (uploadButton) {
-        uploadButton.addEventListener("click", handleWardrobeUpload);
-    }
-
-    if (clothingDisplay) {
-        clothingDisplay.addEventListener("click", handleClothingCardSelection);
-    }
-
+    if (themeSelect)   themeSelect.addEventListener("change", showThemeItems);
+    if (previewButton) previewButton.addEventListener("click", showPreviewSummary);
+    const uploadBtn = document.getElementById("uploadWardrobeBtn");
+    if (uploadBtn) uploadBtn.addEventListener("click", () => { window.location.href = "camera.html"; });
+    if (clothingDisplay) clothingDisplay.addEventListener("click", handleClothingCardSelection);
     initCameraMode();
-
-    if (themeSelect && themeSelect.value) {
+    if (clothingDisplay && themeSelect && themeSelect.value) {
         showThemeItems();
+    } else if (clothingDisplay) {
+        clothingDisplay.innerHTML = "";
     }
-
     initScrollEffects();
 }
 
 function initScrollEffects() {
-    const builderIntro = document.querySelector(".builder-intro");
-    const controls = document.querySelector(".controls");
-    const instructionBox = document.getElementById("instructionBox");
-    const categorySections = document.querySelectorAll(".category-section");
-    const previewBox = document.querySelector(".preview-box");
-
-    if (!builderIntro && !controls && !instructionBox && !previewBox && categorySections.length === 0) return;
-
-    const revealItems = [controls, instructionBox, previewBox, ...categorySections].filter(Boolean);
+    const revealItems = [
+        document.querySelector(".controls"),
+        document.getElementById("instructionBox"),
+        document.querySelector(".preview-box"),
+        ...document.querySelectorAll(".category-section")
+    ].filter(Boolean);
 
     const onScroll = () => {
-        const shouldShrink = window.scrollY > 20;
-        document.body.classList.toggle("builder-scrolled", shouldShrink);
-
-        revealItems.forEach((item, index) => {
-            const rect = item.getBoundingClientRect();
-            const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > 80;
-
-            if (inView || item.classList.contains("category-section")) {
+        document.body.classList.toggle("builder-scrolled", window.scrollY > 20);
+        revealItems.forEach((item, i) => {
+            const r = item.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.9 && r.bottom > 80) {
                 item.classList.add("is-visible");
                 item.style.opacity = "1";
                 item.style.transform = "translateY(0)";
-                item.style.transitionDelay = `${index * 0.06}s`;
+                item.style.transitionDelay = `${i * 0.06}s`;
             }
         });
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 }
 
 document.addEventListener("DOMContentLoaded", initBuilder);
 
+if (document.readyState !== "loading") {
+    initBuilder();
+}
+
+window.showThemeItems = showThemeItems;
+
 function showThemeItems() {
     if (!clothingDisplay) return;
-
     const theme = themeSelect ? themeSelect.value : "";
     clothingDisplay.innerHTML = "";
-
-    if (!theme) {
-        if (instructionBox) {
-            instructionBox.style.display = "block";
-        }
-        return;
-    }
-
-    if (instructionBox) {
-        instructionBox.style.display = "none";
-    }
-
-    const themeItems = outfits[theme] || outfits.oldMoney;
-    const categoryData = [
-        { title: "Tops", type: "top", items: themeItems.tops || [] },
-        { title: "Bottoms", type: "bottom", items: themeItems.bottoms || [] },
-        { title: "Shoes", type: "shoes", items: themeItems.shoes || [] },
-        { title: "Accessories", type: "accessory", items: themeItems.accessories || [] }
+    if (!theme) { if (instructionBox) instructionBox.style.display = "block"; return; }
+    if (instructionBox) instructionBox.style.display = "none";
+    const t = outfits[theme] || outfits.oldMoney;
+    const cats = [
+        { title: "Tops",        type: "top",       items: t.tops        },
+        { title: "Bottoms",     type: "bottom",    items: t.bottoms     },
+        { title: "Shoes",       type: "shoes",     items: t.shoes       },
+        { title: "Accessories", type: "accessory", items: t.accessories }
     ];
-
-    clothingDisplay.innerHTML = categoryData.map(({ title, type, items }) => createCategory(title, type, items)).join("");
-
-    clothingDisplay.querySelectorAll(".category-section").forEach((section, index) => {
-        section.classList.add("is-visible");
-        section.style.opacity = "1";
-        section.style.transform = "translateY(0)";
-        section.style.transitionDelay = `${index * 0.06}s`;
+    clothingDisplay.innerHTML = cats.map(c => createCategory(c.title, c.type, c.items)).join("");
+    clothingDisplay.querySelectorAll(".category-section").forEach((s, i) => {
+        s.classList.add("is-visible");
+        s.style.opacity = "1";
+        s.style.transform = "translateY(0)";
+        s.style.transitionDelay = `${i * 0.06}s`;
     });
+}
+
+function getPlaceholderImage(type) {
+    const map = {
+        top: "images/placeholders/top-placeholder.svg",
+        bottom: "images/placeholders/bottom-placeholder.svg",
+        shoes: "images/placeholders/shoe-placeholder.svg",
+        accessory: "images/placeholders/accessory-placeholder.svg"
+    };
+    return map[type] || map.top;
 }
 
 function getImageCandidates(item, type) {
@@ -292,535 +324,343 @@ function getImageCandidates(item, type) {
     const extensions = [".webp", ".jpg", ".jpeg", ".png", ".svg"];
     const baseNames = [normalized, normalized.replace(/-/g, " "), normalized.replace(/-/g, "_"), spaced];
     const candidates = [];
-    const placeholders = {
-        top: "images/placeholders/top-placeholder.svg",
-        bottom: "images/placeholders/bottom-placeholder.svg",
-        shoes: "images/placeholders/shoe-placeholder.svg",
-        accessory: "images/placeholders/accessory-placeholder.svg"
-    };
 
-    if (safeItem.image) {
-        candidates.push(safeItem.image);
-    }
+    if (safeItem.image) candidates.push(safeItem.image);
 
-    roots[type] && roots[type].forEach((root) => {
+    (roots[type] || roots.top).forEach((root) => {
         baseNames.forEach((baseName) => {
             extensions.forEach((ext) => {
-                if (baseName) {
-                    candidates.push(`${root}/${baseName}${ext}`);
-                }
+                if (baseName) candidates.push(`${root}/${baseName}${ext}`);
             });
         });
     });
 
-    return Array.from(new Set(candidates.filter(Boolean).concat([placeholders[type] || placeholders.top])));
+    candidates.push(getPlaceholderImage(type));
+    return Array.from(new Set(candidates.filter(Boolean)));
 }
 
 function tryImageFallback(img, fallbackChain) {
     if (!img) return false;
-
     const parts = (fallbackChain || "").split(",").filter(Boolean);
-    const currentSrc = img.getAttribute("data-current-src") || img.src;
-    const nextCandidate = parts.find((candidate) => candidate && candidate !== currentSrc);
+    const current = img.getAttribute("data-current-src") || img.src;
+    const next = parts.find((candidate) => candidate && candidate !== current);
 
-    if (nextCandidate) {
-        img.setAttribute("data-current-src", nextCandidate);
-        img.src = nextCandidate;
+    if (next) {
+        img.setAttribute("data-current-src", next);
+        img.src = next;
         return true;
     }
 
-    const card = img.closest(".clothing-card");
-    const placeholderByType = {
-        top: "images/placeholders/top-placeholder.svg",
-        bottom: "images/placeholders/bottom-placeholder.svg",
-        shoes: "images/placeholders/shoe-placeholder.svg",
-        accessory: "images/placeholders/accessory-placeholder.svg"
-    };
-    const fallback = placeholderByType[card && card.dataset.type] || placeholderByType.top;
-
+    const fallback = getPlaceholderImage(img.closest(".clothing-card")?.dataset?.type || "top");
     if ((img.getAttribute("data-current-src") || img.src) !== fallback) {
         img.setAttribute("data-current-src", fallback);
         img.src = fallback;
     }
-
-    if (img.parentElement) {
-        img.parentElement.classList.add("image-placeholder");
-    }
-
+    if (img.parentElement) img.parentElement.classList.add("image-placeholder");
     return false;
 }
 
 window.tryImageFallback = tryImageFallback;
 
 function createCategory(title, type, items) {
-    const safeItems = Array.isArray(items) ? items : [];
-    const cards = safeItems.map((item) => {
+    const cards = (items || []).map((item) => {
         const imageCandidates = getImageCandidates(item, type);
-        const imageSrc = imageCandidates[0];
+        const imageSrc = imageCandidates[0] || getPlaceholderImage(type);
         const fallbackChain = imageCandidates.slice(1).join(",");
-        const isSelected = type === "accessory"
-            ? selectedOutfit.accessories.some((selectedItem) => selectedItem.name === item.name)
-            : selectedOutfit[type] && selectedOutfit[type].name === item.name;
+        const sel = type === "accessory"
+            ? selectedOutfit.accessories.some((a) => a.name === item.name)
+            : selectedOutfit[type]?.name === item.name;
 
         return `
-            <button type="button" class="clothing-card ${isSelected ? "selected" : ""}" data-type="${type}" data-name="${item.name}" data-image="${imageSrc}">
+            <button type="button" class="clothing-card ${sel ? "selected" : ""}"
+                data-type="${type}" data-name="${item.name}" data-image="${imageSrc}">
                 <div class="clothing-card-media">
-                    <img src="${imageSrc}" alt="${item.name}" onerror="this.onerror=null;window.tryImageFallback(this,'${fallbackChain}');">
+                    <img src="${imageSrc}" alt="${item.name}" loading="lazy"
+                         onerror="this.onerror=null;window.tryImageFallback && window.tryImageFallback(this,'${fallbackChain}');">
                 </div>
                 <p>${item.name}</p>
-            </button>
-        `;
+            </button>`;
     }).join("");
 
-    return `
-        <div class="category-section">
-            <h2>${title}</h2>
-            <div class="clothing-grid">
-                ${cards}
-            </div>
-        </div>
-    `;
+    return `<div class="category-section"><h2>${title}</h2><div class="clothing-grid">${cards}</div></div>`;
 }
 
-function handleClothingCardSelection(event) {
-    const card = event.target.closest(".clothing-card");
-
+function handleClothingCardSelection(e) {
+    const card = e.target.closest(".clothing-card");
     if (!card) return;
-
-    selectItem(card.dataset.type, {
-        name: card.dataset.name,
-        image: card.dataset.image
-    });
+    selectItem(card.dataset.type, { name: card.dataset.name, image: card.dataset.image });
 }
 
 let chatHistory = [];
 
 function initCameraMode() {
-    const generateButton = document.getElementById("generateCameraOutfits");
-    if (!generateButton) return;
+    const genBtn = document.getElementById("generateCameraOutfits");
+    if (genBtn) genBtn.addEventListener("click", generateCameraOutfits);
 
-    generateButton.addEventListener("click", generateCameraOutfits);
-
-    const chatForm = document.getElementById("chatForm");
-    const chatInput = document.getElementById("chatInput");
+    const chatForm     = document.getElementById("chatForm");
+    const chatInput    = document.getElementById("chatInput");
     const chatMessages = document.getElementById("chatMessages");
+    if (!chatForm || !chatInput || !chatMessages) return;
 
-    if (chatForm && chatInput && chatMessages) {
-        chatForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const question = chatInput.value.trim();
-
-            if (!question) return;
-
-            const userBubble = document.createElement("div");
-            userBubble.className = "chat-bubble user";
-            userBubble.innerHTML = `<p>${question}</p>`;
-            chatMessages.appendChild(userBubble);
-
-            const answer = getChatAnswer(question, chatHistory);
-            const assistantBubble = document.createElement("div");
-            assistantBubble.className = "chat-bubble assistant";
-            assistantBubble.innerHTML = `<p>${answer.replace(/\n/g, "<br>")}</p>`;
-            chatMessages.appendChild(assistantBubble);
-            chatHistory.push({ question, answer });
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            chatInput.value = "";
+    document.querySelectorAll(".chat-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+            chatInput.value = chip.dataset.prompt || "";
+            chatInput.focus();
+            chatForm.requestSubmit();
         });
-    }
-}
+    });
 
-function getChatAnswer(question, history = []) {
-    const normalized = question.toLowerCase().trim();
+    chatForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const question = chatInput.value.trim();
+        if (!question) return;
 
-    if (normalized.includes('bag') || normalized.includes('colo')) {
-        return `[Direct Verdict]: For a neutral base, a bag can anchor the outfit or add a pop.\n\n[How to Style It]:\n- Tan or Cognac: Adds a classic, warm finish.\n- Black: Instantly builds high contrast.\n- Olive Green: Introduces rich color without clashing.`;
-    }
+        const userBubble = document.createElement("div");
+        userBubble.className = "chat-bubble user";
+        userBubble.innerHTML = `<p>${question}</p>`;
+        chatMessages.appendChild(userBubble);
+        chatInput.value = "";
 
-    if (normalized.includes('shoe') || normalized.includes('boot') || normalized.includes('heel') || normalized.includes('loafer')) {
-        return `[Direct Verdict]: Footwear completely defines the final vibe.\n\n[How to Style It]:\n- White Sneakers / Loafers: Ideal for a relaxed, casual smart appearance.\n- Nude or Black Heels: Instantly elevates the outfit for work or dinner events.`;
-    }
+        const typingBubble = document.createElement("div");
+        typingBubble.className = "chat-bubble assistant typing-indicator";
+        typingBubble.innerHTML = `<span></span><span></span><span></span>`;
+        chatMessages.appendChild(typingBubble);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    if (/^(hi|hello|hey|hey there|good morning|hi there)/.test(normalized)) {
-        return `Hi! I can help you style your wardrobe pieces and suggest what accessories or options work best. What are you styling today?`;
-    }
+        const systemPrompt = `You are a luxury fashion stylist for MZ LUX. Give specific, direct, confident advice. Name real brands, styling techniques, and colour pairings. Never be vague. Max 90 words per response.`;
+        const messages = chatHistory.slice(-6).flatMap(h => [
+            { role: "user",      content: h.question },
+            { role: "assistant", content: h.answer   }
+        ]);
+        messages.push({ role: "user", content: question });
 
-    return `[Direct Verdict]: Yes, this combination can work well when the shape and texture are balanced.\n\n[How to Style It]:\n- Style top with a clean, well-fitted base layer.\n- Add one strong accessory like a belt, bag, or jewelry.\n- Finish with shoes that match the mood, such as loafers, boots, or heels.`;
-}
+        const answer = await callAI(systemPrompt, messages);
+        typingBubble.remove();
 
-function createPreviewUrl(file) {
-    if (!file) return "images/models/model-1.svg";
-    return window.URL.createObjectURL(file);
+        const assistantBubble = document.createElement("div");
+        assistantBubble.className = "chat-bubble assistant";
+        assistantBubble.innerHTML = `<p>${answer.replace(/\n/g, "<br>")}</p>`;
+        chatMessages.appendChild(assistantBubble);
+        chatHistory.push({ question, answer });
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
 }
 
 function getCameraItems(selector, type) {
-    const inputs = Array.from(document.querySelectorAll(selector));
-
-    return inputs.map((input, index) => {
-        const file = input.files && input.files[0] ? input.files[0] : null;
-        const label = input.dataset.label || `${type} ${index + 1}`;
-        return {
-            label,
-            type,
-            preview: createPreviewUrl(file),
-            fileName: file ? file.name : "placeholder"
-        };
-    }).filter((item) => item.label);
+    return Array.from(document.querySelectorAll(selector)).map((input, i) => {
+        const file = input.files?.[0] || null;
+        return { label: input.dataset.label || `${type} ${i+1}`, type,
+                 preview: file ? URL.createObjectURL(file) : "", fileName: file?.name || "" };
+    }).filter(i => i.label);
 }
 
 function getOutfitMood(top, bottom) {
-    const text = `${top.label} ${bottom.label}`.toLowerCase();
-    if (text.includes("blazer") || text.includes("satin") || text.includes("tailored") || text.includes("trouser") || text.includes("linen")) {
-        return "luxury tailoring";
-    }
-    if (text.includes("denim") || text.includes("jean") || text.includes("cargo") || text.includes("casual")) {
-        return "casual cool";
-    }
-    if (text.includes("sweater") || text.includes("knit") || text.includes("cream") || text.includes("white")) {
-        return "soft elegance";
-    }
+    const t = `${top.label} ${bottom.label}`.toLowerCase();
+    if (/blazer|satin|tailored|trouser|linen/.test(t)) return "luxury tailoring";
+    if (/denim|jean|cargo|casual/.test(t))             return "casual cool";
+    if (/sweater|knit|cream|white/.test(t))            return "soft elegance";
     return "polished street style";
 }
 
 function getHatOptions(mood) {
-    if (mood === "luxury tailoring") {
-        return ["Structured Fedora", "Panama Hat", "Vintage Beret"];
-    }
-    if (mood === "casual cool") {
-        return ["Bucket Hat", "Baseball Cap", "Canvas Cap"];
-    }
-    if (mood === "soft elegance") {
-        return ["Wide-Brim Sun Hat", "Soft Wool Hat", "Minimal Trilby"];
-    }
-    return ["Classic Fedora", "Trilby", "Satin Headband"];
+    const opts = { "luxury tailoring": ["Structured Fedora","Panama Hat","Vintage Beret"], "casual cool": ["Bucket Hat","Baseball Cap","Canvas Cap"], "soft elegance": ["Wide-Brim Sun Hat","Soft Wool Hat","Minimal Trilby"] };
+    return opts[mood] || ["Classic Fedora","Trilby","Satin Headband"];
 }
 
 function getOutfitStyleProfile(top, bottom) {
-    const combined = `${top.label || top.name || ""} ${bottom.label || bottom.name || ""}`.toLowerCase();
-    const menswearKeywords = /blazer|suit|shirt|tie|trouser|trousers|jean|denim|cargo|jacket|sweater|knit|hoodie|polo|overshirt|bomber|jogger|chino|coat|overcoat/;
-    const womenswearKeywords = /dress|skirt|blouse|camisole|mini|maxi|satin|heel|heels|silk|gown|wrap|slip|peplum|flare/;
-
-    if (menswearKeywords.test(combined) && !womenswearKeywords.test(combined)) {
-        return "menswear";
-    }
-
-    if (womenswearKeywords.test(combined) && !menswearKeywords.test(combined)) {
-        return "womenswear";
-    }
-
+    const c = `${top.label || top.name || ""} ${bottom.label || bottom.name || ""}`.toLowerCase();
+    if (/blazer|suit|shirt|trouser|jean|denim|cargo|jacket|sweater|hoodie|polo|jogger|chino/.test(c) && !/dress|skirt|blouse|satin|heel|gown|wrap/.test(c)) return "menswear";
+    if (/dress|skirt|blouse|camisole|satin|heel|gown|wrap|peplum|flare/.test(c)) return "womenswear";
     return "neutral";
 }
 
 function getOutfitStyleComments(outfit, mood, tone) {
-    const topName = (outfit.top && (outfit.top.label || outfit.top.name)) || "this top";
-    const bottomName = (outfit.bottom && (outfit.bottom.label || outfit.bottom.name)) || "these bottoms";
-    const shoeName = (outfit.shoes && (outfit.shoes.label || outfit.shoes.name)) || "";
-    const accessoryNames = Array.isArray(outfit.accessories)
-        ? outfit.accessories.map((item) => item.name || item.label || "accessory").filter(Boolean)
-        : [];
-    const profile = getOutfitStyleProfile({ label: topName }, { label: bottomName });
-    const templates = [];
-
-    const topPhrase = topName.toLowerCase();
-    const bottomPhrase = bottomName.toLowerCase();
-    const comboPhrase = `${topName} + ${bottomName}`;
-
+    const top  = outfit.top?.label  || outfit.top?.name  || "this top";
+    const bot  = outfit.bottom?.label || outfit.bottom?.name || "these bottoms";
+    const shoe = outfit.shoes?.label  || outfit.shoes?.name  || "";
+    const accs = (outfit.accessories||[]).map(a => a.name||a.label).filter(Boolean);
+    const prof = getOutfitStyleProfile({label:top},{label:bot});
+    const t = [];
     if (tone === "luxurious") {
-        templates.push(`${comboPhrase} feels especially polished because the ${topPhrase} and ${bottomPhrase} balance each other beautifully.`);
-        templates.push(`A sleek watch, structured bag, or sculptural jewelry would make this feel more high-end.`);
-        templates.push(`This version is stronger if you keep the styling refined and intentional.`);
+        t.push(`${top} + ${bot} feels polished — they balance each other beautifully.`);
+        t.push("A sleek watch, structured bag, or sculptural jewelry lifts this further.");
     } else if (tone === "fun") {
-        templates.push(`${comboPhrase} has a playful edge, and the ${topPhrase} gives it a confident lift.`);
-        templates.push(`A bright accessory or a more relaxed layer would make this feel more youthful and energetic.`);
-        templates.push(`This one works best when the styling feels a little more expressive.`);
+        t.push(`${top} + ${bot} has a playful, confident energy.`);
+        t.push("A bright accessory or relaxed layer makes it more expressive.");
+    } else if (prof === "womenswear") {
+        t.push(`${top} + ${bot} feels chic and balanced with a soft, elevated finish.`);
+        t.push("Delicate jewellery or a sleek bag refines it further.");
     } else {
-        if (profile === "menswear") {
-            templates.push(`${comboPhrase} reads sharp and modern, especially with a clean silhouette.`);
-            templates.push(`A simple belt or watch would make the outfit feel more complete.`);
-        } else if (profile === "womenswear") {
-            templates.push(`${comboPhrase} feels chic and balanced, with a soft but elevated finish.`);
-            templates.push(`Delicate jewelry or a sleek bag would make it look even more refined.`);
-        } else {
-            templates.push(`${comboPhrase} feels easy to style and very wearable.`);
-            templates.push(`A polished accessory would make the whole look feel more curated.`);
-        }
+        t.push(`${top} + ${bot} reads sharp and modern with a clean silhouette.`);
+        t.push("A simple belt or watch completes the look.");
     }
-
-    if (accessoryNames.length) {
-        templates.push(`The ${accessoryNames.join(" and ").toLowerCase()} already gives this outfit personality, so the rest can stay simple.`);
-    }
-
-    if (shoeName) {
-        templates.push(`It would look especially strong with ${shoeName.toLowerCase()} to finish the look.`);
-    } else if (profile === "womenswear") {
-        templates.push(`Heels would work beautifully here for a more elevated silhouette.`);
-    } else {
-        templates.push(`Clean loafers or sleek sneakers would work really well with this outfit.`);
-    }
-
-    return templates.slice(0, 4);
+    if (accs.length) t.push(`The ${accs.join(" and ").toLowerCase()} gives this outfit personality.`);
+    if (shoe) t.push(`Especially strong finished with ${shoe.toLowerCase()}.`);
+    else t.push(prof === "womenswear" ? "Heels would elevate the silhouette beautifully." : "Clean loafers or sleek sneakers work perfectly.");
+    return t.slice(0,4);
 }
 
 function generateCameraOutfits() {
-    const tops = getCameraItems('[data-role="top-input"]', "top");
+    const tops    = getCameraItems('[data-role="top-input"]',    "top");
     const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom");
-    const resultsContainer = document.getElementById("cameraResults");
-
-    if (!resultsContainer) return;
-
-    const pairs = [];
-    tops.slice(0, 3).forEach((top) => {
-        bottoms.slice(0, 2).forEach((bottom) => {
-            const mood = getOutfitMood(top, bottom);
-            pairs.push({ top, bottom, mood, hats: getHatOptions(mood) });
-        });
-    });
-
-    const rankedPairs = pairs
-        .sort((a, b) => {
-            const moodScore = (mood) => mood === "luxury tailoring" ? 3 : mood === "soft elegance" ? 2 : mood === "casual cool" ? 1 : 0;
-            return moodScore(b.mood) - moodScore(a.mood);
-        })
-        .slice(0, 2)
-        .map((pair, index) => {
-            const tone = index === 0 ? "luxurious" : "fun";
-            const comments = getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, tone);
-            return { ...pair, comments };
-        });
-
-    if (!rankedPairs.length) {
-        resultsContainer.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>';
-        return;
-    }
-
-    resultsContainer.innerHTML = `
-        <div class="camera-results-grid">
-            ${rankedPairs.map(({ top, bottom, mood, hats, comments }) => `
-                <article class="camera-outfit-card">
-                    <div class="camera-outfit-media">
-                        <img src="${top.preview}" alt="${top.label}">
-                        <img src="${bottom.preview}" alt="${bottom.label}">
-                    </div>
-                    <div class="camera-outfit-copy">
-                        <h4>${top.label} + ${bottom.label}</h4>
-                        <p class="camera-mood">${mood}</p>
-                        <p class="camera-description">A refined pairing with balanced structure and effortless confidence.</p>
-                        <div class="camera-ai-comments">
-                            ${comments.map((comment) => `<p>${comment}</p>`).join("")}
-                        </div>
-                        <div class="camera-hats">
-                            <span>Hat options</span>
-                            <ul>
-                                ${hats.map((hat) => `<li>${hat}</li>`).join("")}
-                            </ul>
-                        </div>
-                    </div>
-                </article>
-            `).join("")}
-        </div>
-    `;
-}
-
-function handleWardrobeUpload() {
-    window.location.href = "camera.html";
+    const results = document.getElementById("cameraResults");
+    if (!results) return;
+    const pairs = tops.slice(0,3).flatMap(top => bottoms.slice(0,2).map(bottom => ({ top, bottom, mood: getOutfitMood(top, bottom) })))
+        .sort((a,b) => { const s = m => m==="luxury tailoring"?3:m==="soft elegance"?2:m==="casual cool"?1:0; return s(b.mood)-s(a.mood); })
+        .slice(0,2).map((p,i) => ({ ...p, hats: getHatOptions(p.mood), comments: getOutfitStyleComments({top:p.top,bottom:p.bottom},p.mood,i===0?"luxurious":"fun") }));
+    if (!pairs.length) { results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>'; return; }
+    results.innerHTML = `<div class="camera-results-grid">${pairs.map(({top,bottom,mood,hats,comments}) => `
+        <article class="camera-outfit-card">
+            <div class="camera-outfit-media">
+                ${top.preview    ? `<img src="${top.preview}"    alt="${top.label}">` : ""}
+                ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
+            </div>
+            <div class="camera-outfit-copy">
+                <h4>${top.label} + ${bottom.label}</h4>
+                <p class="camera-mood">${mood}</p>
+                <div class="camera-ai-comments">${comments.map(c=>`<p>${c}</p>`).join("")}</div>
+                <div class="camera-hats"><span>Hat options</span><ul>${hats.map(h=>`<li>${h}</li>`).join("")}</ul></div>
+            </div>
+        </article>`).join("")}</div>`;
 }
 
 function selectItem(type, item) {
     if (type === "accessory") {
-        const existingIndex = selectedOutfit.accessories.findIndex((selectedItem) => selectedItem.name === item.name);
-
-        if (existingIndex >= 0) {
-            selectedOutfit.accessories.splice(existingIndex, 1);
-        } else if (selectedOutfit.accessories.length < 2) {
-            selectedOutfit.accessories.push(item);
-        }
+        const idx = selectedOutfit.accessories.findIndex(a => a.name === item.name);
+        if (idx >= 0) selectedOutfit.accessories.splice(idx, 1);
+        else if (selectedOutfit.accessories.length < 2) selectedOutfit.accessories.push(item);
     } else {
         selectedOutfit[type] = item;
     }
-
     saveCurrentOutfit();
     updatePreview(type, type === "accessory" ? selectedOutfit.accessories : item);
     updateSelectionHighlights();
 }
 
 function updatePreview(type, item) {
-    const previewBox = previewBoxes[type === "accessory" ? "accessory" : type];
-
-    if (!previewBox) return;
-
+    const box = previewBoxes[type === "accessory" ? "accessory" : type];
+    if (!box) return;
     if (type === "accessory") {
-        const accessories = Array.isArray(item) ? item : [];
-
-        previewBox.innerHTML = `
-            <div class="preview-card-content preview-card-visual">
-                <p class="preview-label">Accessories</p>
-                ${accessories.length ? accessories.map((accessory) => `
-                    <div class="preview-thumb-row">
-                        <img src="${accessory.image}" alt="${accessory.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
-                        <h3>${accessory.name}</h3>
-                    </div>
-                `).join("") : '<h3>No accessories selected</h3>'}
-            </div>
-        `;
+        const accs = Array.isArray(item) ? item : [];
+        box.innerHTML = `<div class="preview-card-content preview-card-visual"><p class="preview-label">Accessories</p>${accs.length ? accs.map(a=>`<div class="preview-thumb-row"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><h3>${a.name}</h3></div>`).join("") : "<h3>No accessories selected</h3>"}</div>`;
         return;
     }
-
-    if (!item) {
-        previewBox.innerHTML = `<span class="preview-label">${getLabel(type)}</span>`;
-        return;
-    }
-
-    const imageCandidates = getImageCandidates(item, type);
-    const imageSrc = imageCandidates[0];
-    const fallbackChain = imageCandidates.slice(1).join(",");
-
-    previewBox.innerHTML = `
-        <div class="preview-card-content preview-card-visual">
-            <p class="preview-label">${getLabel(type)}</p>
-            <img class="preview-img ${type}-img" src="${imageSrc}" alt="${item.name}" onerror="this.onerror=null;window.tryImageFallback(this,'${fallbackChain}');">
-            <h3>${item.name}</h3>
-        </div>
-    `;
+    if (!item) { box.innerHTML = `<span class="preview-label">${getLabel(type)}</span>`; return; }
+    box.innerHTML = `<div class="preview-card-content preview-card-visual"><p class="preview-label">${getLabel(type)}</p><img class="preview-img ${type}-img" src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';"><h3>${item.name}</h3></div>`;
 }
 
 function updateSelectionHighlights() {
     if (!clothingDisplay) return;
-
-    clothingDisplay.querySelectorAll(".clothing-card").forEach((card) => {
-        const type = card.dataset.type;
-        const name = card.dataset.name;
-        const isSelected = type === "accessory"
-            ? selectedOutfit.accessories.some((selectedItem) => selectedItem.name === name)
-            : selectedOutfit[type] && selectedOutfit[type].name === name;
-
-        card.classList.toggle("selected", isSelected);
+    clothingDisplay.querySelectorAll(".clothing-card").forEach(card => {
+        const sel = card.dataset.type === "accessory"
+            ? selectedOutfit.accessories.some(a => a.name === card.dataset.name)
+            : selectedOutfit[card.dataset.type]?.name === card.dataset.name;
+        card.classList.toggle("selected", sel);
     });
 }
 
-function getLabel(type) {
-    const labels = {
-        top: "Top",
-        bottom: "Bottom",
-        shoes: "Shoes",
-        accessory: "Accessory"
-    };
-    return labels[type] || "Style";
-}
+function getLabel(type) { return { top:"Top", bottom:"Bottom", shoes:"Shoes", accessory:"Accessory" }[type] || "Style"; }
 
-function saveCurrentOutfit() {
-    localStorage.setItem("currentOutfit", JSON.stringify(selectedOutfit));
+function saveCurrentOutfit() { localStorage.setItem("currentOutfit", JSON.stringify(selectedOutfit)); }
+
+function saveToFavourites() {
+    const outfit = JSON.parse(localStorage.getItem("currentOutfit") || "null");
+    if (!outfit?.top || !outfit?.bottom || !outfit?.shoes) return false;
+    const saved = JSON.parse(localStorage.getItem("savedOutfits") || "[]");
+    saved.unshift({ ...outfit, savedAt: new Date().toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" }), theme: themeSelect?.value || "" });
+    localStorage.setItem("savedOutfits", JSON.stringify(saved));
+    return true;
 }
 
 function showPreviewSummary() {
     if (!previewResult) return;
-
-    const incomplete = [selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes].filter((item) => !item);
-
-    if (incomplete.length) {
-        previewResult.innerHTML = `
-            <div class="preview-summary empty">
-                <p>Select a top, bottom, and shoes to preview your full outfit.</p>
-            </div>
-        `;
+    if (![selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes].every(Boolean)) {
+        previewResult.innerHTML = `<div class="preview-summary empty"><p>Select a top, bottom, and shoes to preview your full outfit.</p></div>`;
         return;
     }
-
-    const themeName = themeSelect && themeSelect.value ? themeLabels[themeSelect.value] : "Your";
+    const themeName = themeSelect?.value ? themeLabels[themeSelect.value] : "Your";
     previewResult.innerHTML = buildVisualPreviewMarkup(selectedOutfit, themeName);
+    attachSaveBtn(previewResult);
 }
 
 function loadPreviewPage() {
-    const previewArea = document.getElementById("finalPreview");
-
-    if (!previewArea) return;
-
+    const area = document.getElementById("finalPreview");
+    if (!area) return;
     const outfit = JSON.parse(localStorage.getItem("currentOutfit") || "null");
+    if (!outfit?.top || !outfit?.bottom || !outfit?.shoes) { area.innerHTML = "<p class='empty-message'>Please complete your outfit in the Categories page first.</p>"; return; }
+    area.innerHTML = buildVisualPreviewMarkup(outfit, "Your");
+    attachSaveBtn(area);
+}
 
-    if (!outfit || !outfit.top || !outfit.bottom || !outfit.shoes) {
-        previewArea.innerHTML = "<p class='empty-message'>Please complete your outfit in the Categories page first.</p>";
-        return;
-    }
+function attachSaveBtn(container) {
+    const btn = container.querySelector(".save-to-favs-btn");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+        const ok = saveToFavourites();
+        btn.textContent = ok ? "✓ Saved to Favourites!" : "Please complete your outfit first";
+        btn.disabled = true;
+        if (ok) setTimeout(() => { btn.textContent = "Save to Favourites"; btn.disabled = false; }, 2500);
+    });
+}
 
-    previewArea.innerHTML = buildVisualPreviewMarkup(outfit, "Your");
+function loadFavouritesPage() {
+    const list = document.getElementById("favoritesList");
+    if (!list) return;
+    const saved = JSON.parse(localStorage.getItem("savedOutfits") || "[]");
+    if (!saved.length) { list.innerHTML = "<p class='empty-message'>No saved outfits yet. Generate and save an outfit on the builder page.</p>"; return; }
+    list.innerHTML = saved.map((outfit, i) => `
+        <div class="outfit-card favourite-entry">
+            <div class="outfit-card-header">
+                <h3>Look ${i+1} — ${themeLabels[outfit.theme] || outfit.theme || "Custom"}</h3>
+                <span class="pill">${outfit.savedAt || ""}</span>
+                <button class="delete-fav-btn" data-index="${i}" style="background:transparent;border:1px solid rgba(176,141,87,0.3);color:#8a623a;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:0.75rem;letter-spacing:0.1em;">Remove</button>
+            </div>
+            <div class="outfit-items">
+                ${["top","bottom","shoes"].map(k => outfit[k] ? `<div class="outfit-item"><img src="${outfit[k].image}" alt="${outfit[k].name}" onerror="this.onerror=null;this.style.display='none';"><p class="item-label">${k}</p><p class="item-name">${outfit[k].name}</p></div>` : "").join("")}
+                ${(outfit.accessories||[]).map(a => `<div class="outfit-item"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><p class="item-label">Accessory</p><p class="item-name">${a.name}</p></div>`).join("")}
+            </div>
+        </div>`).join("");
+    list.querySelectorAll(".delete-fav-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const all = JSON.parse(localStorage.getItem("savedOutfits") || "[]");
+            all.splice(parseInt(btn.dataset.index), 1);
+            localStorage.setItem("savedOutfits", JSON.stringify(all));
+            loadFavouritesPage();
+        });
+    });
 }
 
 function buildVisualPreviewMarkup(outfit, themeName) {
-    const accessories = Array.isArray(outfit.accessories) ? outfit.accessories : [];
-    const accessoryItems = accessories.length
-        ? accessories.map((item) => `
-            <div class="preview-accessory-item">
-                <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
-                <span>${item.name}</span>
-            </div>
-        `).join("")
-        : '<span class="preview-empty-text">No accessories selected</span>';
-
-    const topLabel = outfit.top ? outfit.top.name : "Top";
-    const bottomLabel = outfit.bottom ? outfit.bottom.name : "Bottom";
-    const mood = getOutfitMood({ label: topLabel }, { label: bottomLabel });
-    const profile = getOutfitStyleProfile({ label: topLabel }, { label: bottomLabel });
-    const styleLabel = profile === "menswear" ? "Structured finish" : profile === "womenswear" ? "Elevated finish" : "Versatile finish";
-    const styleNotes = getOutfitStyleComments(outfit, mood);
-
+    const accs = outfit.accessories || [];
+    const accHtml = accs.length ? accs.map(a=>`<div class="preview-accessory-item"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><span>${a.name}</span></div>`).join("") : '<span class="preview-empty-text">No accessories selected</span>';
+    const mood  = getOutfitMood({ label: outfit.top?.name||"" }, { label: outfit.bottom?.name||"" });
+    const prof  = getOutfitStyleProfile({ label: outfit.top?.name||"" }, { label: outfit.bottom?.name||"" });
+    const notes = getOutfitStyleComments(outfit, mood);
+    const styleLabel = prof==="menswear"?"Structured finish":prof==="womenswear"?"Elevated finish":"Versatile finish";
     return `
         <div class="preview-summary visual-preview-card">
-            <div class="visual-preview-title">
-                <h3>${themeName} Look</h3>
-                <p>${mood} • ${styleLabel}</p>
-            </div>
+            <div class="visual-preview-title"><h3>${themeName} Look</h3><p>${mood} • ${styleLabel}</p></div>
             <div class="preview-hero-row">
                 <div class="preview-chip-row">
-                    ${previewChip("Top", outfit.top)}
-                    ${previewChip("Bottom", outfit.bottom)}
-                    ${previewChip("Shoes", outfit.shoes)}
+                    ${previewChip("Top", outfit.top)}${previewChip("Bottom", outfit.bottom)}${previewChip("Shoes", outfit.shoes)}
                 </div>
-                <div class="preview-notes-card">
-                    <h4>Styling notes</h4>
-                    <ul>
-                        ${styleNotes.map((note) => `<li>${note}</li>`).join("")}
-                    </ul>
-                </div>
+                <div class="preview-notes-card"><h4>Styling notes</h4><ul>${notes.map(n=>`<li>${n}</li>`).join("")}</ul></div>
             </div>
             <div class="editorial-preview-layout">
                 <div class="editorial-preview-stack">
-                    ${outfit.top ? `
-                        <div class="editorial-preview-card">
-                            <p class="item-label">Top</p>
-                            <img class="preview-img top-img" src="${outfit.top.image}" alt="${outfit.top.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
-                            <p class="item-name">${outfit.top.name}</p>
-                        </div>
-                    ` : ""}
-                    ${outfit.bottom ? `
-                        <div class="editorial-preview-card">
-                            <p class="item-label">Bottom</p>
-                            <img class="preview-img bottom-img" src="${outfit.bottom.image}" alt="${outfit.bottom.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
-                            <p class="item-name">${outfit.bottom.name}</p>
-                        </div>
-                    ` : ""}
-                    ${outfit.shoes ? `
-                        <div class="editorial-preview-card">
-                            <p class="item-label">Shoes</p>
-                            <img class="preview-img shoes-img" src="${outfit.shoes.image}" alt="${outfit.shoes.name}" onerror="this.onerror=null;this.src='images/models/model-1.svg';">
-                            <p class="item-name">${outfit.shoes.name}</p>
-                        </div>
-                    ` : ""}
+                    ${["top","bottom","shoes"].map(k => outfit[k] ? `<div class="editorial-preview-card"><p class="item-label">${k.charAt(0).toUpperCase()+k.slice(1)}</p><img class="preview-img ${k}-img" src="${outfit[k].image}" alt="${outfit[k].name}" onerror="this.onerror=null;this.style.display='none';"><p class="item-name">${outfit[k].name}</p></div>` : "").join("")}
                 </div>
-                <div class="preview-accessory-side">
-                    <p class="item-label">Accessories</p>
-                    <div class="preview-accessory-list">${accessoryItems}</div>
-                </div>
+                <div class="preview-accessory-side"><p class="item-label">Accessories</p><div class="preview-accessory-list">${accHtml}</div></div>
             </div>
-        </div>
-    `;
+            <button class="save-to-favs-btn" style="margin-top:16px;width:100%;padding:14px;border-radius:999px;border:1px solid rgba(176,141,87,0.4);background:rgba(212,175,55,0.1);color:#3b2a1a;font-family:inherit;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-size:0.85rem;">
+                Save to Favourites
+            </button>
+        </div>`;
 }
 
 function previewChip(label, item) {
     if (!item) return "";
-    return `
-        <div class="preview-item-chip">
-            <p class="item-label">${label}</p>
-            <p class="item-name">${item.name}</p>
-        </div>
-    `;
+    return `<div class="preview-item-chip"><p class="item-label">${label}</p><p class="item-name">${item.name}</p></div>`;
 }
 
-window.addEventListener("load", loadPreviewPage);
+window.addEventListener("load", () => { loadPreviewPage(); loadFavouritesPage(); });
