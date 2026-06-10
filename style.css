@@ -50,6 +50,21 @@ body > * {
 }
 
 .intro-logo {
+    .logo-shine {
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.5),
+        transparent
+    );
+    transform: rotate(25deg);
+    animation: shine 4s infinite;
+}
     width: min(42vw, 300px);
     aspect-ratio: 1;
     border: 2px solid rgba(212, 175, 55, 0.95);
@@ -2178,4 +2193,37 @@ body.builder-scrolled .builder-intro p {
     .builder-page {
         padding: 34px 16px 60px;
     }
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='48' font-family='Montserrat' font-weight='700' fill='rgba(212,175,55,0.06)' transform='rotate(-25 100 100)'%3EMZ%3C/text%3E%3C/svg%3E");
+    background-repeat: repeat;
+}
+.watermark-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.watermark-bg::before {
+    content:
+    "MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ "
+    "MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ "
+    "MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ "
+    "MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ ";
+
+    position: absolute;
+    inset: -20%;
+    font-size: 120px;
+    font-weight: 900;
+    line-height: 180px;
+    color: rgba(169, 164, 126, 0.15);
+    transform: rotate(-30deg);
 }
