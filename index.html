@@ -18,6 +18,20 @@
     <p class="curtain-logo-text">MZ LUX</p>
 </div>
 
+<div class="magazine-wireframe" id="magazineWireframe" aria-hidden="true">
+    <span class="wire wire-top"></span>
+    <span class="wire wire-bottom"></span>
+    <span class="wire wire-left"></span>
+    <span class="wire wire-right"></span>
+    <span class="wire wire-header"></span>
+    <span class="wire wire-nav"></span>
+    <span class="wire wire-hero"></span>
+    <span class="wire wire-feature"></span>
+    <span class="wire wire-card wire-card-one"></span>
+    <span class="wire wire-card wire-card-two"></span>
+    <span class="wire wire-card wire-card-three"></span>
+</div>
+
 <div class="page-content" id="pageContent">
     <header>
         <div class="logo">
@@ -125,15 +139,18 @@
 <script>
     window.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => document.getElementById("curtain")?.classList.add("open"), 950);
+        setTimeout(() => document.body.classList.add("wireframe-active"), 1700);
         setTimeout(() => {
             document.getElementById("pageContent")?.classList.add("visible");
+            document.body.classList.add("wireframe-complete");
             document.body.classList.remove("curtain-active");
-        }, 1350);
-        setTimeout(() => document.body.classList.add("collection-live"), 2500);
+        }, 3050);
+        setTimeout(() => document.body.classList.add("collection-live"), 4200);
         setTimeout(() => {
             document.getElementById("curtain")?.remove();
             document.getElementById("curtainLogo")?.remove();
-        }, 2600);
+            document.getElementById("magazineWireframe")?.remove();
+        }, 5600);
     });
 </script>
 </body>

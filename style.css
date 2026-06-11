@@ -5377,3 +5377,119 @@ body:has(.builder-page) nav {
 .luxury-motion-strip .featured-card:focus-within .featured-card-description {
     padding-bottom: 12px;
 }
+
+/* Luxury magazine line-draw reveal after curtain */
+.magazine-wireframe {
+    position: fixed;
+    inset: 0;
+    z-index: 9900;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+body.wireframe-active .magazine-wireframe {
+    opacity: 1;
+}
+
+body.wireframe-complete .magazine-wireframe {
+    opacity: 0;
+    transition-delay: 0.72s;
+}
+
+.wire {
+    position: absolute;
+    display: block;
+    background: linear-gradient(90deg, transparent, rgba(215,182,101,0.9), rgba(255,250,242,0.72), rgba(215,182,101,0.9), transparent);
+    box-shadow: 0 0 18px rgba(215,182,101,0.22);
+    transform-origin: left center;
+    opacity: 0;
+}
+
+.wire-top,
+.wire-bottom,
+.wire-header,
+.wire-nav,
+.wire-hero,
+.wire-feature,
+.wire-card {
+    height: 1px;
+    transform: scaleX(0);
+}
+
+.wire-left,
+.wire-right {
+    width: 1px;
+    transform: scaleY(0);
+    transform-origin: top center;
+    background: linear-gradient(180deg, transparent, rgba(215,182,101,0.9), rgba(255,250,242,0.72), rgba(215,182,101,0.9), transparent);
+}
+
+.wire-top { left: 5vw; right: 5vw; top: 28px; }
+.wire-bottom { left: 5vw; right: 5vw; bottom: 28px; }
+.wire-left { top: 28px; bottom: 28px; left: 5vw; }
+.wire-right { top: 28px; bottom: 28px; right: 5vw; }
+.wire-header { left: 7vw; right: 7vw; top: 128px; }
+.wire-nav { left: 12vw; right: 12vw; top: 184px; }
+.wire-hero { left: 9vw; right: 9vw; top: 61vh; }
+.wire-feature { left: 9vw; right: 9vw; top: 78vh; }
+.wire-card { top: 84vh; width: 24vw; height: 1px; }
+.wire-card-one { left: 9vw; }
+.wire-card-two { left: 38vw; }
+.wire-card-three { left: 67vw; }
+
+body.wireframe-active .wire {
+    opacity: 1;
+    animation: drawMagazineLine 1.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+body.wireframe-active .wire-left,
+body.wireframe-active .wire-right {
+    animation-name: drawMagazineVertical;
+}
+
+body.wireframe-active .wire-top { animation-delay: 0.02s; }
+body.wireframe-active .wire-bottom { animation-delay: 0.08s; }
+body.wireframe-active .wire-left { animation-delay: 0.14s; }
+body.wireframe-active .wire-right { animation-delay: 0.2s; }
+body.wireframe-active .wire-header { animation-delay: 0.34s; }
+body.wireframe-active .wire-nav { animation-delay: 0.46s; }
+body.wireframe-active .wire-hero { animation-delay: 0.62s; }
+body.wireframe-active .wire-feature { animation-delay: 0.78s; }
+body.wireframe-active .wire-card-one { animation-delay: 0.92s; }
+body.wireframe-active .wire-card-two { animation-delay: 1.04s; }
+body.wireframe-active .wire-card-three { animation-delay: 1.16s; }
+
+.home-page .page-content {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+.home-page .page-content.visible {
+    animation: contentIntoWireframe 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes drawMagazineLine {
+    0% { transform: scaleX(0); opacity: 0; }
+    18% { opacity: 1; }
+    100% { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes drawMagazineVertical {
+    0% { transform: scaleY(0); opacity: 0; }
+    18% { opacity: 1; }
+    100% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes contentIntoWireframe {
+    0% {
+        opacity: 0;
+        transform: translateY(18px);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
