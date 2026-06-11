@@ -271,9 +271,11 @@ function initScrollEffects() {
 }
 
 document.addEventListener("DOMContentLoaded", initBuilder);
+document.addEventListener("DOMContentLoaded", () => setTimeout(initAutoSlidingCategoryRails, 250));
 
 if (document.readyState !== "loading") {
     initBuilder();
+    setTimeout(initAutoSlidingCategoryRails, 250);
 }
 
 window.showThemeItems = showThemeItems;
@@ -388,6 +390,23 @@ function createCategory(title, type, items) {
 
 function initAutoSlidingCategoryRails() {
     if (!clothingDisplay) return;
+    if (!clothingDisplay.dataset.autoSlideReady) {
+        clothingDisplay.dataset.autoSlideReady = "true";
+        clothingDisplay.dataset.slideDirection = "1";
+        let displayPaused = false;
+        clothingDisplay.addEventListener("mouseenter", () => { displayPaused = true; });
+        clothingDisplay.addEventListener("mouseleave", () => { displayPaused = false; });
+        clothingDisplay.addEventListener("touchstart", () => { displayPaused = true; }, { passive: true });
+        clothingDisplay.addEventListener("touchend", () => setTimeout(() => { displayPaused = false; }, 1400), { passive: true });
+        setInterval(() => {
+            if (displayPaused || document.hidden || clothingDisplay.scrollWidth <= clothingDisplay.clientWidth) return;
+            const dir = Number(clothingDisplay.dataset.slideDirection || "1");
+            clothingDisplay.scrollLeft += dir * 0.9;
+            if (clothingDisplay.scrollLeft + clothingDisplay.clientWidth >= clothingDisplay.scrollWidth - 2) clothingDisplay.dataset.slideDirection = "-1";
+            if (clothingDisplay.scrollLeft <= 2) clothingDisplay.dataset.slideDirection = "1";
+        }, 24);
+    }
+
     clothingDisplay.querySelectorAll(".clothing-grid").forEach((grid, index) => {
         if (grid.dataset.autoSlideReady) return;
         grid.dataset.autoSlideReady = "true";

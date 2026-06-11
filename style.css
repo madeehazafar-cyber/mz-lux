@@ -3507,6 +3507,195 @@ body.curtain-active {
     scroll-snap-type: x mandatory;
 }
 
+/* Category page: horizontal runway for whole sections */
+.builder-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+}
+
+.clothing-display {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: none;
+    scroll-behavior: smooth;
+    padding: 2px 4px 18px;
+}
+
+.clothing-display::-webkit-scrollbar {
+    height: 8px;
+}
+
+.clothing-display::-webkit-scrollbar-track {
+    background: rgba(23, 18, 15, 0.06);
+}
+
+.clothing-display::-webkit-scrollbar-thumb {
+    background: rgba(23, 18, 15, 0.34);
+}
+
+.clothing-display .category-section {
+    flex: 0 0 min(760px, 86vw);
+    scroll-snap-align: start;
+    margin: 0;
+}
+
+.clothing-display .clothing-grid {
+    overflow-x: visible;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    padding-bottom: 0;
+}
+
+.clothing-display .clothing-card {
+    flex: initial;
+}
+
+@media (max-width: 980px) {
+    .clothing-display .category-section {
+        flex-basis: 88vw;
+    }
+
+    .clothing-display .clothing-grid {
+        grid-template-columns: repeat(2, minmax(130px, 1fr));
+    }
+}
+
+/* Categories: four luxury columns, each with its own horizontal flow */
+body:has(.builder-page) {
+    background:
+        radial-gradient(circle at 18% 10%, rgba(255,255,255,0.9), transparent 26%),
+        radial-gradient(circle at 84% 18%, rgba(185,145,69,0.16), transparent 30%),
+        linear-gradient(135deg, #f8efe1 0%, #eadbc2 52%, #f6ecdc 100%);
+}
+
+.builder-page {
+    max-width: 1480px;
+}
+
+.builder-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(23,18,15,0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(23,18,15,0.028) 1px, transparent 1px);
+    background-size: 88px 88px;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.18));
+    animation: categoryGridDrift 14s linear infinite;
+}
+
+.builder-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(310px, 360px);
+    position: relative;
+    z-index: 1;
+}
+
+.clothing-display {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(210px, 1fr));
+    gap: 14px;
+    overflow: visible;
+    padding: 0;
+}
+
+.clothing-display .category-section {
+    min-width: 0;
+    flex: initial;
+    padding: 16px;
+    background:
+        linear-gradient(180deg, rgba(255,250,242,0.9), rgba(244,234,217,0.82));
+    border: 1px solid rgba(23,18,15,0.13);
+    box-shadow: 0 24px 60px rgba(23,18,15,0.07);
+    overflow: hidden;
+}
+
+.clothing-display .category-section h2 {
+    min-height: 34px;
+    margin-bottom: 12px;
+    font-size: 0.78rem;
+    letter-spacing: 0.24em;
+}
+
+.clothing-display .clothing-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+    padding: 0 0 12px;
+}
+
+.clothing-display .clothing-grid::-webkit-scrollbar {
+    height: 5px;
+}
+
+.clothing-display .clothing-grid::-webkit-scrollbar-track {
+    background: rgba(23,18,15,0.05);
+}
+
+.clothing-display .clothing-grid::-webkit-scrollbar-thumb {
+    background: rgba(185,145,69,0.55);
+}
+
+.clothing-display .clothing-card {
+    flex: 0 0 172px;
+}
+
+.clothing-display .clothing-card-media,
+.clothing-display .clothing-card img {
+    height: 154px;
+    min-height: 154px;
+}
+
+.clothing-display .category-section:nth-child(2n) .clothing-card {
+    animation-delay: 0.12s;
+}
+
+.clothing-display .category-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.55) 48%, transparent 58%);
+    transform: translateX(-120%);
+    animation: categorySheen 6s ease-in-out infinite;
+}
+
+.category-section {
+    position: relative;
+}
+
+@keyframes categoryGridDrift {
+    to { background-position: 88px 88px; }
+}
+
+@keyframes categorySheen {
+    0%, 58% { transform: translateX(-120%); opacity: 0; }
+    68% { opacity: 0.75; }
+    100% { transform: translateX(120%); opacity: 0; }
+}
+
+@media (max-width: 1180px) {
+    .clothing-display {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .clothing-display {
+        grid-template-columns: 1fr;
+    }
+
+    .clothing-display .clothing-card {
+        flex-basis: 160px;
+    }
+}
+
 @media (max-width: 980px) {
     .home-editorial-shell .luxury-hero,
     .studio-shell {
