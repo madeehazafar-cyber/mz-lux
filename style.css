@@ -4993,30 +4993,31 @@ body:has(.builder-page) nav {
 }
 
 .clothing-display .category-section {
-    padding: 6px 8px;
+    padding: 8px 10px;
 }
 
 .clothing-display .category-section h2 {
-    margin-bottom: 4px;
-    font-size: 0.62rem;
+    margin-bottom: 5px;
+    font-size: 0.68rem;
 }
 
 .clothing-display .clothing-grid {
-    gap: 7px;
-    padding-bottom: 4px;
+    gap: 9px;
+    padding-bottom: 5px;
 }
 
 .clothing-display .clothing-card {
-    flex-basis: 98px;
-    padding: 5px;
+    flex-basis: 132px;
+    padding: 7px;
 }
 
 .clothing-display .clothing-card-media,
 .clothing-display .clothing-card img {
-    height: 54px;
-    min-height: 54px;
+    height: 82px;
+    min-height: 82px;
 }
 
 .clothing-display .clothing-card p {
-    font-size: 0.56rem;
+    font-size: 0.64rem;
+    line-height: 1.18;
 }
