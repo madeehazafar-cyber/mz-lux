@@ -5190,11 +5190,15 @@ body:has(.builder-page) nav {
 
 .featured-card-copy {
     position: absolute;
-    inset: auto 0 0;
+    inset: 0;
     z-index: 3;
     padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     background:
-        linear-gradient(180deg, transparent 0%, rgba(255,250,242,0.92) 32%, rgba(255,250,242,0.98) 100%);
+        linear-gradient(180deg, transparent 0%, transparent 42%, rgba(255,250,242,0.9) 72%, rgba(255,250,242,0.98) 100%);
+    transition: background 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .featured-card-copy span,
@@ -5219,23 +5223,45 @@ body:has(.builder-page) nav {
 }
 
 .featured-card-description {
-    color: #6b5747;
-    font-size: 0.82rem;
-    line-height: 1.55;
-    margin-bottom: 10px;
-    max-width: 92%;
+    order: 3;
+    color: #4b3324;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 100%;
+    margin-top: 12px;
+    padding: 14px 0 0;
+    border-top: 1px solid rgba(74, 51, 36, 0.14);
     opacity: 0;
-    transform: translateY(18px);
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-16px);
     transition:
         opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+        transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+        max-height 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .featured-card:hover .featured-card-description,
 .featured-card:focus .featured-card-description,
 .featured-card:focus-within .featured-card-description {
     opacity: 1;
+    max-height: 150px;
     transform: translateY(0);
+}
+
+.featured-card:hover .featured-card-copy,
+.featured-card:focus .featured-card-copy,
+.featured-card:focus-within .featured-card-copy {
+    background:
+        linear-gradient(180deg, rgba(255,250,242,0.08) 0%, rgba(255,250,242,0.74) 38%, rgba(255,250,242,0.98) 100%);
+}
+
+.featured-card-copy h3 {
+    order: 2;
+}
+
+.featured-card-copy span {
+    order: 1;
 }
 
 /* Brand logo upgrade and richer luxury visuals */
@@ -5336,4 +5362,18 @@ body:has(.builder-page) nav {
     0%, 64% { transform: translateX(-130%); opacity: 0; }
     72% { opacity: 0.65; }
     100% { transform: translateX(130%); opacity: 0; }
+}
+
+/* Final readable featured-card hover panel */
+.luxury-motion-strip .featured-card .featured-card-description {
+    color: #3b2a20 !important;
+    background: rgba(255, 250, 242, 0.94);
+    margin-top: 12px;
+    padding: 12px 12px 0;
+}
+
+.luxury-motion-strip .featured-card:hover .featured-card-description,
+.luxury-motion-strip .featured-card:focus .featured-card-description,
+.luxury-motion-strip .featured-card:focus-within .featured-card-description {
+    padding-bottom: 12px;
 }
