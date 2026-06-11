@@ -5021,3 +5021,121 @@ body:has(.builder-page) nav {
     font-size: 0.64rem;
     line-height: 1.18;
 }
+
+.style-concierge {
+    border-top: 1px solid rgba(74, 51, 36, 0.12);
+    margin-top: 10px;
+    padding-top: 10px;
+    display: grid;
+    gap: 8px;
+}
+
+.style-concierge-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.style-concierge-head span {
+    background: #17120f;
+    color: #fffaf2;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    padding: 5px 7px;
+    text-transform: uppercase;
+}
+
+.style-concierge h3 {
+    color: #3b2a20;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.style-concierge label {
+    color: #7a6a5d;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.style-concierge select {
+    width: 100%;
+    border: 1px solid rgba(74, 51, 36, 0.14);
+    background: rgba(255, 253, 248, 0.88);
+    color: #3b2a20;
+    font: inherit;
+    padding: 8px 10px;
+}
+
+.style-concierge button {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.68rem;
+}
+
+.concierge-result {
+    min-height: 76px;
+    border: 1px solid rgba(74, 51, 36, 0.11);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.64), rgba(247,239,228,0.88));
+    color: #6b5747;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    padding: 10px;
+}
+
+.concierge-empty {
+    color: #8a623a;
+    font-weight: 700;
+}
+
+.concierge-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.concierge-score span {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(185,145,69,0.45);
+    color: #17120f;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.concierge-score p,
+.concierge-copy h4 {
+    color: #3b2a20;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.concierge-copy {
+    display: grid;
+    gap: 6px;
+}
+
+.concierge-copy strong {
+    color: #3b2a20;
+}
+
+.concierge-swatches {
+    display: flex;
+    gap: 6px;
+}
+
+.concierge-swatches i {
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(74,51,36,0.16);
+}

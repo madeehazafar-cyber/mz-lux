@@ -234,6 +234,8 @@ async function callAI(systemPrompt, messages) {
 function initBuilder() {
     if (themeSelect)   themeSelect.addEventListener("change", showThemeItems);
     if (previewButton) previewButton.addEventListener("click", showPreviewSummary);
+    const conciergeBtn = document.getElementById("conciergeBtn");
+    if (conciergeBtn) conciergeBtn.addEventListener("click", generateStyleConciergeBrief);
     const uploadBtn = document.getElementById("uploadWardrobeBtn");
     if (uploadBtn) uploadBtn.addEventListener("click", () => { window.location.href = "camera.html"; });
     if (clothingDisplay) clothingDisplay.addEventListener("click", handleClothingCardSelection);
@@ -665,6 +667,62 @@ function updateSelectionHighlights() {
 function getLabel(type) { return { top:"Top", bottom:"Bottom", shoes:"Shoes", accessory:"Accessory" }[type] || "Style"; }
 
 function saveCurrentOutfit() { localStorage.setItem("currentOutfit", JSON.stringify(selectedOutfit)); }
+
+function generateStyleConciergeBrief() {
+    const result = document.getElementById("conciergeResult");
+    const occasion = document.getElementById("occasionSelect")?.value || "day";
+    if (!result) return;
+
+    const top = selectedOutfit.top?.name || "";
+    const bottom = selectedOutfit.bottom?.name || "";
+    const shoes = selectedOutfit.shoes?.name || "";
+    const accessories = selectedOutfit.accessories.map((item) => item.name);
+
+    if (!top || !bottom || !shoes) {
+        result.innerHTML = `
+            <p class="concierge-empty">Choose a top, bottom, and shoes first.</p>
+        `;
+        return;
+    }
+
+    const outfitText = `${top} ${bottom} ${shoes} ${accessories.join(" ")}`.toLowerCase();
+    const palette = getConciergePalette(outfitText);
+    const occasionCopy = {
+        day: "polished daytime",
+        school: "clean school-ready",
+        dinner: "evening dinner",
+        event: "statement event",
+        travel: "comfortable travel"
+    }[occasion] || "polished daytime";
+    const score = Math.min(98, 78 + accessories.length * 4 + (/(blazer|button|trouser|loafer|watch|pearl)/.test(outfitText) ? 10 : 4));
+    const addOn = /(loafer|boot|heel)/.test(outfitText)
+        ? "Add a structured mini bag or a slim belt to sharpen the silhouette."
+        : "Swap in loafers, boots, or sleek flats for a more finished base.";
+    const avoid = /(striped|graphic|hoodie|sneaker)/.test(outfitText)
+        ? "Avoid adding another loud piece; keep the accessory quiet and expensive-looking."
+        : "Avoid over-accessorizing; one strong detail is enough.";
+
+    result.innerHTML = `
+        <div class="concierge-score">
+            <span>${score}</span>
+            <p>Luxury fit score</p>
+        </div>
+        <div class="concierge-copy">
+            <h4>${occasionCopy} brief</h4>
+            <p><strong>Palette:</strong> ${palette.label}</p>
+            <div class="concierge-swatches">${palette.colors.map((color) => `<i style="background:${color}"></i>`).join("")}</div>
+            <p><strong>Add:</strong> ${addOn}</p>
+            <p><strong>Avoid:</strong> ${avoid}</p>
+        </div>
+    `;
+}
+
+function getConciergePalette(text) {
+    if (/black|navy|dress/.test(text)) return { label: "noir, ivory, warm gold", colors: ["#17120f", "#fff8ea", "#b99145"] };
+    if (/beige|cream|linen|brown|loafer/.test(text)) return { label: "camel, cream, espresso", colors: ["#c4a06d", "#fff5e4", "#4b3324"] };
+    if (/white|pearl|sneaker/.test(text)) return { label: "optic white, soft grey, champagne", colors: ["#ffffff", "#d9d4cc", "#d7b665"] };
+    return { label: "ivory, chocolate, antique gold", colors: ["#fff8ea", "#3a281d", "#b99145"] };
+}
 
 function saveToFavourites() {
     const outfit = JSON.parse(localStorage.getItem("currentOutfit") || "null");
