@@ -798,3 +798,55 @@ function previewChip(label, item) {
 }
 
 window.addEventListener("load", () => { loadPreviewPage(); loadFavouritesPage(); });
+
+function buildVisualPreviewMarkup(outfit, themeName) {
+    const accs = outfit.accessories || [];
+    const accHtml = accs.length
+        ? accs.map((a, i) => `<div class="preview-accessory-item" style="--item-delay:${i + 4};"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><span>${a.name}</span></div>`).join("")
+        : '<span class="preview-empty-text">No accessories selected</span>';
+    const mood = getOutfitMood({ label: outfit.top?.name || "" }, { label: outfit.bottom?.name || "" });
+    const prof = getOutfitStyleProfile({ label: outfit.top?.name || "" }, { label: outfit.bottom?.name || "" });
+    const notes = getOutfitStyleComments(outfit, mood);
+    const styleLabel = prof === "menswear" ? "Structured finish" : prof === "womenswear" ? "Elevated finish" : "Versatile finish";
+    const lookPieces = [
+        ["top", "Top", outfit.top],
+        ["bottom", "Bottom", outfit.bottom],
+        ["shoes", "Shoes", outfit.shoes]
+    ].filter(([, , item]) => item);
+
+    return `
+        <div class="preview-summary visual-preview-card full-look-preview">
+            <div class="visual-preview-title"><h3>${themeName} Look</h3><p>${mood} / ${styleLabel}</p></div>
+            <div class="preview-hero-row">
+                <div class="preview-chip-row">
+                    ${previewChip("Top", outfit.top)}${previewChip("Bottom", outfit.bottom)}${previewChip("Shoes", outfit.shoes)}
+                </div>
+                <div class="preview-notes-card"><h4>Styling notes</h4><ul>${notes.map((n) => `<li>${n}</li>`).join("")}</ul></div>
+            </div>
+            <div class="editorial-preview-layout">
+                <section class="look-stage" aria-label="Full outfit preview">
+                    <div class="look-stage-orbit"></div>
+                    <div class="model-silhouette" aria-hidden="true">
+                        <span class="model-head"></span>
+                        <span class="model-torso"></span>
+                        <span class="model-leg model-leg-left"></span>
+                        <span class="model-leg model-leg-right"></span>
+                    </div>
+                    <div class="look-piece-stack">
+                        ${lookPieces.map(([key, label, item], i) => `
+                            <article class="look-piece look-piece-${key}" style="--piece-delay:${i};">
+                                <p class="item-label">${label}</p>
+                                <img class="preview-img ${key}-img" src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';">
+                                <p class="item-name">${item.name}</p>
+                            </article>
+                        `).join("")}
+                    </div>
+                </section>
+                <div class="editorial-preview-stack">
+                    ${lookPieces.map(([key, label, item], i) => `<div class="editorial-preview-card" style="--item-delay:${i};"><p class="item-label">${label}</p><img class="preview-img ${key}-img" src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';"><p class="item-name">${item.name}</p></div>`).join("")}
+                </div>
+                <div class="preview-accessory-side"><p class="item-label">Accessories</p><div class="preview-accessory-list">${accHtml}</div></div>
+            </div>
+            <button class="save-to-favs-btn">Save to Favourites</button>
+        </div>`;
+}

@@ -1,7 +1,3 @@
-<h2>Outfit Preview</h2>
-<a href="preview.html">
-    <button onclick="saveCurrentOutfit()">View Outfit Preview</button>
-</a>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +6,9 @@
     <title>MZ LUX | Preview</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <header>
-    <div class="logo">M<span>Z</span></div>
+    <div class="logo"><span class="logo-initials">MZ</span></div>
     <div>
         <h1 class="brand-name">MZ LUX</h1>
         <p class="tagline">Outfit Preview</p>
@@ -31,9 +25,12 @@
 </nav>
 
 <main class="preview-page">
-    <h2>Your Selected Outfit</h2>
+    <section class="builder-intro preview-intro">
+        <h2>Your Selected Outfit</h2>
+        <p>A polished full-look preview with the complete outfit kept in frame.</p>
+    </section>
 
-    <div id="finalPreview" class="preview-grid"></div>
+    <div id="finalPreview" class="preview-grid final-preview-grid"></div>
 </main>
 
 <script src="main.js"></script>
