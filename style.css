@@ -5139,3 +5139,103 @@ body:has(.builder-page) nav {
     height: 22px;
     border: 1px solid rgba(74,51,36,0.16);
 }
+
+/* Brand logo upgrade and richer luxury visuals */
+.logo {
+    background:
+        radial-gradient(circle at 50% 45%, rgba(255,255,255,0.08), transparent 58%),
+        #050403 url("images/logo.png") center / 118% auto no-repeat !important;
+    border: 1px solid rgba(215, 182, 101, 0.65) !important;
+    box-shadow:
+        0 16px 42px rgba(23,18,15,0.22),
+        inset 0 0 0 1px rgba(255,250,242,0.08) !important;
+}
+
+.logo::before,
+.logo::after,
+.logo .logo-shine,
+.logo-initials {
+    display: none !important;
+}
+
+.logo:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 22px 54px rgba(23,18,15,0.3) !important;
+}
+
+.curtain-logo-box {
+    background: #050403 url("images/logo.png") center / 122% auto no-repeat !important;
+    border-color: rgba(215, 182, 101, 0.78) !important;
+}
+
+.curtain-logo-box span {
+    display: none;
+}
+
+.home-editorial-shell .luxury-hero::before {
+    content: "";
+    display: block !important;
+    position: absolute;
+    right: clamp(16px, 5vw, 90px);
+    top: 50%;
+    width: min(34vw, 420px);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    background: url("images/logo.png") center / contain no-repeat;
+    opacity: 0.16;
+    filter: drop-shadow(0 30px 80px rgba(0,0,0,0.5));
+    pointer-events: none;
+    animation: logoWatermarkFloat 7s ease-in-out infinite;
+}
+
+.home-page.collection-live .luxury-hero::before {
+    opacity: 0.08;
+}
+
+.home-page header {
+    box-shadow: 0 18px 60px rgba(74,51,36,0.06);
+}
+
+.home-page .brand-name,
+.home-page .tagline {
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.luxury-motion-strip article::after,
+.camera-editorial-panel::after,
+.clothing-display .category-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.42) 48%, transparent 58%);
+    transform: translateX(-130%);
+    animation: premiumSheen 8s ease-in-out infinite;
+}
+
+.luxury-motion-strip article,
+.camera-editorial-panel,
+.clothing-display .category-section {
+    position: relative;
+}
+
+.luxury-motion-strip article:nth-child(2)::after,
+.clothing-display .category-section:nth-child(2)::after {
+    animation-delay: 1.4s;
+}
+
+.luxury-motion-strip article:nth-child(3)::after,
+.clothing-display .category-section:nth-child(3)::after {
+    animation-delay: 2.6s;
+}
+
+@keyframes logoWatermarkFloat {
+    0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.14; }
+    50% { transform: translateY(-54%) scale(1.035); opacity: 0.2; }
+}
+
+@keyframes premiumSheen {
+    0%, 64% { transform: translateX(-130%); opacity: 0; }
+    72% { opacity: 0.65; }
+    100% { transform: translateX(130%); opacity: 0; }
+}
