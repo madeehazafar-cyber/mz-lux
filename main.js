@@ -407,11 +407,11 @@ function initAutoSlidingCategoryRails() {
         }, 24);
     }
 
-    clothingDisplay.querySelectorAll(".clothing-grid").forEach((grid, index) => {
+    clothingDisplay.querySelectorAll(".clothing-grid").forEach((grid) => {
         if (grid.dataset.autoSlideReady) return;
         grid.dataset.autoSlideReady = "true";
-        grid.dataset.slideDirection = index % 2 === 0 ? "1" : "-1";
-        if (grid.dataset.slideDirection === "-1") grid.scrollLeft = grid.scrollWidth;
+        grid.dataset.slideDirection = "1";
+        grid.scrollLeft = 0;
 
         let paused = false;
         const pause = () => { paused = true; };
@@ -425,8 +425,7 @@ function initAutoSlidingCategoryRails() {
             if (paused || document.hidden || grid.scrollWidth <= grid.clientWidth) return;
             const dir = Number(grid.dataset.slideDirection || "1");
             grid.scrollLeft += dir * 0.7;
-            if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2) grid.dataset.slideDirection = "-1";
-            if (grid.scrollLeft <= 2) grid.dataset.slideDirection = "1";
+            if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2) grid.scrollLeft = 0;
         }, 24);
     });
 }
