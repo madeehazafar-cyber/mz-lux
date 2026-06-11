@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="home-page curtain-active">
+<div class="opening-flash" aria-hidden="true"></div>
 <div class="curtain-wrap" id="curtain" aria-hidden="true">
     <div class="curtain-panel curtain-left"></div>
     <div class="curtain-panel curtain-right"></div>
@@ -38,27 +39,25 @@
         <a href="favourites.html">Favourites</a>
     </nav>
 
-    <div class="hero-shell">
-        <aside class="weather-sidebar home-reveal" id="weatherSidebar" aria-label="Weather style update">
-            <div class="weather-sidebar-head">
-                <span class="weather-pill">Today</span>
-                <span class="weather-pill weather-pill-accent">Rain likely</span>
-            </div>
-            <h3>Rain-ready elegance</h3>
-            <p>Expect light rain today. Wear a polished trench, water-resistant loafers, and a structured bag to keep the look refined.</p>
-            <a href="camera.html">Ask the stylist</a>
-        </aside>
-
+    <div class="hero-shell home-editorial-shell">
         <main class="hero luxury-hero home-reveal">
+            <div class="cinematic-light light-one"></div>
+            <div class="cinematic-light light-two"></div>
+            <div class="spark-field" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
             <div class="hero-copy-block">
-                <p class="hero-kicker">Digital wardrobe atelier</p>
-                <h2>Discover Your Signature Style</h2>
-                <p>Create polished outfit combinations, explore fashion themes, and save your favourite looks with MZ LUX.</p>
+                <p class="hero-kicker">Digital luxury wardrobe</p>
+                <h2>MZ LUX</h2>
+                <p>Curate elevated outfits, preview real wardrobe pairings, and get polished styling direction with a calmer, more editorial fashion experience.</p>
                 <a href="categories.html"><button>Start Styling</button></a>
             </div>
 
             <section class="hero-runway" aria-label="Animated outfit preview">
                 <div class="runway-glow"></div>
+                <div class="luxury-orbit luxury-orbit-one"></div>
+                <div class="luxury-orbit luxury-orbit-two"></div>
+                <div class="runway-line"></div>
                 <article class="runway-card runway-card-top">
                     <img src="images/models/beige blazer.webp" alt="Beige blazer">
                     <span>Tailored Layer</span>
@@ -71,16 +70,38 @@
                     <img src="images/models/black pants.webp" alt="Black pants">
                     <span>Clean Trouser</span>
                 </article>
+                <article class="runway-card runway-card-accent">
+                    <img src="images/models/gold watch.webp" alt="Gold watch">
+                    <span>Gold Detail</span>
+                </article>
             </section>
         </main>
     </div>
 
     <section class="featured editorial-strip home-reveal">
         <div>
-            <p>Curated looks, clean silhouettes, saved in one place.</p>
-            <h2>Build the outfit. Keep the taste level high.</h2>
+            <p>Luxury styling tools</p>
+            <h2>Featured Collection</h2>
         </div>
         <a href="categories.html">Open the wardrobe</a>
+    </section>
+
+    <section class="luxury-motion-strip home-reveal" aria-label="Luxury styling features">
+        <article>
+            <img src="images/models/white button up shirt.webp" alt="White shirt">
+            <span>01</span>
+            <h3>Curate</h3>
+        </article>
+        <article>
+            <img src="images/models/pleated skirt.webp" alt="Pleated skirt">
+            <span>02</span>
+            <h3>Preview</h3>
+        </article>
+        <article>
+            <img src="images/models/brown loafers.webp" alt="Brown loafers">
+            <span>03</span>
+            <h3>Refine</h3>
+        </article>
     </section>
 
     <footer>MZ LUX &copy; 2026</footer>
@@ -93,6 +114,7 @@
             document.getElementById("pageContent")?.classList.add("visible");
             document.body.classList.remove("curtain-active");
         }, 1350);
+        setTimeout(() => document.body.classList.add("collection-live"), 2500);
         setTimeout(() => {
             document.getElementById("curtain")?.remove();
             document.getElementById("curtainLogo")?.remove();

@@ -298,6 +298,7 @@ function showThemeItems() {
         s.style.transform = "translateY(0)";
         s.style.transitionDelay = `${i * 0.06}s`;
     });
+    initAutoSlidingCategoryRails();
 }
 
 function getPlaceholderImage(type) {
@@ -385,6 +386,32 @@ function createCategory(title, type, items) {
     return `<div class="category-section"><h2>${title}</h2><div class="clothing-grid">${cards}</div></div>`;
 }
 
+function initAutoSlidingCategoryRails() {
+    if (!clothingDisplay) return;
+    clothingDisplay.querySelectorAll(".clothing-grid").forEach((grid, index) => {
+        if (grid.dataset.autoSlideReady) return;
+        grid.dataset.autoSlideReady = "true";
+        grid.dataset.slideDirection = index % 2 === 0 ? "1" : "-1";
+        if (grid.dataset.slideDirection === "-1") grid.scrollLeft = grid.scrollWidth;
+
+        let paused = false;
+        const pause = () => { paused = true; };
+        const resume = () => { paused = false; };
+        grid.addEventListener("mouseenter", pause);
+        grid.addEventListener("mouseleave", resume);
+        grid.addEventListener("touchstart", pause, { passive: true });
+        grid.addEventListener("touchend", () => setTimeout(resume, 1400), { passive: true });
+
+        setInterval(() => {
+            if (paused || document.hidden || grid.scrollWidth <= grid.clientWidth) return;
+            const dir = Number(grid.dataset.slideDirection || "1");
+            grid.scrollLeft += dir * 0.7;
+            if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2) grid.dataset.slideDirection = "-1";
+            if (grid.scrollLeft <= 2) grid.dataset.slideDirection = "1";
+        }, 24);
+    });
+}
+
 function handleClothingCardSelection(e) {
     const card = e.target.closest(".clothing-card");
     if (!card) return;
@@ -396,6 +423,17 @@ let chatHistory = [];
 function initCameraMode() {
     const genBtn = document.getElementById("generateCameraOutfits");
     if (genBtn) genBtn.addEventListener("click", generateCameraOutfits);
+
+    document.querySelectorAll(".camera-field input[type='file']").forEach((input) => {
+        input.addEventListener("change", () => {
+            const file = input.files?.[0];
+            const field = input.closest(".camera-field");
+            const preview = field?.querySelector("[data-preview]");
+            if (!preview || !file) return;
+            preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="${field?.dataset.label || "Uploaded garment"}">`;
+            field.classList.add("has-image");
+        });
+    });
 
     const chatForm     = document.getElementById("chatForm");
     const chatInput    = document.getElementById("chatInput");
@@ -427,7 +465,8 @@ function initCameraMode() {
         chatMessages.appendChild(typingBubble);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        const systemPrompt = `You are a luxury fashion stylist for MZ LUX. Give specific, direct, confident advice. Name real brands, styling techniques, and colour pairings. Never be vague. Max 90 words per response.`;
+        const wardrobeContext = getCameraWardrobeContext();
+        const systemPrompt = `You are a luxury fashion stylist for MZ LUX. Give specific, direct, confident advice based on the user's uploaded wardrobe context. Be practical for real life: mention occasion, fit, color, shoes, accessories, and what to avoid. Max 95 words. Wardrobe context: ${wardrobeContext}`;
         const messages = chatHistory.slice(-6).flatMap(h => [
             { role: "user",      content: h.question },
             { role: "assistant", content: h.answer   }
@@ -446,10 +485,20 @@ function initCameraMode() {
     });
 }
 
+function getCameraWardrobeContext() {
+    const tops = getCameraItems('[data-role="top-input"] input', "top").filter((item) => item.fileName);
+    const bottoms = getCameraItems('[data-role="bottom-input"] input', "bottom").filter((item) => item.fileName);
+    if (!tops.length && !bottoms.length) return "No uploaded pieces yet. Ask one quick question if needed, then give strong general luxury styling advice.";
+    const topText = tops.map((item) => `${item.label}: ${item.fileName}`).join(", ") || "no tops uploaded";
+    const bottomText = bottoms.map((item) => `${item.label}: ${item.fileName}`).join(", ") || "no bottoms uploaded";
+    return `Uploaded tops: ${topText}. Uploaded bottoms: ${bottomText}.`;
+}
+
 function getCameraItems(selector, type) {
-    return Array.from(document.querySelectorAll(selector)).map((input, i) => {
-        const file = input.files?.[0] || null;
-        return { label: input.dataset.label || `${type} ${i+1}`, type,
+    return Array.from(document.querySelectorAll(selector)).map((node, i) => {
+        const input = node.matches?.("input") ? node : node.querySelector?.("input[type='file']");
+        const file = input?.files?.[0] || null;
+        return { label: node.dataset?.label || input?.closest(".camera-field")?.dataset?.label || `${type} ${i+1}`, type,
                  preview: file ? URL.createObjectURL(file) : "", fileName: file?.name || "" };
     }).filter(i => i.label);
 }
