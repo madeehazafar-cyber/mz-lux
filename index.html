@@ -140,37 +140,56 @@ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ MZ
     <a href="themes.html">Themes</a>
     <a href="categories.html">Categories</a>
     <a href="camera.html">Camera</a>
-    <a href="preview.html">Preview</a>
     <a href="favourites.html">Favourites</a>
 </nav>
 
-<div class="hero-shell">
-    <div class="weather-sidebar" id="weatherSidebar" aria-label="Weather style update">
-        <div class="weather-sidebar-head">
-            <span class="weather-pill">Today</span>
-            <span class="weather-pill weather-pill-accent">Rain likely</span>
+<div class="luxury-home-shell">
+    <section class="atelier-panel">
+        <div class="atelier-grid-lines" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
-        <h3>Rain-ready elegance</h3>
-        <p>Expect light rain today. Wear a polished trench, water-resistant loafers, and a structured bag to keep the look refined.</p>
-        <a href="camera.html">Ask the stylist</a>
-    </div>
+        <div class="atelier-badge">MZ LUX / 01</div>
+        <div class="atelier-copy">
+            <p class="atelier-label">Architectural wardrobe study</p>
+            <h2>Luxury garments, precisely composed.</h2>
+            <p>Minimal form, restrained texture, and editorial clarity in a high-end digital atelier.</p>
+        </div>
+        <div class="atelier-specs">
+            <div class="atelier-spec">
+                <span>Fabric</span>
+                <strong>Italian silk / wool</strong>
+            </div>
+            <div class="atelier-spec">
+                <span>Weight</span>
+                <strong>18.5 oz / 530 g</strong>
+            </div>
+            <div class="atelier-spec">
+                <span>Composition</span>
+                <strong>Structured drape</strong>
+            </div>
+        </div>
+        <div class="atelier-figure">
+            <div class="atelier-circle"></div>
+            <div class="atelier-crosshair"></div>
+            <div class="atelier-card">
+                <span>Look 01</span>
+                <p>Soft tailoring, architectural contrast, and a calm luxury presence.</p>
+            </div>
+        </div>
+    </section>
 
-    <main class="hero">
-        <h2>Discover Your Signature Style</h2>
-        <p>Create stylish outfit combinations, explore fashion themes, and save your favourite looks with MZ LUX.</p>
-        <a href="categories.html"><button>Start Styling</button></a>
-    </main>
+    <aside class="nav-rail" aria-label="Luxury navigation nodes">
+        <a class="nav-node is-active" href="categories.html"><span>01</span><strong>Atelier</strong></a>
+        <a class="nav-node" href="camera.html"><span>02</span><strong>Closet</strong></a>
+        <a class="nav-node" href="favourites.html"><span>03</span><strong>Archive</strong></a>
+    </aside>
 </div>
-
-<section class="featured">
-    <h2>Featured Collection</h2>
-    <div class="featured-box">Luxury Fashion Preview</div>
-</section>
 
 <footer>MZ LUX © 2026</footer>
 
 </div>
 
+<script src="main.js"></script>
 <script>
     window.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => { document.getElementById("curtain").classList.add("open"); }, 1400);

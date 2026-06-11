@@ -20,7 +20,6 @@
     <a href="themes.html">Themes</a>
     <a href="categories.html">Categories</a>
     <a href="camera.html">Camera</a>
-    <a href="preview.html">Preview</a>
     <a href="favourites.html">Favourites</a>
 </nav>
 
@@ -32,7 +31,6 @@
 
     <section class="controls">
         <div class="controls-row">
-            <button id="uploadWardrobeBtn" class="upload-wardrobe-btn" type="button">Upload Your Outfits</button>
             <div class="theme-control">
                 <label for="themeSelect">Choose a theme</label>
                 <select id="themeSelect">
@@ -51,23 +49,25 @@
         Pick a theme to reveal five tops, bottoms, shoes, and accessories for your look.
     </section>
 
-    <section id="clothingDisplay" class="clothing-display"></section>
+    <div class="builder-layout">
+        <section id="clothingDisplay" class="clothing-display"></section>
 
-    <section class="preview-box">
-        <div class="preview-box-header">
-            <h2>Current Look</h2>
-            <button id="previewBtn" type="button">Preview Outfit</button>
-        </div>
+        <section class="preview-box">
+            <div class="preview-box-header">
+                <h2>Current Look</h2>
+            </div>
 
-        <div class="preview-grid">
-            <div class="preview-card" id="previewTop"><span class="preview-label">Top</span></div>
-            <div class="preview-card" id="previewBottom"><span class="preview-label">Bottom</span></div>
-            <div class="preview-card" id="previewShoes"><span class="preview-label">Shoes</span></div>
-            <div class="preview-card" id="previewAccessory"><span class="preview-label">Accessory</span></div>
-        </div>
-
-        <div id="previewResult" class="preview-result"></div>
-    </section>
+            <div class="current-look-canvas-shell">
+                <div class="current-look-canvas" id="currentLookCanvas">
+                    <img class="base-layer" src="images/placeholders/mannequin-silhouette.svg" alt="Mannequin silhouette">
+                    <img data-layer="top" src="images/placeholders/top-placeholder.svg" alt="Top placeholder">
+                    <img data-layer="bottom" src="images/placeholders/bottom-placeholder.svg" alt="Bottom placeholder">
+                    <img data-layer="outerwear" src="images/placeholders/accessory-placeholder.svg" alt="Outerwear placeholder">
+                </div>
+                <p class="current-look-label" id="currentLookLabel">No garments selected yet</p>
+            </div>
+        </section>
+    </div>
 </main>
 
 <script src="main.js?v=20260610-1"></script>

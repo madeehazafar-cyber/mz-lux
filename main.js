@@ -159,7 +159,6 @@ const themeLabels = { oldMoney: "Old Money", streetwear: "Streetwear", minimalis
 const themeSelect     = document.getElementById("themeSelect");
 const clothingDisplay = document.getElementById("clothingDisplay");
 const instructionBox  = document.getElementById("instructionBox");
-const previewButton   = document.getElementById("previewBtn");
 const previewResult   = document.getElementById("previewResult");
 const previewBoxes = {
     top:       document.getElementById("previewTop"),
@@ -233,11 +232,10 @@ async function callAI(systemPrompt, messages) {
 
 function initBuilder() {
     if (themeSelect)   themeSelect.addEventListener("change", showThemeItems);
-    if (previewButton) previewButton.addEventListener("click", showPreviewSummary);
-    const uploadBtn = document.getElementById("uploadWardrobeBtn");
-    if (uploadBtn) uploadBtn.addEventListener("click", () => { window.location.href = "camera.html"; });
     if (clothingDisplay) clothingDisplay.addEventListener("click", handleClothingCardSelection);
     initCameraMode();
+    initStylistPopup();
+    initRunwayOverlay();
     if (clothingDisplay && themeSelect && themeSelect.value) {
         showThemeItems();
     } else if (clothingDisplay) {
@@ -285,13 +283,13 @@ function showThemeItems() {
     if (!theme) { if (instructionBox) instructionBox.style.display = "block"; return; }
     if (instructionBox) instructionBox.style.display = "none";
     const t = outfits[theme] || outfits.oldMoney;
-    const cats = [
-        { title: "Tops",        type: "top",       items: t.tops        },
-        { title: "Bottoms",     type: "bottom",    items: t.bottoms     },
-        { title: "Shoes",       type: "shoes",     items: t.shoes       },
-        { title: "Accessories", type: "accessory", items: t.accessories }
+    const categories = [
+        { title: "Tops", type: "top", items: t.tops || [] },
+        { title: "Bottoms", type: "bottom", items: t.bottoms || [] },
+        { title: "Shoes", type: "shoes", items: t.shoes || [] },
+        { title: "Accessories", type: "accessory", items: t.accessories || [] }
     ];
-    clothingDisplay.innerHTML = cats.map(c => createCategory(c.title, c.type, c.items)).join("");
+    clothingDisplay.innerHTML = categories.map(c => createCategory(c.title, c.type, c.items, true)).join("");
     clothingDisplay.querySelectorAll(".category-section").forEach((s, i) => {
         s.classList.add("is-visible");
         s.style.opacity = "1";
@@ -362,7 +360,7 @@ function tryImageFallback(img, fallbackChain) {
 
 window.tryImageFallback = tryImageFallback;
 
-function createCategory(title, type, items) {
+function createCategory(title, type, items, compact = false) {
     const cards = (items || []).map((item) => {
         const imageCandidates = getImageCandidates(item, type);
         const imageSrc = imageCandidates[0] || getPlaceholderImage(type);
@@ -382,6 +380,22 @@ function createCategory(title, type, items) {
             </button>`;
     }).join("");
 
+    if (compact) {
+        return `
+            <div class="category-section category-section-compact">
+                <div class="category-card-intro">
+                    <span class="category-chip">Featured</span>
+                    <h2>${title}</h2>
+                    <p>Swipe through a curated line of ${title.toLowerCase()} styles without extra scrolling.</p>
+                </div>
+                <div class="category-rail" aria-label="${title} preview">
+                    <div class="category-rail-track">
+                        ${cards}${cards}
+                    </div>
+                </div>
+            </div>`;
+    }
+
     return `<div class="category-section"><h2>${title}</h2><div class="clothing-grid">${cards}</div></div>`;
 }
 
@@ -396,6 +410,23 @@ let chatHistory = [];
 function initCameraMode() {
     const genBtn = document.getElementById("generateCameraOutfits");
     if (genBtn) genBtn.addEventListener("click", generateCameraOutfits);
+
+    document.querySelectorAll('.camera-field').forEach((field) => {
+        const input = field.querySelector('input[type="file"]');
+        const preview = field.querySelector('[data-preview]');
+        if (!input || !preview) return;
+        field.addEventListener('click', () => input.click());
+        input.addEventListener('change', () => {
+            const file = input.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                preview.innerHTML = `<img src="${event.target?.result}" alt="${field.dataset.label || 'Uploaded image'}">`;
+                preview.classList.add('has-image');
+            };
+            reader.readAsDataURL(file);
+        });
+    });
 
     const chatForm     = document.getElementById("chatForm");
     const chatInput    = document.getElementById("chatInput");
@@ -535,18 +566,41 @@ function selectItem(type, item) {
     saveCurrentOutfit();
     updatePreview(type, type === "accessory" ? selectedOutfit.accessories : item);
     updateSelectionHighlights();
+    showPreviewSummary();
+}
+
+function changeGarmentLayer(layerType, imageSrc, name) {
+    const canvas = document.getElementById("currentLookCanvas");
+    const label = document.getElementById("currentLookLabel");
+    if (!canvas) return;
+
+    const layer = canvas.querySelector(`[data-layer="${layerType}"]`);
+    if (!layer) return;
+
+    layer.style.opacity = "0";
+    setTimeout(() => {
+        layer.src = imageSrc || "";
+        layer.alt = name || layerType;
+        layer.style.opacity = "1";
+        if (label) label.textContent = name ? `${name}` : "No garments selected yet";
+    }, 180);
 }
 
 function updatePreview(type, item) {
-    const box = previewBoxes[type === "accessory" ? "accessory" : type];
-    if (!box) return;
-    if (type === "accessory") {
-        const accs = Array.isArray(item) ? item : [];
-        box.innerHTML = `<div class="preview-card-content preview-card-visual"><p class="preview-label">Accessories</p>${accs.length ? accs.map(a=>`<div class="preview-thumb-row"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><h3>${a.name}</h3></div>`).join("") : "<h3>No accessories selected</h3>"}</div>`;
-        return;
-    }
-    if (!item) { box.innerHTML = `<span class="preview-label">${getLabel(type)}</span>`; return; }
-    box.innerHTML = `<div class="preview-card-content preview-card-visual"><p class="preview-label">${getLabel(type)}</p><img class="preview-img ${type}-img" src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.style.display='none';"><h3>${item.name}</h3></div>`;
+    if (!item) return;
+
+    const layerMap = {
+        top: "top",
+        bottom: "bottom",
+        shoes: "outerwear",
+        accessory: "outerwear"
+    };
+
+    const layerType = layerMap[type] || "top";
+    const imageSrc = item.image || "";
+    const name = item.name || "";
+
+    changeGarmentLayer(layerType, imageSrc, name);
 }
 
 function updateSelectionHighlights() {
@@ -558,6 +612,8 @@ function updateSelectionHighlights() {
         card.classList.toggle("selected", sel);
     });
 }
+
+window.changeGarmentLayer = changeGarmentLayer;
 
 function getLabel(type) { return { top:"Top", bottom:"Bottom", shoes:"Shoes", accessory:"Accessory" }[type] || "Style"; }
 
@@ -574,13 +630,7 @@ function saveToFavourites() {
 
 function showPreviewSummary() {
     if (!previewResult) return;
-    if (![selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes].every(Boolean)) {
-        previewResult.innerHTML = `<div class="preview-summary empty"><p>Select a top, bottom, and shoes to preview your full outfit.</p></div>`;
-        return;
-    }
-    const themeName = themeSelect?.value ? themeLabels[themeSelect.value] : "Your";
-    previewResult.innerHTML = buildVisualPreviewMarkup(selectedOutfit, themeName);
-    attachSaveBtn(previewResult);
+    previewResult.innerHTML = "";
 }
 
 function loadPreviewPage() {
@@ -635,11 +685,11 @@ function buildVisualPreviewMarkup(outfit, themeName) {
     const accHtml = accs.length ? accs.map(a=>`<div class="preview-accessory-item"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><span>${a.name}</span></div>`).join("") : '<span class="preview-empty-text">No accessories selected</span>';
     const mood  = getOutfitMood({ label: outfit.top?.name||"" }, { label: outfit.bottom?.name||"" });
     const prof  = getOutfitStyleProfile({ label: outfit.top?.name||"" }, { label: outfit.bottom?.name||"" });
-    const notes = getOutfitStyleComments(outfit, mood);
+    const notes = getOutfitStyleComments(outfit, mood).slice(0, 2);
     const styleLabel = prof==="menswear"?"Structured finish":prof==="womenswear"?"Elevated finish":"Versatile finish";
     return `
         <div class="preview-summary visual-preview-card">
-            <div class="visual-preview-title"><h3>${themeName} Look</h3><p>${mood} • ${styleLabel}</p></div>
+            <div class="visual-preview-title"><p class="preview-kicker">Instant preview</p><h3>${themeName} Look</h3><p>${mood} • ${styleLabel}</p></div>
             <div class="preview-hero-row">
                 <div class="preview-chip-row">
                     ${previewChip("Top", outfit.top)}${previewChip("Bottom", outfit.bottom)}${previewChip("Shoes", outfit.shoes)}
@@ -652,10 +702,94 @@ function buildVisualPreviewMarkup(outfit, themeName) {
                 </div>
                 <div class="preview-accessory-side"><p class="item-label">Accessories</p><div class="preview-accessory-list">${accHtml}</div></div>
             </div>
-            <button class="save-to-favs-btn" style="margin-top:16px;width:100%;padding:14px;border-radius:999px;border:1px solid rgba(176,141,87,0.4);background:rgba(212,175,55,0.1);color:#3b2a1a;font-family:inherit;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-size:0.85rem;">
+            <button class="save-to-favs-btn" style="margin-top:10px;width:100%;padding:12px;border-radius:999px;border:1px solid rgba(176,141,87,0.4);background:rgba(212,175,55,0.1);color:#3b2a1a;font-family:inherit;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-size:0.8rem;">
                 Save to Favourites
             </button>
         </div>`;
+}
+
+function initRunwayOverlay() {
+    const overlay = document.getElementById("runwayOverlay");
+    const trigger = document.querySelector('.nav-runway-link');
+    if (!overlay || !trigger) return;
+
+    const open = () => {
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        open();
+    });
+    overlay.querySelectorAll('[data-close-runway]').forEach((el) => el.addEventListener('click', close));
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && overlay.classList.contains('is-open')) close();
+    });
+}
+
+function initStylistPopup() {
+    if (document.getElementById("stylistPopupShell")) return;
+
+    const shell = document.createElement("div");
+    shell.id = "stylistPopupShell";
+    shell.className = "stylist-popup-shell";
+    shell.innerHTML = `
+        <button class="stylist-toggle" type="button" aria-label="Open stylist chat">✦ Stylist</button>
+        <div class="stylist-popup" role="dialog" aria-label="Stylist assistant">
+            <div class="stylist-popup-head">
+                <div>
+                    <p class="stylist-kicker">MZ LUX</p>
+                    <h3>Stylist Assistant</h3>
+                </div>
+                <button class="stylist-close" type="button" aria-label="Close stylist chat">×</button>
+            </div>
+            <div class="stylist-messages" id="stylistMessages"></div>
+            <form class="stylist-form" id="stylistForm">
+                <input id="stylistInput" type="text" placeholder="Ask for a sharper outfit idea" autocomplete="off">
+                <button type="submit">Send</button>
+            </form>
+        </div>`;
+    document.body.appendChild(shell);
+
+    const toggle = shell.querySelector(".stylist-toggle");
+    const popup = shell.querySelector(".stylist-popup");
+    const close = shell.querySelector(".stylist-close");
+    const form = shell.querySelector(".stylist-form");
+    const input = shell.querySelector("#stylistInput");
+    const messages = shell.querySelector("#stylistMessages");
+
+    toggle.addEventListener("click", () => {
+        popup.classList.toggle("open");
+        if (popup.classList.contains("open")) input.focus();
+    });
+    close.addEventListener("click", () => popup.classList.remove("open"));
+
+    const addMessage = (text, from = "assistant") => {
+        const bubble = document.createElement("div");
+        bubble.className = `stylist-bubble ${from}`;
+        bubble.textContent = text;
+        messages.appendChild(bubble);
+        messages.scrollTop = messages.scrollHeight;
+    };
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const value = input.value.trim();
+        if (!value) return;
+        addMessage(value, "user");
+        input.value = "";
+        const reply = await callAI("You are a refined luxury stylist.", [{ role: "user", content: value }]);
+        addMessage(reply, "assistant");
+    });
+
+    addMessage("Tell me what you want to refine and I’ll keep it short and elevated.", "assistant");
 }
 
 function previewChip(label, item) {

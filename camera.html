@@ -20,7 +20,6 @@
     <a href="themes.html">Themes</a>
     <a href="categories.html">Categories</a>
     <a href="camera.html">Camera</a>
-    <a href="preview.html">Preview</a>
     <a href="favourites.html">Favourites</a>
 </nav>
 
@@ -30,36 +29,47 @@
         <p>Snap or upload 3 different tops and 2 different bottoms. We’ll suggest polished outfit combinations and hat accessories that fit your vibe.</p>
     </section>
 
-    <section class="camera-upload-grid">
-        <div class="camera-panel">
-            <h3>Top Pieces</h3>
-            <div class="camera-inputs">
-                <label class="camera-field">
-                    <span>Top 1</span>
-                    <input type="file" accept="image/*" capture="environment" data-role="top-input" data-label="Top 1">
-                </label>
-                <label class="camera-field">
-                    <span>Top 2</span>
-                    <input type="file" accept="image/*" capture="environment" data-role="top-input" data-label="Top 2">
-                </label>
-                <label class="camera-field">
-                    <span>Top 3</span>
-                    <input type="file" accept="image/*" capture="environment" data-role="top-input" data-label="Top 3">
-                </label>
+    <section class="camera-stack">
+        <div class="camera-intake-grid">
+            <div class="camera-editorial-panel">
+                <h3>Wardrobe Intake</h3>
+                <p>Drop in your closet pieces and let the styling engine build a polished pairing story.</p>
+                <div class="camera-inputs">
+                    <label class="camera-field" data-role="top-input" data-label="Top 1">
+                        <div class="camera-field-header"><span>Top 1</span><span>Tap to upload</span></div>
+                        <div class="camera-field-preview" data-preview></div>
+                        <input type="file" accept="image/*" capture="environment">
+                    </label>
+                    <label class="camera-field" data-role="top-input" data-label="Top 2">
+                        <div class="camera-field-header"><span>Top 2</span><span>Tap to upload</span></div>
+                        <div class="camera-field-preview" data-preview></div>
+                        <input type="file" accept="image/*" capture="environment">
+                    </label>
+                    <label class="camera-field" data-role="top-input" data-label="Top 3">
+                        <div class="camera-field-header"><span>Top 3</span><span>Tap to upload</span></div>
+                        <div class="camera-field-preview" data-preview></div>
+                        <input type="file" accept="image/*" capture="environment">
+                    </label>
+                </div>
             </div>
-        </div>
 
-        <div class="camera-panel">
-            <h3>Bottom Pieces</h3>
-            <div class="camera-inputs">
-                <label class="camera-field">
-                    <span>Bottom 1</span>
-                    <input type="file" accept="image/*" capture="environment" data-role="bottom-input" data-label="Bottom 1">
-                </label>
-                <label class="camera-field">
-                    <span>Bottom 2</span>
-                    <input type="file" accept="image/*" capture="environment" data-role="bottom-input" data-label="Bottom 2">
-                </label>
+            <div class="camera-note-card">
+                <div class="camera-editorial-panel">
+                    <h3>Bottom Edit</h3>
+                    <p>Pair your wardrobe with a calm, editorial rhythm and keep the mood luxurious.</p>
+                    <div class="camera-inputs">
+                        <label class="camera-field" data-role="bottom-input" data-label="Bottom 1">
+                            <div class="camera-field-header"><span>Bottom 1</span><span>Tap to upload</span></div>
+                            <div class="camera-field-preview" data-preview></div>
+                            <input type="file" accept="image/*" capture="environment">
+                        </label>
+                        <label class="camera-field" data-role="bottom-input" data-label="Bottom 2">
+                            <div class="camera-field-header"><span>Bottom 2</span><span>Tap to upload</span></div>
+                            <div class="camera-field-preview" data-preview></div>
+                            <input type="file" accept="image/*" capture="environment">
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
