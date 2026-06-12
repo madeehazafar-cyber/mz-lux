@@ -387,7 +387,7 @@ function createCategory(title, type, items) {
         return `
             <button type="button" class="clothing-card ${sel ? "selected" : ""}"
                 data-type="${type}" data-name="${item.name}" data-image="${imageSrc}">
-                <span class="closet-card-lock" aria-label="Lock item" title="Lock item"></span>
+                <span class="closet-card-lock" role="button" tabindex="0" aria-label="Lock item" title="Lock item"></span>
                 <div class="clothing-card-media">
                     <img src="${imageSrc}" alt="${item.name}" loading="lazy"
                          onerror="this.onerror=null;window.tryImageFallback && window.tryImageFallback(this,'${fallbackChain}');">
@@ -417,6 +417,10 @@ function initClosetRails() {
 
         grid.addEventListener("pointerdown", (event) => {
             if (event.target.closest(".closet-card-lock")) return;
+            if (grid.classList.contains("is-row-locked")) {
+                event.preventDefault();
+                return;
+            }
             isDown = true;
             startX = event.clientX;
             startScroll = grid.scrollLeft;
@@ -439,6 +443,10 @@ function initClosetRails() {
         });
 
         grid.addEventListener("scroll", debounce(() => syncCenteredClosetSelections(grid), 100), { passive: true });
+        grid.addEventListener("wheel", (event) => {
+            if (!grid.classList.contains("is-row-locked")) return;
+            event.preventDefault();
+        }, { passive: false });
     });
 }
 
@@ -448,9 +456,24 @@ function handleClothingCardSelection(e) {
         e.preventDefault();
         e.stopPropagation();
         const card = lock.closest(".clothing-card");
-        card?.classList.toggle("is-locked");
-        lock.setAttribute("aria-label", card?.classList.contains("is-locked") ? "Unlock item" : "Lock item");
-        lock.setAttribute("title", card?.classList.contains("is-locked") ? "Unlock item" : "Lock item");
+        const grid = card?.closest(".closet-track");
+        if (!card || !grid) return;
+        const shouldLock = !card.classList.contains("is-locked");
+        grid.querySelectorAll(".clothing-card.is-locked").forEach((lockedCard) => {
+            lockedCard.classList.remove("is-locked");
+            const lockedIcon = lockedCard.querySelector(".closet-card-lock");
+            lockedIcon?.setAttribute("aria-label", "Lock item");
+            lockedIcon?.setAttribute("title", "Lock item");
+        });
+        card.classList.toggle("is-locked", shouldLock);
+        grid.classList.toggle("is-row-locked", shouldLock);
+        grid.closest(".category-section")?.classList.toggle("is-row-locked", shouldLock);
+        lock.setAttribute("aria-label", shouldLock ? "Unlock item" : "Lock item");
+        lock.setAttribute("title", shouldLock ? "Unlock item" : "Lock item");
+        if (shouldLock) {
+            selectCenteredClosetItem(card.dataset.type, { name: card.dataset.name, image: card.dataset.image });
+            card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
         return;
     }
     const card = e.target.closest(".clothing-card");
@@ -458,6 +481,13 @@ function handleClothingCardSelection(e) {
     selectItem(card.dataset.type, { name: card.dataset.name, image: card.dataset.image });
     card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
 }
+
+document.addEventListener("keydown", (event) => {
+    if (!event.target.closest?.(".closet-card-lock")) return;
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    event.target.click();
+});
 
 function debounce(fn, wait) {
     let timer;

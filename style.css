@@ -5877,6 +5877,24 @@ body:has(.clueless-closet) nav a {
     scroll-behavior: auto;
 }
 
+.closet-rails .clothing-grid.is-row-locked {
+    overflow-x: hidden;
+    cursor: default;
+}
+
+.closet-rails .category-section.is-row-locked {
+    border-color: rgba(221, 184, 101, 0.42);
+    box-shadow: inset 0 0 0 1px rgba(221, 184, 101, 0.12);
+}
+
+.closet-rails .category-section.is-row-locked h2::before {
+    content: "Locked";
+    color: var(--closet-gold);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    margin-right: 10px;
+}
+
 .closet-rails .clothing-card {
     position: relative;
     flex: 0 0 clamp(144px, 16vw, 210px);
@@ -5917,12 +5935,13 @@ body:has(.clueless-closet) nav a {
     top: 8px;
     right: 8px;
     z-index: 3;
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
     border: 1px solid rgba(221, 184, 101, 0.34);
     background: rgba(6, 5, 4, 0.72);
     display: grid;
     place-items: center;
+    cursor: pointer;
 }
 
 .closet-card-lock::before {
@@ -5937,7 +5956,7 @@ body:has(.clueless-closet) nav a {
 .closet-card-lock::after {
     content: "";
     position: absolute;
-    top: 6px;
+    top: 9px;
     width: 9px;
     height: 8px;
     border: 1px solid rgba(248, 239, 224, 0.72);
@@ -6080,11 +6099,11 @@ body:has(.clueless-closet) nav a {
 
 .clash-banner {
     position: fixed;
-    left: 50%;
-    top: 18px;
+    right: 18px;
+    top: 132px;
     z-index: 9999;
-    width: min(520px, calc(100vw - 28px));
-    transform: translate(-50%, -130%);
+    width: min(340px, calc(100vw - 28px));
+    transform: translateX(calc(100% + 28px));
     padding: 14px 16px;
     border: 1px solid rgba(221, 184, 101, 0.44);
     background: rgba(6, 5, 4, 0.88);
@@ -6095,7 +6114,7 @@ body:has(.clueless-closet) nav a {
 }
 
 .clash-banner.is-visible {
-    transform: translate(-50%, 0);
+    transform: translateX(0);
     animation: clashPulse 0.9s ease 2;
 }
 
@@ -6163,5 +6182,17 @@ body:has(.clueless-closet) nav a {
     .save-look-btn,
     .style-me-btn {
         width: 100%;
+    }
+
+    .clash-banner {
+        top: auto;
+        right: 14px;
+        bottom: 14px;
+        width: calc(100vw - 28px);
+        transform: translateY(calc(100% + 28px));
+    }
+
+    .clash-banner.is-visible {
+        transform: translateY(0);
     }
 }
