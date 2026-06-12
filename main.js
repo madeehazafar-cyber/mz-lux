@@ -235,8 +235,10 @@ function initBuilder() {
     if (themeSelect)   themeSelect.addEventListener("change", showThemeItems);
     if (previewButton) previewButton.addEventListener("click", showPreviewSummary);
     const styleMeBtn = document.getElementById("styleMeBtn");
+    const saveLookBtn = document.getElementById("saveLookBtn");
     const vibeSelect = document.getElementById("vibeSelect");
     if (styleMeBtn) styleMeBtn.addEventListener("click", shuffleUnlockedClosetRows);
+    if (saveLookBtn) saveLookBtn.addEventListener("click", saveClosetLook);
     if (vibeSelect) vibeSelect.addEventListener("change", () => setClosetVibe(vibeSelect.value));
     const conciergeBtn = document.getElementById("conciergeBtn");
     if (conciergeBtn) conciergeBtn.addEventListener("click", generateStyleConciergeBrief);
@@ -409,13 +411,16 @@ function initClosetRails() {
     clothingDisplay.querySelectorAll(".clothing-grid").forEach((grid) => {
         if (grid.dataset.closetReady) return;
         grid.dataset.closetReady = "true";
+        grid.dataset.autoIndex = "0";
         let isDown = false;
         let startX = 0;
         let startScroll = 0;
+        let paused = false;
 
         grid.addEventListener("pointerdown", (event) => {
             if (event.target.closest(".closet-card-lock")) return;
             isDown = true;
+            paused = true;
             startX = event.clientX;
             startScroll = grid.scrollLeft;
             grid.classList.add("is-dragging");
@@ -432,11 +437,24 @@ function initClosetRails() {
                 if (!isDown) return;
                 isDown = false;
                 grid.classList.remove("is-dragging");
-                setTimeout(() => syncCenteredClosetSelections(grid), 90);
+                setTimeout(() => {
+                    paused = false;
+                    syncCenteredClosetSelections(grid);
+                }, 900);
             });
         });
 
         grid.addEventListener("scroll", debounce(() => syncCenteredClosetSelections(grid), 100), { passive: true });
+
+        setInterval(() => {
+            if (paused || document.hidden || grid.classList.contains("is-spinning") || grid.scrollWidth <= grid.clientWidth) return;
+            const cards = [...grid.querySelectorAll(".clothing-card")];
+            if (!cards.length) return;
+            const current = Math.max(0, cards.findIndex((card) => card.classList.contains("in-viewfinder")));
+            const nextIndex = (current + 1) % cards.length;
+            grid.dataset.autoIndex = String(nextIndex);
+            cards[nextIndex].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }, 2300);
     });
 }
 
@@ -453,6 +471,11 @@ function handleClothingCardSelection(e) {
     }
     const card = e.target.closest(".clothing-card");
     if (!card) return;
+    const grid = card.closest(".closet-track");
+    if (grid) {
+        const cards = [...grid.querySelectorAll(".clothing-card")];
+        grid.dataset.autoIndex = String(Math.max(0, cards.indexOf(card)));
+    }
     selectItem(card.dataset.type, { name: card.dataset.name, image: card.dataset.image });
     card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
 }
@@ -551,6 +574,19 @@ function evaluateClosetMatch() {
         /pearl|satin|blazer|pleated|ballet|clutch|formal|heels/.test(text);
     banner.classList.toggle("is-visible", clash);
     if (clash) setTimeout(() => banner.classList.remove("is-visible"), 4200);
+}
+
+function saveClosetLook() {
+    const btn = document.getElementById("saveLookBtn");
+    const ok = saveToFavourites();
+    if (!btn) return;
+    btn.textContent = ok ? "Saved" : "Complete Look";
+    btn.classList.toggle("is-saved", ok);
+    btn.classList.toggle("needs-look", !ok);
+    setTimeout(() => {
+        btn.textContent = "Save Look";
+        btn.classList.remove("is-saved", "needs-look");
+    }, 2200);
 }
 
 let chatHistory = [];
