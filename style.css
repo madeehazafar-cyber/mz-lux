@@ -5493,3 +5493,566 @@ body.wireframe-active .wire-card-three { animation-delay: 1.16s; }
         filter: blur(0);
     }
 }
+
+/* MZ LUX digital closet matchmaker */
+:root {
+    --closet-font-display: 'Montserrat', Arial, sans-serif;
+    --closet-black: #060504;
+    --closet-ink: #f8efe0;
+    --closet-muted: rgba(248, 239, 224, 0.68);
+    --closet-line: rgba(221, 184, 101, 0.28);
+    --closet-gold: #ddb865;
+    --closet-gold-soft: rgba(221, 184, 101, 0.16);
+    --closet-card: rgba(14, 12, 10, 0.72);
+    --closet-glass: rgba(8, 7, 6, 0.62);
+}
+
+body:has(.clueless-closet) {
+    background: #060504;
+    color: var(--closet-ink);
+}
+
+body:has(.clueless-closet)::before {
+    inset: 12px;
+    border-radius: 0;
+    border-color: rgba(221, 184, 101, 0.22);
+    background:
+        linear-gradient(90deg, rgba(221, 184, 101, 0.08), transparent 18%, transparent 82%, rgba(221, 184, 101, 0.08)),
+        rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 0 80px rgba(221, 184, 101, 0.05);
+}
+
+body:has(.clueless-closet) header,
+body:has(.clueless-closet) nav {
+    background: rgba(6, 5, 4, 0.72);
+    border-color: rgba(221, 184, 101, 0.18);
+    backdrop-filter: blur(18px);
+}
+
+body:has(.clueless-closet) .brand-name,
+body:has(.clueless-closet) .tagline,
+body:has(.clueless-closet) nav a {
+    color: var(--closet-ink);
+}
+
+.clueless-closet {
+    position: relative;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: clamp(14px, 2vw, 26px);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.clueless-closet::before,
+.clueless-closet::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    transition: opacity 0.5s ease, filter 0.5s ease;
+}
+
+.clueless-closet::before {
+    background:
+        radial-gradient(circle at 50% 12%, rgba(221, 184, 101, 0.18), transparent 28%),
+        radial-gradient(circle at 14% 82%, rgba(96, 82, 68, 0.52), transparent 34%),
+        linear-gradient(135deg, #050403 0%, #11100e 54%, #050403 100%);
+    filter: blur(0);
+}
+
+.clueless-closet::after {
+    z-index: -1;
+    opacity: 0.42;
+    background:
+        linear-gradient(rgba(221, 184, 101, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(221, 184, 101, 0.045) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+}
+
+.clueless-closet[data-vibe="brunch"]::before {
+    background:
+        radial-gradient(circle at 18% 18%, rgba(238, 190, 132, 0.2), transparent 32%),
+        radial-gradient(circle at 82% 64%, rgba(112, 75, 52, 0.55), transparent 34%),
+        linear-gradient(135deg, #090604 0%, #24170f 52%, #080604 100%);
+}
+
+.clueless-closet[data-vibe="cocktail"]::before {
+    background:
+        radial-gradient(circle at 50% 16%, rgba(221, 184, 101, 0.24), transparent 30%),
+        radial-gradient(circle at 76% 74%, rgba(88, 22, 34, 0.55), transparent 34%),
+        linear-gradient(135deg, #030303 0%, #15090d 48%, #050403 100%);
+}
+
+.clueless-closet[data-vibe="office"]::before {
+    background:
+        radial-gradient(circle at 82% 18%, rgba(184, 167, 136, 0.18), transparent 32%),
+        radial-gradient(circle at 18% 74%, rgba(46, 55, 62, 0.58), transparent 36%),
+        linear-gradient(135deg, #050607 0%, #101417 54%, #050403 100%);
+}
+
+.closet-hero {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 10px 0 10px;
+}
+
+.closet-kicker {
+    display: block;
+    color: var(--closet-gold);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.closet-hero h2 {
+    color: var(--closet-ink);
+    font-size: clamp(2rem, 5vw, 4.8rem);
+    line-height: 0.92;
+    letter-spacing: 0;
+    margin: 0;
+}
+
+.closet-hero p {
+    max-width: 430px;
+    color: var(--closet-muted);
+    line-height: 1.65;
+    margin: 0;
+    font-size: 0.88rem;
+}
+
+.closet-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(190px, 1fr));
+    gap: 12px;
+    padding: 9px;
+    border: 1px solid var(--closet-line);
+    background: var(--closet-glass);
+    backdrop-filter: blur(22px);
+}
+
+.closet-controls .theme-control {
+    display: grid;
+    gap: 5px;
+}
+
+.closet-controls label {
+    color: var(--closet-gold);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.closet-controls select {
+    width: 100%;
+    border: 1px solid rgba(221, 184, 101, 0.28);
+    border-radius: 0;
+    background: rgba(6, 5, 4, 0.82);
+    color: var(--closet-ink);
+    font: inherit;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.closet-controls select:focus {
+    border-color: rgba(221, 184, 101, 0.78);
+    background: rgba(18, 15, 12, 0.95);
+}
+
+.clueless-closet .instruction-box {
+    display: block !important;
+    margin: 8px 0;
+    padding: 8px 12px;
+    border: 1px solid rgba(221, 184, 101, 0.16);
+    background: rgba(221, 184, 101, 0.08);
+    color: var(--closet-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.closet-stage {
+    position: relative;
+    min-height: 0;
+    display: grid;
+    align-items: center;
+    padding: clamp(10px, 1.5vw, 18px) 0;
+}
+
+.closet-viewfinder {
+    position: absolute;
+    left: 50%;
+    top: clamp(18px, 3vw, 28px);
+    bottom: clamp(18px, 3vw, 28px);
+    width: clamp(144px, 16vw, 210px);
+    transform: translateX(-50%);
+    z-index: 4;
+    pointer-events: none;
+    border: 1px solid rgba(221, 184, 101, 0.82);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 246, 219, 0.08),
+        0 0 42px rgba(221, 184, 101, 0.14);
+}
+
+.closet-viewfinder::before,
+.closet-viewfinder::after {
+    content: "";
+    position: absolute;
+    left: -22px;
+    right: -22px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(221, 184, 101, 0.8), transparent);
+}
+
+.closet-viewfinder::before {
+    top: 50%;
+}
+
+.closet-viewfinder::after {
+    top: calc(50% + 1px);
+    opacity: 0.28;
+}
+
+.closet-viewfinder span {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: var(--closet-gold);
+}
+
+.closet-viewfinder span:first-child {
+    left: -1px;
+    top: -1px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+}
+
+.closet-viewfinder span:last-child {
+    right: -1px;
+    bottom: -1px;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+}
+
+.clothing-display.closet-rails {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(8px, 1.1vw, 12px);
+    overflow: visible;
+    padding: 0;
+}
+
+.closet-rails .category-section {
+    position: relative;
+    min-width: 0;
+    padding: 8px 0 9px;
+    border: 1px solid rgba(221, 184, 101, 0.14);
+    background:
+        linear-gradient(90deg, rgba(221, 184, 101, 0.08), transparent 16%, transparent 84%, rgba(221, 184, 101, 0.08)),
+        rgba(6, 5, 4, 0.48);
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.closet-rails .category-section::after {
+    display: none;
+}
+
+.closet-rails .category-section h2 {
+    position: absolute;
+    left: 14px;
+    top: 10px;
+    z-index: 3;
+    min-height: 0;
+    color: rgba(248, 239, 224, 0.74);
+    font-size: 0.64rem;
+    letter-spacing: 0.24em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.closet-rails .clothing-grid {
+    display: flex;
+    gap: clamp(12px, 1.6vw, 18px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc(50% - (clamp(144px, 16vw, 210px) / 2));
+    padding: 18px calc(50% - (clamp(144px, 16vw, 210px) / 2)) 4px;
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+}
+
+.closet-rails .clothing-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.closet-rails .clothing-grid.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
+
+.closet-rails .clothing-card {
+    position: relative;
+    flex: 0 0 clamp(144px, 16vw, 210px);
+    scroll-snap-align: center;
+    border-radius: 0;
+    border: 1px solid rgba(221, 184, 101, 0.16);
+    background: var(--closet-card);
+    color: var(--closet-ink);
+    gap: 6px;
+    padding: 7px;
+    transform: scale(0.92);
+    opacity: 0.58;
+    box-shadow: none;
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.closet-rails .clothing-card.in-viewfinder,
+.closet-rails .clothing-card.selected {
+    transform: scale(1);
+    opacity: 1;
+    border-color: rgba(221, 184, 101, 0.82);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.34), 0 0 28px rgba(221, 184, 101, 0.1);
+}
+
+.closet-rails .clothing-card.is-locked {
+    border-color: var(--closet-gold);
+    background:
+        linear-gradient(180deg, rgba(221, 184, 101, 0.16), transparent 42%),
+        var(--closet-card);
+}
+
+.closet-card-lock {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 3;
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgba(221, 184, 101, 0.34);
+    background: rgba(6, 5, 4, 0.72);
+    display: grid;
+    place-items: center;
+}
+
+.closet-card-lock::before {
+    content: "";
+    width: 11px;
+    height: 9px;
+    border: 1px solid rgba(248, 239, 224, 0.72);
+    border-top: 0;
+    transform: translateY(3px);
+}
+
+.closet-card-lock::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    width: 9px;
+    height: 8px;
+    border: 1px solid rgba(248, 239, 224, 0.72);
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    transform: translateX(3px);
+}
+
+.clothing-card.is-locked .closet-card-lock {
+    background: var(--closet-gold);
+}
+
+.clothing-card.is-locked .closet-card-lock::before,
+.clothing-card.is-locked .closet-card-lock::after {
+    border-color: #060504;
+    transform: translateY(3px);
+}
+
+.closet-rails .clothing-card-media {
+    height: clamp(58px, 8.5vh, 96px);
+    min-height: clamp(58px, 8.5vh, 96px);
+    border-radius: 0;
+    background:
+        radial-gradient(circle at center, rgba(221, 184, 101, 0.14), transparent 54%),
+        #11100e;
+}
+
+.closet-rails .clothing-card img {
+    height: clamp(58px, 8.5vh, 96px);
+    min-height: clamp(58px, 8.5vh, 96px);
+    object-fit: contain;
+    padding: 6px;
+    border-radius: 0;
+    background: transparent;
+    margin: 0;
+    transition: transform 0.35s ease;
+}
+
+.closet-rails .clothing-card.in-viewfinder img {
+    transform: scale(1.04);
+}
+
+.closet-rails .clothing-card p {
+    min-height: 22px;
+    color: var(--closet-ink);
+    font-size: clamp(0.62rem, 0.88vw, 0.72rem);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.closet-rails .clothing-grid.is-spinning .clothing-card {
+    filter: blur(1px);
+}
+
+.closet-rails .clothing-grid.is-spinning .clothing-card.in-viewfinder {
+    filter: blur(0);
+}
+
+.closet-action-bar {
+    position: sticky;
+    bottom: 12px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px solid rgba(221, 184, 101, 0.24);
+    background: rgba(6, 5, 4, 0.78);
+    backdrop-filter: blur(22px);
+}
+
+.closet-action-bar .current-look-label {
+    margin: 0;
+    color: var(--closet-ink);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.closet-action-bar .current-look-accessories {
+    margin-top: 6px;
+    color: var(--closet-muted);
+    font-size: 0.72rem;
+}
+
+.style-me-btn {
+    min-width: min(220px, 42vw);
+    border: 1px solid rgba(221, 184, 101, 0.72);
+    border-radius: 0;
+    background: linear-gradient(135deg, #ddb865, #fff1be 48%, #a9792f);
+    color: #060504;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    padding: 16px 22px;
+    text-transform: uppercase;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.style-me-btn:hover,
+.style-me-btn:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(221, 184, 101, 0.2);
+    outline: none;
+}
+
+.clash-banner {
+    position: fixed;
+    left: 50%;
+    top: 18px;
+    z-index: 9999;
+    width: min(520px, calc(100vw - 28px));
+    transform: translate(-50%, -130%);
+    padding: 14px 16px;
+    border: 1px solid rgba(221, 184, 101, 0.44);
+    background: rgba(6, 5, 4, 0.88);
+    color: var(--closet-ink);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+    transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.clash-banner.is-visible {
+    transform: translate(-50%, 0);
+    animation: clashPulse 0.9s ease 2;
+}
+
+.clash-banner strong {
+    display: block;
+    color: var(--closet-gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.clash-banner span {
+    color: var(--closet-muted);
+    line-height: 1.45;
+}
+
+@keyframes clashPulse {
+    0%, 100% { border-color: rgba(221, 184, 101, 0.44); }
+    50% { border-color: rgba(255, 241, 190, 0.95); }
+}
+
+@media (max-width: 760px) {
+    body:has(.clueless-closet) header {
+        padding: 10px 16px;
+    }
+
+    body:has(.clueless-closet) nav {
+        gap: 12px;
+        padding: 10px 12px;
+    }
+
+    .closet-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .closet-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .closet-viewfinder {
+        width: clamp(142px, 42vw, 178px);
+    }
+
+    .closet-rails .clothing-grid {
+        scroll-padding-inline: calc(50% - (clamp(142px, 42vw, 178px) / 2));
+        padding-inline: calc(50% - (clamp(142px, 42vw, 178px) / 2));
+    }
+
+    .closet-rails .clothing-card {
+        flex-basis: clamp(142px, 42vw, 178px);
+    }
+
+    .closet-action-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .style-me-btn {
+        width: 100%;
+    }
+}

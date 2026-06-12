@@ -234,6 +234,10 @@ async function callAI(systemPrompt, messages) {
 function initBuilder() {
     if (themeSelect)   themeSelect.addEventListener("change", showThemeItems);
     if (previewButton) previewButton.addEventListener("click", showPreviewSummary);
+    const styleMeBtn = document.getElementById("styleMeBtn");
+    const vibeSelect = document.getElementById("vibeSelect");
+    if (styleMeBtn) styleMeBtn.addEventListener("click", shuffleUnlockedClosetRows);
+    if (vibeSelect) vibeSelect.addEventListener("change", () => setClosetVibe(vibeSelect.value));
     const conciergeBtn = document.getElementById("conciergeBtn");
     if (conciergeBtn) conciergeBtn.addEventListener("click", generateStyleConciergeBrief);
     const uploadBtn = document.getElementById("uploadWardrobeBtn");
@@ -245,6 +249,7 @@ function initBuilder() {
     } else if (clothingDisplay) {
         clothingDisplay.innerHTML = "";
     }
+    setClosetVibe(vibeSelect?.value || "minimalist");
     initScrollEffects();
 }
 
@@ -273,11 +278,11 @@ function initScrollEffects() {
 }
 
 document.addEventListener("DOMContentLoaded", initBuilder);
-document.addEventListener("DOMContentLoaded", () => setTimeout(initAutoSlidingCategoryRails, 250));
+document.addEventListener("DOMContentLoaded", () => setTimeout(initClosetRails, 250));
 
 if (document.readyState !== "loading") {
     initBuilder();
-    setTimeout(initAutoSlidingCategoryRails, 250);
+    setTimeout(initClosetRails, 250);
 }
 
 window.showThemeItems = showThemeItems;
@@ -302,7 +307,8 @@ function showThemeItems() {
         s.style.transform = "translateY(0)";
         s.style.transitionDelay = `${i * 0.06}s`;
     });
-    initAutoSlidingCategoryRails();
+    initClosetRails();
+    requestAnimationFrame(syncCenteredClosetSelections);
 }
 
 function getPlaceholderImage(type) {
@@ -379,6 +385,7 @@ function createCategory(title, type, items) {
         return `
             <button type="button" class="clothing-card ${sel ? "selected" : ""}"
                 data-type="${type}" data-name="${item.name}" data-image="${imageSrc}">
+                <span class="closet-card-lock" aria-label="Lock item" title="Lock item"></span>
                 <div class="clothing-card-media">
                     <img src="${imageSrc}" alt="${item.name}" loading="lazy"
                          onerror="this.onerror=null;window.tryImageFallback && window.tryImageFallback(this,'${fallbackChain}');">
@@ -387,55 +394,163 @@ function createCategory(title, type, items) {
             </button>`;
     }).join("");
 
-    return `<div class="category-section"><h2>${title}</h2><div class="clothing-grid">${cards}</div></div>`;
+    return `<div class="category-section closet-row" data-row-type="${type}">
+        <h2>${title}</h2>
+        <div class="clothing-grid closet-track" data-row-type="${type}" tabindex="0">${cards}</div>
+    </div>`;
 }
 
 function initAutoSlidingCategoryRails() {
+    initClosetRails();
+}
+
+function initClosetRails() {
     if (!clothingDisplay) return;
-    if (!clothingDisplay.dataset.autoSlideReady) {
-        clothingDisplay.dataset.autoSlideReady = "true";
-        clothingDisplay.dataset.slideDirection = "1";
-        let displayPaused = false;
-        clothingDisplay.addEventListener("mouseenter", () => { displayPaused = true; });
-        clothingDisplay.addEventListener("mouseleave", () => { displayPaused = false; });
-        clothingDisplay.addEventListener("touchstart", () => { displayPaused = true; }, { passive: true });
-        clothingDisplay.addEventListener("touchend", () => setTimeout(() => { displayPaused = false; }, 1400), { passive: true });
-        setInterval(() => {
-            if (displayPaused || document.hidden || clothingDisplay.scrollWidth <= clothingDisplay.clientWidth) return;
-            const dir = Number(clothingDisplay.dataset.slideDirection || "1");
-            clothingDisplay.scrollLeft += dir * 0.9;
-            if (clothingDisplay.scrollLeft + clothingDisplay.clientWidth >= clothingDisplay.scrollWidth - 2) clothingDisplay.dataset.slideDirection = "-1";
-            if (clothingDisplay.scrollLeft <= 2) clothingDisplay.dataset.slideDirection = "1";
-        }, 24);
-    }
-
     clothingDisplay.querySelectorAll(".clothing-grid").forEach((grid) => {
-        if (grid.dataset.autoSlideReady) return;
-        grid.dataset.autoSlideReady = "true";
-        grid.dataset.slideDirection = "1";
-        grid.scrollLeft = 0;
+        if (grid.dataset.closetReady) return;
+        grid.dataset.closetReady = "true";
+        let isDown = false;
+        let startX = 0;
+        let startScroll = 0;
 
-        let paused = false;
-        const pause = () => { paused = true; };
-        const resume = () => { paused = false; };
-        grid.addEventListener("mouseenter", pause);
-        grid.addEventListener("mouseleave", resume);
-        grid.addEventListener("touchstart", pause, { passive: true });
-        grid.addEventListener("touchend", () => setTimeout(resume, 1400), { passive: true });
+        grid.addEventListener("pointerdown", (event) => {
+            if (event.target.closest(".closet-card-lock")) return;
+            isDown = true;
+            startX = event.clientX;
+            startScroll = grid.scrollLeft;
+            grid.classList.add("is-dragging");
+            grid.setPointerCapture?.(event.pointerId);
+        });
 
-        setInterval(() => {
-            if (paused || document.hidden || grid.scrollWidth <= grid.clientWidth) return;
-            const dir = Number(grid.dataset.slideDirection || "1");
-            grid.scrollLeft += dir * 0.7;
-            if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2) grid.scrollLeft = 0;
-        }, 24);
+        grid.addEventListener("pointermove", (event) => {
+            if (!isDown) return;
+            grid.scrollLeft = startScroll - (event.clientX - startX);
+        });
+
+        ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+            grid.addEventListener(eventName, () => {
+                if (!isDown) return;
+                isDown = false;
+                grid.classList.remove("is-dragging");
+                setTimeout(() => syncCenteredClosetSelections(grid), 90);
+            });
+        });
+
+        grid.addEventListener("scroll", debounce(() => syncCenteredClosetSelections(grid), 100), { passive: true });
     });
 }
 
 function handleClothingCardSelection(e) {
+    const lock = e.target.closest(".closet-card-lock");
+    if (lock) {
+        e.preventDefault();
+        e.stopPropagation();
+        const card = lock.closest(".clothing-card");
+        card?.classList.toggle("is-locked");
+        lock.setAttribute("aria-label", card?.classList.contains("is-locked") ? "Unlock item" : "Lock item");
+        lock.setAttribute("title", card?.classList.contains("is-locked") ? "Unlock item" : "Lock item");
+        return;
+    }
     const card = e.target.closest(".clothing-card");
     if (!card) return;
     selectItem(card.dataset.type, { name: card.dataset.name, image: card.dataset.image });
+    card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+}
+
+function debounce(fn, wait) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), wait);
+    };
+}
+
+function syncCenteredClosetSelections(track) {
+    const tracks = track?.querySelectorAll ? [track] : [...document.querySelectorAll(".closet-track")];
+    tracks.forEach((grid) => {
+        const cards = [...grid.querySelectorAll(".clothing-card")];
+        if (!cards.length) return;
+        const gridBox = grid.getBoundingClientRect();
+        const center = gridBox.left + gridBox.width / 2;
+        const active = cards.reduce((closest, card) => {
+            const box = card.getBoundingClientRect();
+            const distance = Math.abs(center - (box.left + box.width / 2));
+            return distance < closest.distance ? { card, distance } : closest;
+        }, { card: cards[0], distance: Infinity }).card;
+        cards.forEach((card) => card.classList.toggle("in-viewfinder", card === active));
+        if (active) selectCenteredClosetItem(active.dataset.type, { name: active.dataset.name, image: active.dataset.image });
+    });
+    evaluateClosetMatch();
+}
+
+function selectCenteredClosetItem(type, item) {
+    if (type === "accessory") {
+        selectedOutfit.accessories = [item];
+        saveCurrentOutfit();
+        updatePreview(type, selectedOutfit.accessories);
+        updateSelectionHighlights();
+        return;
+    }
+    selectItem(type, item);
+}
+
+function shuffleUnlockedClosetRows() {
+    const tracks = [...document.querySelectorAll(".closet-track")];
+    tracks.forEach((grid, rowIndex) => {
+        const locked = grid.querySelector(".clothing-card.is-locked");
+        if (locked) {
+            locked.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            return;
+        }
+        const cards = [...grid.querySelectorAll(".clothing-card")];
+        if (!cards.length) return;
+        const target = cards[Math.floor(Math.random() * cards.length)];
+        grid.classList.add("is-spinning");
+        const maxScroll = Math.max(0, grid.scrollWidth - grid.clientWidth);
+        const start = grid.scrollLeft;
+        const targetLeft = target.offsetLeft - (grid.clientWidth - target.offsetWidth) / 2;
+        const finalScroll = Math.max(0, Math.min(maxScroll, targetLeft));
+        const duration = 900 + rowIndex * 180;
+        const startTime = performance.now();
+
+        function step(now) {
+            const elapsed = Math.min(1, (now - startTime) / duration);
+            const eased = 1 - Math.pow(1 - elapsed, 4);
+            const wobble = Math.sin(elapsed * Math.PI * 18) * (1 - elapsed) * 38;
+            grid.scrollLeft = start + (finalScroll - start) * eased + wobble;
+            if (elapsed < 1) {
+                requestAnimationFrame(step);
+            } else {
+                grid.scrollLeft = finalScroll;
+                grid.classList.remove("is-spinning");
+                syncCenteredClosetSelections(grid);
+            }
+        }
+
+        requestAnimationFrame(step);
+    });
+}
+
+function setClosetVibe(vibe) {
+    const page = document.querySelector(".clueless-closet");
+    if (!page) return;
+    page.dataset.vibe = vibe || "minimalist";
+}
+
+function evaluateClosetMatch() {
+    const text = [
+        selectedOutfit.top?.name,
+        selectedOutfit.bottom?.name,
+        selectedOutfit.shoes?.name,
+        ...selectedOutfit.accessories.map((item) => item.name)
+    ].filter(Boolean).join(" ").toLowerCase();
+    const banner = document.getElementById("clashBanner");
+    if (!banner) return;
+    const clash =
+        /graphic|hoodie|varsity|cargo|chunky|combat|baseball|beanie/.test(text) &&
+        /pearl|satin|blazer|pleated|ballet|clutch|formal|heels/.test(text);
+    banner.classList.toggle("is-visible", clash);
+    if (clash) setTimeout(() => banner.classList.remove("is-visible"), 4200);
 }
 
 let chatHistory = [];
@@ -621,22 +736,22 @@ function updatePreview(type, item) {
 
 function updateCurrentLookPreview() {
     const canvas = document.getElementById("currentLookCanvas");
-    if (!canvas) return;
+    if (canvas) {
+        const placeholders = {
+            top: "images/placeholders/top-placeholder.svg",
+            bottom: "images/placeholders/bottom-placeholder.svg",
+            shoes: "images/placeholders/shoe-placeholder.svg"
+        };
 
-    const placeholders = {
-        top: "images/placeholders/top-placeholder.svg",
-        bottom: "images/placeholders/bottom-placeholder.svg",
-        shoes: "images/placeholders/shoe-placeholder.svg"
-    };
-
-    ["top", "bottom", "shoes"].forEach((type) => {
-        const img = canvas.querySelector(`[data-layer="${type}"]`);
-        if (!img) return;
-        const selected = selectedOutfit[type];
-        img.src = selected?.image || placeholders[type];
-        img.alt = selected?.name || `${getLabel(type)} placeholder`;
-        img.classList.toggle("is-selected", Boolean(selected));
-    });
+        ["top", "bottom", "shoes"].forEach((type) => {
+            const img = canvas.querySelector(`[data-layer="${type}"]`);
+            if (!img) return;
+            const selected = selectedOutfit[type];
+            img.src = selected?.image || placeholders[type];
+            img.alt = selected?.name || `${getLabel(type)} placeholder`;
+            img.classList.toggle("is-selected", Boolean(selected));
+        });
+    }
 
     const label = document.getElementById("currentLookLabel");
     if (label) {

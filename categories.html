@@ -23,69 +23,61 @@
     <a href="favourites.html">Favourites</a>
 </nav>
 
-<main class="builder-page">
-    <section class="builder-intro">
-        <h2>Outfit Builder</h2>
-        <p>Select a luxury theme, explore five curated pieces in each category, and preview your final look.</p>
+<main class="builder-page clueless-closet" data-vibe="minimalist">
+    <section class="closet-hero">
+        <div>
+            <span class="closet-kicker">MZ LUX Digital Closet</span>
+            <h2>Style Matchmaker</h2>
+        </div>
+        <p>Swipe each row into the gold frame, lock your favourites, then let MZ LUX style the rest.</p>
     </section>
 
-    <section class="controls">
-        <div class="controls-row">
-            <div class="theme-control">
-                <label for="themeSelect">Choose a theme</label>
-                <select id="themeSelect">
-                    <option value="">Select a theme</option>
-                    <option value="oldMoney" selected>Old Money</option>
-                    <option value="streetwear">Streetwear</option>
-                    <option value="minimalist">Minimalist</option>
-                    <option value="casual">Casual</option>
-                    <option value="formal">Formal</option>
-                </select>
-            </div>
+    <section class="closet-controls" aria-label="Closet controls">
+        <div class="theme-control">
+            <label for="themeSelect">Collection</label>
+            <select id="themeSelect">
+                <option value="">Select a theme</option>
+                <option value="oldMoney" selected>Old Money</option>
+                <option value="streetwear">Streetwear</option>
+                <option value="minimalist">Minimalist</option>
+                <option value="casual">Casual</option>
+                <option value="formal">Formal</option>
+            </select>
+        </div>
+        <div class="theme-control">
+            <label for="vibeSelect">Vibe</label>
+            <select id="vibeSelect">
+                <option value="minimalist" selected>Minimalist Studio</option>
+                <option value="brunch">Brunch Cafe</option>
+                <option value="cocktail">Cocktail Party</option>
+                <option value="office">Chic Office</option>
+            </select>
         </div>
     </section>
 
     <section id="instructionBox" class="instruction-box">
-        Pick a theme to reveal five tops, bottoms, shoes, and accessories for your look.
+        Scroll each rail into the center frame, or press Style Me for a full outfit shuffle.
     </section>
 
-    <div class="builder-layout">
-        <section id="clothingDisplay" class="clothing-display"></section>
+    <section class="closet-stage" aria-label="Interactive outfit builder">
+        <div class="closet-viewfinder" aria-hidden="true">
+            <span></span>
+            <span></span>
+        </div>
+        <div id="clothingDisplay" class="clothing-display closet-rails"></div>
+    </section>
 
-        <section class="preview-box">
-            <div class="preview-box-header">
-                <h2>Current Look</h2>
-            </div>
+    <section class="closet-action-bar" aria-label="Outfit actions">
+        <div>
+            <p class="current-look-label" id="currentLookLabel">Center the rails to compose a look</p>
+            <div class="current-look-accessories" id="currentLookAccessories"></div>
+        </div>
+        <button id="styleMeBtn" class="style-me-btn" type="button">Style Me</button>
+    </section>
 
-            <div class="current-look-canvas-shell">
-                <div class="current-look-canvas" id="currentLookCanvas">
-                    <img class="base-layer" src="images/placeholders/mannequin-silhouette.svg" alt="Mannequin silhouette">
-                    <img data-layer="top" src="images/placeholders/top-placeholder.svg" alt="Top placeholder">
-                    <img data-layer="bottom" src="images/placeholders/bottom-placeholder.svg" alt="Bottom placeholder">
-                    <img data-layer="shoes" src="images/placeholders/shoe-placeholder.svg" alt="Shoes placeholder">
-                </div>
-                <p class="current-look-label" id="currentLookLabel">No garments selected yet</p>
-                <div class="current-look-accessories" id="currentLookAccessories"></div>
-                <div class="style-concierge">
-                    <div class="style-concierge-head">
-                        <span>New</span>
-                        <h3>Style Concierge</h3>
-                    </div>
-                    <label for="occasionSelect">Occasion</label>
-                    <select id="occasionSelect">
-                        <option value="day">Day out</option>
-                        <option value="school">School</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="event">Event</option>
-                        <option value="travel">Travel</option>
-                    </select>
-                    <button id="conciergeBtn" type="button">Create Styling Brief</button>
-                    <div id="conciergeResult" class="concierge-result">
-                        Select pieces, then generate a luxury styling brief.
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div id="clashBanner" class="clash-banner" role="status" aria-live="polite">
+        <strong>Clueless match alert</strong>
+        <span>This combo clashes on purpose. Try locking one piece and shuffling the rest.</span>
     </div>
 </main>
 
