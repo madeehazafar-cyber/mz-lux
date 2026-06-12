@@ -5544,6 +5544,66 @@ body:has(.clueless-closet) nav a {
     isolation: isolate;
 }
 
+.clueless-closet > *:not(.closet-destination-backdrop) {
+    position: relative;
+    z-index: 2;
+}
+
+.closet-destination-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: background 0.5s ease, filter 0.5s ease;
+    background:
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+        radial-gradient(circle at 50% 16%, rgba(221, 184, 101, 0.26), transparent 28%),
+        linear-gradient(135deg, #050403 0%, #14110e 56%, #050403 100%);
+    background-size: 72px 72px, 72px 72px, auto, auto;
+    filter: saturate(1.05);
+}
+
+.closet-destination-backdrop::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,0.62), transparent 28%, transparent 72%, rgba(0,0,0,0.62)),
+        linear-gradient(0deg, rgba(0,0,0,0.72), transparent 34%, rgba(0,0,0,0.46));
+}
+
+.clueless-closet[data-vibe="brunch"] .closet-destination-backdrop {
+    background:
+        radial-gradient(ellipse at 22% 20%, rgba(255, 221, 164, 0.46), transparent 24%),
+        linear-gradient(90deg, transparent 0 10%, rgba(255,255,255,0.16) 10% 10.4%, transparent 10.4% 24%, rgba(255,255,255,0.12) 24% 24.4%, transparent 24.4% 100%),
+        linear-gradient(0deg, rgba(71, 42, 24, 0.88) 0 20%, transparent 20%),
+        radial-gradient(circle at 78% 68%, rgba(152, 91, 49, 0.68), transparent 36%),
+        linear-gradient(135deg, #120906 0%, #2e1a10 52%, #070504 100%);
+}
+
+.clueless-closet[data-vibe="cocktail"] .closet-destination-backdrop {
+    background:
+        radial-gradient(ellipse at 50% 8%, rgba(255, 231, 172, 0.5), transparent 19%),
+        radial-gradient(circle at 22% 24%, rgba(255, 241, 190, 0.28), transparent 7%),
+        radial-gradient(circle at 72% 23%, rgba(255, 241, 190, 0.22), transparent 7%),
+        linear-gradient(90deg, rgba(0,0,0,0.38) 0 18%, transparent 18% 82%, rgba(0,0,0,0.42) 82%),
+        radial-gradient(circle at 75% 72%, rgba(103, 20, 36, 0.78), transparent 36%),
+        linear-gradient(135deg, #020202 0%, #1c070d 50%, #050403 100%);
+}
+
+.clueless-closet[data-vibe="office"] .closet-destination-backdrop {
+    background:
+        linear-gradient(90deg, rgba(210, 224, 230, 0.14) 1px, transparent 1px),
+        linear-gradient(rgba(210, 224, 230, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, transparent 0 18%, rgba(180, 194, 202, 0.18) 18% 18.4%, transparent 18.4% 36%, rgba(180, 194, 202, 0.13) 36% 36.4%, transparent 36.4%),
+        radial-gradient(circle at 82% 18%, rgba(184, 167, 136, 0.22), transparent 32%),
+        radial-gradient(circle at 18% 74%, rgba(46, 64, 74, 0.78), transparent 36%),
+        linear-gradient(135deg, #040607 0%, #12191d 54%, #050403 100%);
+    background-size: 96px 96px, 96px 96px, auto, auto, auto, auto;
+}
+
 .clueless-closet::before,
 .clueless-closet::after {
     content: "";
