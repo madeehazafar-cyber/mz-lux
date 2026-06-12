@@ -281,6 +281,7 @@ function initScrollEffects() {
 
 document.addEventListener("DOMContentLoaded", initBuilder);
 document.addEventListener("DOMContentLoaded", () => setTimeout(initClosetRails, 250));
+document.addEventListener("DOMContentLoaded", initFeaturedCollectionIntro);
 
 if (document.readyState !== "loading") {
     initBuilder();
@@ -288,6 +289,60 @@ if (document.readyState !== "loading") {
 }
 
 window.showThemeItems = showThemeItems;
+
+function initFeaturedCollectionIntro() {
+    const grid = document.querySelector(".cinematic-featured-grid");
+    const primaryCard = grid?.querySelector(".cinematic-card-primary");
+    if (!grid || !primaryCard || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.body.classList.add("featured-intro-complete");
+        return;
+    }
+
+    const playIntro = () => {
+        const rect = primaryCard.getBoundingClientRect();
+        const gap = parseFloat(getComputedStyle(grid).columnGap || "22") || 22;
+        const scaleX = window.innerWidth / rect.width;
+        const scaleY = window.innerHeight / rect.height;
+        const translateX = (window.innerWidth / 2) - (rect.left + rect.width / 2);
+        const translateY = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+
+        primaryCard.style.setProperty("--featured-card-x", `${translateX}px`);
+        primaryCard.style.setProperty("--featured-card-y", `${translateY}px`);
+        primaryCard.style.setProperty("--featured-card-scale-x", scaleX.toFixed(4));
+        primaryCard.style.setProperty("--featured-card-scale-y", scaleY.toFixed(4));
+        grid.style.setProperty("--featured-gap", `${gap}px`);
+
+        document.body.classList.add("featured-intro-running");
+        document.body.classList.remove("featured-intro-complete");
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                document.body.classList.remove("featured-intro-running");
+                document.body.classList.add("featured-intro-complete");
+            });
+        });
+    };
+
+    const startWhenVisible = () => {
+        if (document.body.classList.contains("collection-live") || !document.body.classList.contains("home-page")) {
+            playIntro();
+            return;
+        }
+
+        const observer = new MutationObserver(() => {
+            if (!document.body.classList.contains("collection-live")) return;
+            observer.disconnect();
+            setTimeout(playIntro, 120);
+        });
+        observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    };
+
+    if (document.fonts?.ready) {
+        document.fonts.ready.then(startWhenVisible);
+    } else {
+        startWhenVisible();
+    }
+}
 
 function showThemeItems() {
     if (!clothingDisplay) return;
