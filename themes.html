@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Themes</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260612-suite">
     <style>
         .themes-page {
             max-width: 1100px;
@@ -177,10 +177,50 @@
 
 <main class="themes-page">
     <div class="themes-intro">
-        <span class="small-title">Step 01 — Choose Your Aesthetic</span>
-        <h2>Select a Theme</h2>
-        <p>Each theme unlocks a curated wardrobe of pieces styled around a distinct fashion identity.</p>
+        <span class="small-title">MZ LUX Style Direction</span>
+        <h2>Find Your Theme</h2>
+        <p>Take the quick quiz for a styled recommendation, or explore each aesthetic manually.</p>
     </div>
+
+    <section class="theme-quiz-panel" aria-label="Theme quiz">
+        <div class="theme-quiz-copy">
+            <span>Theme Quiz</span>
+            <h3>Where is this look going?</h3>
+            <p>Answer three quick questions and MZ LUX will recommend the best wardrobe theme.</p>
+        </div>
+
+        <form id="themeQuiz" class="theme-quiz-form">
+            <fieldset class="quiz-step">
+                <legend>Occasion</legend>
+                <label><input type="radio" name="occasion" value="school" checked> School / everyday</label>
+                <label><input type="radio" name="occasion" value="dinner"> Dinner / event</label>
+                <label><input type="radio" name="occasion" value="city"> City day out</label>
+            </fieldset>
+
+            <fieldset class="quiz-step">
+                <legend>Energy</legend>
+                <label><input type="radio" name="energy" value="quiet" checked> Quiet and polished</label>
+                <label><input type="radio" name="energy" value="bold"> Bold and expressive</label>
+                <label><input type="radio" name="energy" value="clean"> Clean and minimal</label>
+            </fieldset>
+
+            <fieldset class="quiz-step">
+                <legend>Priority</legend>
+                <label><input type="radio" name="priority" value="comfort" checked> Comfortable</label>
+                <label><input type="radio" name="priority" value="tailored"> Tailored</label>
+                <label><input type="radio" name="priority" value="statement"> Statement</label>
+            </fieldset>
+
+            <button type="submit" class="theme-quiz-btn">Get Theme</button>
+        </form>
+
+        <aside id="themeQuizResult" class="theme-quiz-result">
+            <span>Recommendation</span>
+            <h4>Old Money</h4>
+            <p>Quiet polish, refined proportions, and expensive-looking basics.</p>
+            <a href="categories.html?theme=oldMoney">Style this theme</a>
+        </aside>
+    </section>
 
     <div class="theme-grid">
 
@@ -272,6 +312,7 @@
         });
     });
 </script>
+<script src="main.js?v=20260612-suite"></script>
 
 </body>
 </html>

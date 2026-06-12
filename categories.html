@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260612-2">
+    <link rel="stylesheet" href="style.css?v=20260612-suite">
 </head>
 <body>
 <header>
@@ -75,9 +75,112 @@
         </div>
         <div class="closet-action-buttons">
             <button id="saveLookBtn" class="save-look-btn" type="button">Save Look</button>
+            <button id="openSuiteBtn" class="save-look-btn suite-launch-btn" type="button">Stylist Suite</button>
             <button id="styleMeBtn" class="style-me-btn" type="button">Style Me</button>
         </div>
     </section>
+
+    <section class="stylist-suite" aria-label="MZ LUX stylist suite">
+        <div class="suite-head">
+            <span>Stylist Suite</span>
+            <h2>Finish the look like a real appointment.</h2>
+        </div>
+
+        <div class="suite-grid">
+            <article class="suite-card profile-suite-card" data-suite-tool="profile" tabindex="0">
+                <span>Style Profile</span>
+                <h3 id="styleProfileTitle">Personalized styling</h3>
+                <p id="styleProfileSummary">Answer the opening questions to personalize your outfit rows.</p>
+            </article>
+
+            <article class="suite-card outfit-score-card" data-suite-tool="score" tabindex="0">
+                <span>AI Outfit Score</span>
+                <strong id="luxuryScore">--</strong>
+                <p id="luxuryScoreText">Build a full look to receive color, silhouette, and styling feedback.</p>
+            </article>
+
+            <article class="suite-card" data-suite-tool="occasion" tabindex="0">
+                <span>Occasion Planner</span>
+                <label for="suiteOccasion">Destination</label>
+                <select id="suiteOccasion">
+                    <option value="school">School</option>
+                    <option value="brunch">Brunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="travel">Travel</option>
+                    <option value="interview">Interview</option>
+                    <option value="party">Party</option>
+                </select>
+                <button id="occasionPlanBtn" type="button">Plan Look</button>
+                <p id="occasionPlanResult">Choose a destination to get styling direction.</p>
+            </article>
+
+            <article class="suite-card" data-suite-tool="palette" tabindex="0">
+                <span>Color Match Studio</span>
+                <div class="color-studio">
+                    <button type="button" data-palette="cream">Cream</button>
+                    <button type="button" data-palette="noir">Noir</button>
+                    <button type="button" data-palette="espresso">Espresso</button>
+                    <button type="button" data-palette="navy">Navy</button>
+                </div>
+                <div id="paletteResult" class="palette-result">Select a color to build a luxury palette.</div>
+            </article>
+
+            <article class="suite-card" data-suite-tool="checklist" tabindex="0">
+                <span>Before You Leave</span>
+                <ul class="leave-checklist">
+                    <li><label><input type="checkbox"> Shoes match the formality</label></li>
+                    <li><label><input type="checkbox"> One polished accessory</label></li>
+                    <li><label><input type="checkbox"> Weather layer considered</label></li>
+                    <li><label><input type="checkbox"> Bag or pocket plan ready</label></li>
+                </ul>
+            </article>
+
+            <article class="suite-card" data-suite-tool="pack" tabindex="0">
+                <span>Pack My Bag</span>
+                <button id="packBagBtn" type="button">Generate Pack List</button>
+                <ul id="packBagResult" class="suite-list">
+                    <li>Complete an outfit, then generate a travel-ready list.</li>
+                </ul>
+            </article>
+
+            <article class="suite-card" data-suite-tool="calendar" tabindex="0">
+                <span>Closet Calendar</span>
+                <div class="calendar-actions">
+                    <select id="calendarDay">
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                        <option>Sunday</option>
+                    </select>
+                    <button id="saveCalendarBtn" type="button">Save Day</button>
+                </div>
+                <div id="calendarResult" class="calendar-result">No outfit scheduled yet.</div>
+            </article>
+
+            <article class="suite-card stylist-note-card" data-suite-tool="note" tabindex="0">
+                <span>Personal Stylist Note</span>
+                <p id="stylistNote">Select a complete outfit and MZ LUX will give you a direct styling note.</p>
+            </article>
+
+            <article class="suite-card stylist-chat-card" data-suite-tool="ask" tabindex="0">
+                <span>Ask Stylist</span>
+                <label for="stylistQuestion">Quick question</label>
+                <input id="stylistQuestion" type="text" placeholder="What should I wear to dinner?">
+                <button id="stylistAskBtn" type="button">Ask</button>
+                <p id="stylistAnswer">Ask for quick outfit advice based on your current look.</p>
+            </article>
+        </div>
+    </section>
+
+    <aside id="suiteDrawer" class="suite-drawer" aria-hidden="true" aria-label="Stylist tool drawer">
+        <div class="suite-drawer-panel">
+            <button id="suiteDrawerClose" class="suite-drawer-close" type="button" aria-label="Close stylist drawer">Close</button>
+            <div id="suiteDrawerContent" class="suite-drawer-content"></div>
+        </div>
+    </aside>
 
     <div id="clashBanner" class="clash-banner" role="status" aria-live="polite">
         <strong>Clueless match alert</strong>
@@ -85,7 +188,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260612-2"></script>
+<script src="main.js?v=20260612-suite-drawer2"></script>
 <script>
 (function () {
     function revealCategorySections() {

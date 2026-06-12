@@ -246,6 +246,7 @@ function initBuilder() {
     if (uploadBtn) uploadBtn.addEventListener("click", () => { window.location.href = "camera.html"; });
     if (clothingDisplay) clothingDisplay.addEventListener("click", handleClothingCardSelection);
     initCameraMode();
+    applyStoredThemeSelection();
     if (clothingDisplay && themeSelect && themeSelect.value) {
         showThemeItems();
     } else if (clothingDisplay) {
@@ -282,6 +283,9 @@ function initScrollEffects() {
 document.addEventListener("DOMContentLoaded", initBuilder);
 document.addEventListener("DOMContentLoaded", () => setTimeout(initClosetRails, 250));
 document.addEventListener("DOMContentLoaded", initFeaturedCollectionIntro);
+document.addEventListener("DOMContentLoaded", initStylePreferencePopup);
+document.addEventListener("DOMContentLoaded", initThemeQuiz);
+document.addEventListener("DOMContentLoaded", initStylistSuite);
 
 if (document.readyState !== "loading") {
     initBuilder();
@@ -289,6 +293,7 @@ if (document.readyState !== "loading") {
 }
 
 window.showThemeItems = showThemeItems;
+window.openSuiteDrawer = openSuiteDrawer;
 
 function initFeaturedCollectionIntro() {
     const grid = document.querySelector(".cinematic-featured-grid");
@@ -298,7 +303,10 @@ function initFeaturedCollectionIntro() {
         return;
     }
 
+    let hasPlayed = false;
     const playIntro = () => {
+        if (hasPlayed) return;
+        hasPlayed = true;
         const rect = primaryCard.getBoundingClientRect();
         const gap = parseFloat(getComputedStyle(grid).columnGap || "22") || 22;
         const scaleX = window.innerWidth / rect.width;
@@ -323,24 +331,40 @@ function initFeaturedCollectionIntro() {
         });
     };
 
-    const startWhenVisible = () => {
-        if (document.body.classList.contains("collection-live") || !document.body.classList.contains("home-page")) {
-            playIntro();
+    const observeFeaturedSection = () => {
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (!entry?.isIntersecting) return;
+            observer.disconnect();
+            setTimeout(playIntro, 120);
+        }, { threshold: 0.28 });
+
+        observer.observe(grid);
+    };
+
+    const startWhenPageReady = () => {
+        if (!document.body.classList.contains("home-page")) {
+            observeFeaturedSection();
+            return;
+        }
+
+        if (document.body.classList.contains("collection-live")) {
+            observeFeaturedSection();
             return;
         }
 
         const observer = new MutationObserver(() => {
             if (!document.body.classList.contains("collection-live")) return;
             observer.disconnect();
-            setTimeout(playIntro, 120);
+            observeFeaturedSection();
         });
         observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     };
 
     if (document.fonts?.ready) {
-        document.fonts.ready.then(startWhenVisible);
+        document.fonts.ready.then(startWhenPageReady);
     } else {
-        startWhenVisible();
+        startWhenPageReady();
     }
 }
 
@@ -350,7 +374,7 @@ function showThemeItems() {
     clothingDisplay.innerHTML = "";
     if (!theme) { if (instructionBox) instructionBox.style.display = "block"; return; }
     if (instructionBox) instructionBox.style.display = "none";
-    const t = outfits[theme] || outfits.oldMoney;
+    const t = getPersonalizedThemeOutfits(outfits[theme] || outfits.oldMoney);
     const cats = [
         { title: "Tops",        type: "top",       items: t.tops        },
         { title: "Bottoms",     type: "bottom",    items: t.bottoms     },
@@ -366,6 +390,141 @@ function showThemeItems() {
     });
     initClosetRails();
     requestAnimationFrame(syncCenteredClosetSelections);
+}
+
+function applyStoredThemeSelection() {
+    if (!themeSelect) return;
+    const params = new URLSearchParams(window.location.search);
+    const urlTheme = params.get("theme");
+    const storedTheme = localStorage.getItem("selectedTheme");
+    const nextTheme = urlTheme || storedTheme;
+    if (nextTheme && outfits[nextTheme]) {
+        themeSelect.value = nextTheme;
+        localStorage.setItem("selectedTheme", nextTheme);
+    }
+}
+
+function getPersonalizedThemeOutfits(themeData) {
+    const preference = localStorage.getItem("mzLuxStylePreference") || "neutral";
+    const priority = localStorage.getItem("mzLuxStylePriority") || "tailored";
+    const sortItems = (items, type) => [...items].sort((a, b) => getPreferenceScore(b, type, preference, priority) - getPreferenceScore(a, type, preference, priority));
+    return {
+        tops: sortItems(themeData.tops || [], "top"),
+        bottoms: sortItems(themeData.bottoms || [], "bottom"),
+        shoes: sortItems(themeData.shoes || [], "shoes"),
+        accessories: sortItems(themeData.accessories || [], "accessory")
+    };
+}
+
+function getPreferenceScore(item, type, preference, priority = "tailored") {
+    if (!item) return 0;
+    const text = `${item.name || ""} ${type}`.toLowerCase();
+    const feminine = /(skirt|blouse|ballet|heel|pearl|clutch|earring|necklace|camisole|flats|satin)/;
+    const masculine = /(shirt|polo|blazer|trouser|pants|loafer|boot|watch|belt|jacket|cargo|suit)/;
+    const tailored = /(blazer|trouser|shirt|loafer|watch|belt|formal|satin|pleated)/;
+    const comfort = /(hoodie|tee|sweater|sneaker|jogger|denim|casual|flannel)/;
+    const statement = /(graphic|varsity|cargo|chunky|combat|pearl|clutch|striped|sunglasses)/;
+    let score = 0;
+    if (preference === "female") score += feminine.test(text) ? 3 : masculine.test(text) ? 1 : 2;
+    if (preference === "male") score += masculine.test(text) ? 3 : feminine.test(text) ? 1 : 2;
+    if (priority === "tailored") score += tailored.test(text) ? 2 : 0;
+    if (priority === "comfort") score += comfort.test(text) ? 2 : 0;
+    if (priority === "statement") score += statement.test(text) ? 2 : 0;
+    return score;
+}
+
+function initStylePreferencePopup() {
+    if (localStorage.getItem("mzLuxStylePreference") && localStorage.getItem("mzLuxStylePriority")) return;
+    const modal = document.createElement("section");
+    modal.className = "style-preference-modal style-preference-drawer";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", "Customize your outfits");
+    modal.innerHTML = `
+        <div class="style-preference-card">
+            <span>Personalize MZ LUX</span>
+            <h2>Would you like us to customize your experience?</h2>
+            <p>Answer two quick questions so your outfit rows feel more personal.</p>
+            <form class="style-preference-form">
+                <fieldset>
+                    <legend>Gender</legend>
+                    <label><input type="radio" name="stylePreference" value="female" checked> Female</label>
+                    <label><input type="radio" name="stylePreference" value="male"> Male</label>
+                    <label><input type="radio" name="stylePreference" value="neutral"> Prefer not to say</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Outfit priority</legend>
+                    <label><input type="radio" name="stylePriority" value="tailored" checked> Tailored and polished</label>
+                    <label><input type="radio" name="stylePriority" value="comfort"> Comfortable everyday</label>
+                    <label><input type="radio" name="stylePriority" value="statement"> Statement pieces</label>
+                </fieldset>
+                <button type="submit">Customize</button>
+            </form>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    requestAnimationFrame(() => modal.classList.add("is-visible"));
+    modal.querySelector(".style-preference-form")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        localStorage.setItem("mzLuxStylePreference", data.get("stylePreference") || "neutral");
+        localStorage.setItem("mzLuxStylePriority", data.get("stylePriority") || "tailored");
+        modal.classList.remove("is-visible");
+        setTimeout(() => modal.remove(), 360);
+        if (themeSelect && clothingDisplay) showThemeItems();
+    });
+}
+
+function initThemeQuiz() {
+    const form = document.getElementById("themeQuiz");
+    const result = document.getElementById("themeQuizResult");
+    if (!form || !result) return;
+
+    const themeCopy = {
+        oldMoney: ["Old Money", "Quiet polish, refined proportions, and expensive-looking basics."],
+        streetwear: ["Streetwear", "Bold shape, sneaker energy, and expressive statement styling."],
+        minimalist: ["Minimalist", "Clean lines, controlled color, and calm modern pieces."],
+        casual: ["Casual", "Comfortable, relaxed, and still intentionally styled."],
+        formal: ["Formal", "Sharp tailoring, evening polish, and a more dressed-up finish."]
+    };
+
+    function scoreQuiz() {
+        const data = new FormData(form);
+        const scores = { oldMoney: 0, streetwear: 0, minimalist: 0, casual: 0, formal: 0 };
+        const occasion = data.get("occasion");
+        const energy = data.get("energy");
+        const priority = data.get("priority");
+
+        if (occasion === "school") scores.casual += 2, scores.minimalist += 1;
+        if (occasion === "dinner") scores.formal += 2, scores.oldMoney += 2;
+        if (occasion === "city") scores.streetwear += 2, scores.oldMoney += 1;
+        if (energy === "quiet") scores.oldMoney += 3;
+        if (energy === "bold") scores.streetwear += 3;
+        if (energy === "clean") scores.minimalist += 3;
+        if (priority === "comfort") scores.casual += 3;
+        if (priority === "tailored") scores.formal += 2, scores.oldMoney += 2;
+        if (priority === "statement") scores.streetwear += 2, scores.formal += 1;
+
+        return Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+    }
+
+    function updateResult(theme) {
+        const [name, copy] = themeCopy[theme] || themeCopy.oldMoney;
+        localStorage.setItem("selectedTheme", theme);
+        result.innerHTML = `
+            <span>Recommendation</span>
+            <h4>${name}</h4>
+            <p>${copy}</p>
+            <a href="categories.html?theme=${theme}">Style this theme</a>
+        `;
+        result.classList.add("is-active");
+    }
+
+    form.addEventListener("change", () => updateResult(scoreQuiz()));
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        updateResult(scoreQuiz());
+    });
 }
 
 function getPlaceholderImage(type) {
@@ -867,6 +1026,359 @@ function updateCurrentLookPreview() {
             ? selectedOutfit.accessories.map((item) => `<span>${item.name}</span>`).join("")
             : "<span>No accessories</span>";
     }
+
+    updateStylistSuite();
+}
+
+function initStylistSuite() {
+    const occasionBtn = document.getElementById("occasionPlanBtn");
+    const occasionSelect = document.getElementById("suiteOccasion");
+    const packBtn = document.getElementById("packBagBtn");
+    const calendarBtn = document.getElementById("saveCalendarBtn");
+    const askBtn = document.getElementById("stylistAskBtn");
+    const suiteBtn = document.getElementById("openSuiteBtn");
+
+    if (occasionBtn) occasionBtn.addEventListener("click", generateOccasionPlan);
+    if (occasionSelect) occasionSelect.addEventListener("change", generateOccasionPlan);
+    if (packBtn) packBtn.addEventListener("click", generatePackList);
+    if (calendarBtn) calendarBtn.addEventListener("click", saveOutfitToCalendar);
+    if (askBtn) askBtn.addEventListener("click", answerStylistQuestion);
+    if (suiteBtn) suiteBtn.addEventListener("click", () => openSuiteDrawer("menu"));
+    document.querySelectorAll("[data-suite-tool]").forEach((card) => {
+        card.addEventListener("click", (event) => {
+            if (event.target.closest("button, input, select, label, a")) return;
+            openSuiteDrawer(card.dataset.suiteTool);
+        });
+        card.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            openSuiteDrawer(card.dataset.suiteTool);
+        });
+    });
+    document.getElementById("suiteDrawerClose")?.addEventListener("click", closeSuiteDrawer);
+    document.getElementById("suiteDrawer")?.addEventListener("click", (event) => {
+        if (event.target.id === "suiteDrawer") closeSuiteDrawer();
+    });
+    document.getElementById("suiteDrawerContent")?.addEventListener("click", (event) => {
+        const toolButton = event.target.closest("[data-open-suite-tool]");
+        if (!toolButton) return;
+        openSuiteDrawer(toolButton.dataset.openSuiteTool || "score");
+    });
+    document.querySelectorAll("[data-palette]").forEach((button) => {
+        button.addEventListener("click", () => showPalette(button.dataset.palette || "cream"));
+    });
+    renderClosetCalendar();
+    generateOccasionPlan();
+    updateStylistSuite();
+}
+
+function openSuiteDrawer(tool = "score") {
+    const drawer = document.getElementById("suiteDrawer");
+    const content = document.getElementById("suiteDrawerContent");
+    if (!drawer || !content) return;
+    content.innerHTML = getSuiteDrawerMarkup(tool);
+    drawer.classList.add("is-open");
+    drawer.setAttribute("aria-hidden", "false");
+    bindSuiteDrawerControls(tool);
+}
+
+function closeSuiteDrawer() {
+    const drawer = document.getElementById("suiteDrawer");
+    if (!drawer) return;
+    drawer.classList.remove("is-open");
+    drawer.setAttribute("aria-hidden", "true");
+}
+
+function getSuiteDrawerMarkup(tool) {
+    const names = getCurrentOutfitNames();
+    const complete = isCompleteOutfit();
+    const incomplete = `<div class="drawer-empty"><h3>Finish your outfit first</h3><p>Select a top, bottom, and shoes so this tool can give better advice.</p></div>`;
+    const toolNames = {
+        menu: "Stylist Suite",
+        profile: "Style Profile",
+        score: "AI Outfit Score",
+        occasion: "Occasion Planner",
+        palette: "Color Match Studio",
+        checklist: "Before You Leave",
+        pack: "Pack My Bag",
+        calendar: "Closet Calendar",
+        note: "Personal Stylist Note",
+        ask: "Ask Stylist"
+    };
+    const header = `<span>${toolNames[tool] || "Stylist Tool"}</span>`;
+
+    if (tool === "menu") {
+        return `
+            ${header}
+            <h2>Choose a styling tool</h2>
+            <p class="drawer-intro">Open a focused tool without scrolling through the full page.</p>
+            <div class="suite-tool-menu">
+                <button type="button" data-open-suite-tool="profile" onclick="openSuiteDrawer('profile')"><span>01</span>Style Profile</button>
+                <button type="button" data-open-suite-tool="score" onclick="openSuiteDrawer('score')"><span>02</span>AI Outfit Score</button>
+                <button type="button" data-open-suite-tool="occasion" onclick="openSuiteDrawer('occasion')"><span>03</span>Occasion Planner</button>
+                <button type="button" data-open-suite-tool="palette" onclick="openSuiteDrawer('palette')"><span>04</span>Color Match Studio</button>
+                <button type="button" data-open-suite-tool="checklist" onclick="openSuiteDrawer('checklist')"><span>05</span>Before You Leave</button>
+                <button type="button" data-open-suite-tool="pack" onclick="openSuiteDrawer('pack')"><span>06</span>Pack My Bag</button>
+                <button type="button" data-open-suite-tool="calendar" onclick="openSuiteDrawer('calendar')"><span>07</span>Closet Calendar</button>
+                <button type="button" data-open-suite-tool="note" onclick="openSuiteDrawer('note')"><span>08</span>Stylist Note</button>
+                <button type="button" data-open-suite-tool="ask" onclick="openSuiteDrawer('ask')"><span>09</span>Ask Stylist</button>
+            </div>
+        `;
+    }
+
+    if (tool === "profile") {
+        return `${header}<h2 id="drawerProfileTitle">${document.getElementById("styleProfileTitle")?.textContent || "Style Profile"}</h2><p>${document.getElementById("styleProfileSummary")?.textContent || ""}</p>`;
+    }
+    if (tool === "score") {
+        return `${header}${complete ? `<strong class="drawer-score">${document.getElementById("luxuryScore")?.textContent || "--"}</strong><p>${document.getElementById("luxuryScoreText")?.textContent || ""}</p>` : incomplete}`;
+    }
+    if (tool === "occasion") {
+        return `${header}<h2>Plan by destination</h2><select id="drawerOccasion"><option value="school">School</option><option value="brunch">Brunch</option><option value="dinner">Dinner</option><option value="travel">Travel</option><option value="interview">Interview</option><option value="party">Party</option></select><p id="drawerOccasionResult">${complete ? "Choose a destination for specific styling direction." : "You can choose a destination now, then complete your outfit."}</p>`;
+    }
+    if (tool === "palette") {
+        return `${header}<h2>Build a luxury palette</h2><div class="drawer-palette-actions"><button data-drawer-palette="cream">Cream</button><button data-drawer-palette="noir">Noir</button><button data-drawer-palette="espresso">Espresso</button><button data-drawer-palette="navy">Navy</button></div><div id="drawerPaletteResult" class="palette-result">Select a color direction.</div>`;
+    }
+    if (tool === "checklist") {
+        return `${header}<h2>Final check</h2><ul class="leave-checklist drawer-checklist"><li><label><input type="checkbox"> Shoes match the formality</label></li><li><label><input type="checkbox"> One polished accessory</label></li><li><label><input type="checkbox"> Weather layer considered</label></li><li><label><input type="checkbox"> Bag or pocket plan ready</label></li></ul>`;
+    }
+    if (tool === "pack") {
+        if (!complete) return `${header}${incomplete}`;
+        const items = [names.top, names.bottom, names.shoes, names.accessories[0] || "One polished accessory", "Lint roller or mini steamer", "Backup layer"];
+        return `${header}<h2>Pack this look</h2><ul class="suite-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+    }
+    if (tool === "calendar") {
+        return `${header}<h2>Schedule a look</h2>${complete ? "" : "<p>Complete an outfit before saving it to a day.</p>"}<div class="calendar-actions"><select id="drawerCalendarDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select><button id="drawerSaveCalendar" type="button">Save Day</button></div><div id="drawerCalendarResult" class="calendar-result">${getCalendarMarkup()}</div>`;
+    }
+    if (tool === "note") {
+        return `${header}${complete ? `<h2>Stylist note</h2><p>${document.getElementById("stylistNote")?.textContent || ""}</p>` : incomplete}`;
+    }
+    if (tool === "ask") {
+        return `${header}<h2>Ask the stylist</h2><input id="drawerStylistQuestion" type="text" placeholder="What should I wear to dinner?"><button id="drawerStylistAsk" type="button">Ask</button><p id="drawerStylistAnswer">${complete ? "Ask for quick outfit advice based on this look." : "Complete an outfit first so the answer can be specific."}</p>`;
+    }
+    return `${header}${incomplete}`;
+}
+
+function bindSuiteDrawerControls(tool) {
+    if (tool === "menu") {
+        return;
+    }
+    if (tool === "occasion") {
+        const select = document.getElementById("drawerOccasion");
+        const update = () => {
+            const original = document.getElementById("suiteOccasion");
+            if (original && select) original.value = select.value;
+            generateOccasionPlan();
+            const result = document.getElementById("drawerOccasionResult");
+            if (result) result.textContent = document.getElementById("occasionPlanResult")?.textContent || "";
+        };
+        select?.addEventListener("change", update);
+        update();
+    }
+    if (tool === "palette") {
+        document.querySelectorAll("[data-drawer-palette]").forEach((button) => {
+            button.addEventListener("click", () => {
+                showPalette(button.dataset.drawerPalette || "cream");
+                const drawerResult = document.getElementById("drawerPaletteResult");
+                const pageResult = document.getElementById("paletteResult");
+                if (drawerResult && pageResult) drawerResult.innerHTML = pageResult.innerHTML;
+            });
+        });
+    }
+    if (tool === "calendar") {
+        document.getElementById("drawerSaveCalendar")?.addEventListener("click", () => {
+            const pageDay = document.getElementById("calendarDay");
+            const drawerDay = document.getElementById("drawerCalendarDay");
+            if (pageDay && drawerDay) pageDay.value = drawerDay.value;
+            saveOutfitToCalendar();
+            const result = document.getElementById("drawerCalendarResult");
+            if (result) result.innerHTML = getCalendarMarkup();
+        });
+    }
+    if (tool === "ask") {
+        document.getElementById("drawerStylistAsk")?.addEventListener("click", () => {
+            const pageInput = document.getElementById("stylistQuestion");
+            const drawerInput = document.getElementById("drawerStylistQuestion");
+            if (pageInput && drawerInput) pageInput.value = drawerInput.value;
+            answerStylistQuestion();
+            const drawerAnswer = document.getElementById("drawerStylistAnswer");
+            if (drawerAnswer) drawerAnswer.textContent = document.getElementById("stylistAnswer")?.textContent || "";
+        });
+    }
+}
+
+function getCurrentOutfitNames() {
+    return {
+        top: selectedOutfit.top?.name || "",
+        bottom: selectedOutfit.bottom?.name || "",
+        shoes: selectedOutfit.shoes?.name || "",
+        accessories: selectedOutfit.accessories.map((item) => item.name).filter(Boolean)
+    };
+}
+
+function isCompleteOutfit() {
+    return Boolean(selectedOutfit.top && selectedOutfit.bottom && selectedOutfit.shoes);
+}
+
+function updateStylistSuite() {
+    updateStyleProfileCard();
+    updateLuxuryScore();
+    updateStylistNote();
+}
+
+function updateStyleProfileCard() {
+    const title = document.getElementById("styleProfileTitle");
+    const summary = document.getElementById("styleProfileSummary");
+    if (!title || !summary) return;
+    const preference = localStorage.getItem("mzLuxStylePreference") || "neutral";
+    const priority = localStorage.getItem("mzLuxStylePriority") || "tailored";
+    const labels = {
+        female: "Feminine styling",
+        male: "Masculine styling",
+        neutral: "Neutral styling",
+        tailored: "tailored and polished",
+        comfort: "comfortable everyday",
+        statement: "statement-focused"
+    };
+    title.textContent = labels[preference] || "Neutral styling";
+    summary.textContent = `Your rows prioritize ${labels[priority] || "tailored and polished"} pieces first.`;
+}
+
+function updateLuxuryScore() {
+    const scoreEl = document.getElementById("luxuryScore");
+    const textEl = document.getElementById("luxuryScoreText");
+    if (!scoreEl || !textEl) return;
+    if (!isCompleteOutfit()) {
+        scoreEl.textContent = "--";
+        textEl.textContent = "Build a full look to receive color, silhouette, and styling feedback.";
+        return;
+    }
+
+    const names = getCurrentOutfitNames();
+    const outfitText = `${names.top} ${names.bottom} ${names.shoes} ${names.accessories.join(" ")}`.toLowerCase();
+    let score = 72 + names.accessories.length * 4;
+    if (/(blazer|button|trouser|loafer|watch|pearl|satin|pleated)/.test(outfitText)) score += 12;
+    if (/(hoodie|graphic|cargo|chunky|combat)/.test(outfitText)) score += 4;
+    if (/(black|white|cream|beige|navy|brown)/.test(outfitText)) score += 8;
+    score = Math.min(98, score);
+
+    scoreEl.textContent = `${score}%`;
+    textEl.textContent = score >= 90
+        ? "Excellent balance. The palette feels expensive and the silhouette is intentional."
+        : "Strong base. Add one refined accessory or cleaner shoe choice to lift the look.";
+}
+
+function updateStylistNote() {
+    const note = document.getElementById("stylistNote");
+    if (!note) return;
+    if (!isCompleteOutfit()) {
+        note.textContent = "Select a complete outfit and MZ LUX will give you a direct styling note.";
+        return;
+    }
+    const names = getCurrentOutfitNames();
+    const accessory = names.accessories[0] ? ` The ${names.accessories[0].toLowerCase()} adds a finished detail.` : " Add one accessory to make it feel complete.";
+    note.textContent = `${names.top} with ${names.bottom} and ${names.shoes} reads polished without trying too hard.${accessory}`;
+}
+
+function generateOccasionPlan() {
+    const result = document.getElementById("occasionPlanResult");
+    const occasion = document.getElementById("suiteOccasion")?.value || "school";
+    if (!result) return;
+    const copy = {
+        school: "Keep it clean and comfortable: choose one polished piece, then keep shoes practical.",
+        brunch: "Go warm and camera-ready: soft neutrals, a refined accessory, and relaxed structure.",
+        dinner: "Push the look sharper: darker tones, sleeker shoes, and one statement finish.",
+        travel: "Prioritize comfort with structure: layerable top, easy shoes, and a practical bag.",
+        interview: "Make it precise: tailored lines, closed shoes, and minimal accessories.",
+        party: "Let one piece speak: statement accessory or shoe, with the rest controlled."
+    };
+    result.textContent = copy[occasion] || copy.school;
+}
+
+function showPalette(key) {
+    const result = document.getElementById("paletteResult");
+    if (!result) return;
+    const palettes = {
+        cream: { label: "Cream / Camel / Warm Gold", colors: ["#fff4df", "#c5a06a", "#ddb865"] },
+        noir: { label: "Noir / Ivory / Champagne", colors: ["#070605", "#fff8ea", "#d8bd7a"] },
+        espresso: { label: "Espresso / Oat / Bronze", colors: ["#3a2418", "#eadcc7", "#9d6a32"] },
+        navy: { label: "Navy / Pearl / Cognac", colors: ["#111d31", "#f4efe6", "#8f542d"] }
+    };
+    const palette = palettes[key] || palettes.cream;
+    result.innerHTML = `
+        <strong>${palette.label}</strong>
+        <div class="suite-swatches">${palette.colors.map((color) => `<i style="background:${color}"></i>`).join("")}</div>
+        <p>Use one dominant shade, one soft contrast, and one metallic or leather accent.</p>
+    `;
+}
+
+function generatePackList() {
+    const result = document.getElementById("packBagResult");
+    if (!result) return;
+    if (!isCompleteOutfit()) {
+        result.innerHTML = "<li>Complete an outfit first.</li>";
+        return;
+    }
+    const names = getCurrentOutfitNames();
+    const items = [names.top, names.bottom, names.shoes, names.accessories[0] || "One polished accessory", "Lint roller or mini steamer", "Backup layer"];
+    result.innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+}
+
+function saveOutfitToCalendar() {
+    const day = document.getElementById("calendarDay")?.value || "Monday";
+    const result = document.getElementById("calendarResult");
+    if (!result) return;
+    if (!isCompleteOutfit()) {
+        result.textContent = "Complete an outfit before scheduling it.";
+        return;
+    }
+    const names = getCurrentOutfitNames();
+    const calendar = JSON.parse(localStorage.getItem("mzLuxCalendar") || "{}");
+    calendar[day] = `${names.top} / ${names.bottom} / ${names.shoes}`;
+    localStorage.setItem("mzLuxCalendar", JSON.stringify(calendar));
+    renderClosetCalendar();
+}
+
+function renderClosetCalendar() {
+    const result = document.getElementById("calendarResult");
+    if (!result) return;
+    const calendar = JSON.parse(localStorage.getItem("mzLuxCalendar") || "{}");
+    const entries = Object.entries(calendar);
+    result.innerHTML = getCalendarMarkup();
+}
+
+function getCalendarMarkup() {
+    const calendar = JSON.parse(localStorage.getItem("mzLuxCalendar") || "{}");
+    const entries = Object.entries(calendar);
+    return entries.length
+        ? entries.map(([day, look]) => `<p><strong>${day}</strong> ${look}</p>`).join("")
+        : "No outfit scheduled yet.";
+}
+
+function answerStylistQuestion() {
+    const input = document.getElementById("stylistQuestion");
+    const answer = document.getElementById("stylistAnswer");
+    if (!input || !answer) return;
+    const question = input.value.trim().toLowerCase();
+    if (!question) {
+        answer.textContent = "Ask a quick styling question first.";
+        return;
+    }
+    if (!isCompleteOutfit()) {
+        answer.textContent = "Complete an outfit first so the advice can be specific.";
+        return;
+    }
+    const names = getCurrentOutfitNames();
+    if (/dinner|date|evening/.test(question)) {
+        answer.textContent = `For dinner, keep ${names.top.toLowerCase()} and ${names.bottom.toLowerCase()}, then make the shoes feel sleek. Add one metallic or structured accessory.`;
+    } else if (/school|class|campus/.test(question)) {
+        answer.textContent = `For school, this works best if you keep it comfortable: ${names.shoes.toLowerCase()} should feel practical, and the accessory should stay minimal.`;
+    } else if (/interview|office|work/.test(question)) {
+        answer.textContent = `For a polished setting, sharpen the outfit with clean lines and avoid loud extras. ${names.top} should be the anchor.`;
+    } else if (/party|event/.test(question)) {
+        answer.textContent = `For an event, make one piece the focus and keep everything else controlled. The current look can handle one stronger accessory.`;
+    } else {
+        answer.textContent = `${names.top}, ${names.bottom}, and ${names.shoes} already form the base. Improve it with one intentional accessory and a cleaner color story.`;
+    }
 }
 
 function updateSelectionHighlights() {
@@ -985,7 +1497,7 @@ function loadFavouritesPage() {
     const saved = JSON.parse(localStorage.getItem("savedOutfits") || "[]");
     if (!saved.length) { list.innerHTML = "<p class='empty-message'>No saved outfits yet. Generate and save an outfit on the builder page.</p>"; return; }
     list.innerHTML = saved.map((outfit, i) => `
-        <div class="outfit-card favourite-entry">
+        <article class="outfit-card favourite-entry lookbook-entry">
             <div class="outfit-card-header">
                 <h3>Look ${i+1} — ${themeLabels[outfit.theme] || outfit.theme || "Custom"}</h3>
                 <span class="pill">${outfit.savedAt || ""}</span>
@@ -995,7 +1507,7 @@ function loadFavouritesPage() {
                 ${["top","bottom","shoes"].map(k => outfit[k] ? `<div class="outfit-item"><img src="${outfit[k].image}" alt="${outfit[k].name}" onerror="this.onerror=null;this.style.display='none';"><p class="item-label">${k}</p><p class="item-name">${outfit[k].name}</p></div>` : "").join("")}
                 ${(outfit.accessories||[]).map(a => `<div class="outfit-item"><img src="${a.image}" alt="${a.name}" onerror="this.onerror=null;this.style.display='none';"><p class="item-label">Accessory</p><p class="item-name">${a.name}</p></div>`).join("")}
             </div>
-        </div>`).join("");
+        </article>`).join("");
     list.querySelectorAll(".delete-fav-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             const all = JSON.parse(localStorage.getItem("savedOutfits") || "[]");
