@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260614-planner-tab">
+    <link rel="stylesheet" href="style.css?v=20260614-split-planner">
 </head>
 <body>
 <header>
@@ -82,7 +82,8 @@
     <section id="openingCalendar" class="opening-calendar event-planner-calendar" aria-label="MZ LUX event planner calendar">
         <div class="opening-calendar-frame" aria-hidden="true"></div>
         <div class="event-planner-tabbar">
-            <button id="plannerExpandBtn" class="event-planner-icon-btn" type="button" aria-label="Enlarge calendar">+</button>
+            <button id="plannerAddBtn" class="event-planner-icon-btn" type="button" aria-label="Add calendar event">+</button>
+            <button id="plannerExpandBtn" class="event-planner-icon-btn" type="button" aria-label="Enlarge calendar">□</button>
             <button id="plannerCloseBtn" class="event-planner-icon-btn" type="button" aria-label="Close calendar">x</button>
         </div>
         <div class="opening-calendar-head">
@@ -106,6 +107,11 @@
             <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
         </div>
         <div id="plannerCalendarGrid" class="opening-calendar-grid event-planner-grid" role="grid" aria-label="Monthly event planner"></div>
+        <form id="plannerEventForm" class="event-planner-form" aria-label="Save event to calendar">
+            <span id="plannerSelectedDate">Select a date</span>
+            <input id="plannerEventName" type="text" placeholder="Wedding, gala, photoshoot..." aria-label="Event name">
+            <button type="submit">Save</button>
+        </form>
         <p id="plannerEventSummary" class="event-planner-summary" aria-live="polite">Tap a date to add your first event.</p>
     </section>
 
@@ -115,7 +121,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260614-planner-tab"></script>
+<script src="main.js?v=20260614-split-planner"></script>
 <script>
 (function () {
     function revealCategorySections() {

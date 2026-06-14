@@ -1048,6 +1048,9 @@ function initOpeningClosetCalendar() {
     const calendar = document.getElementById("openingCalendar");
     if (!calendar) return;
 
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
     updateOpeningCalendarSelection();
     renderEventPlannerCalendar();
     hydrateOpeningCalendarWeather();
@@ -1055,16 +1058,34 @@ function initOpeningClosetCalendar() {
         setTimeout(() => calendar.classList.add("is-visible"), 120);
     });
 
-    document.getElementById("plannerPrevMonth")?.addEventListener("click", () => shiftEventPlannerMonth(-1));
-    document.getElementById("plannerNextMonth")?.addEventListener("click", () => shiftEventPlannerMonth(1));
-    document.getElementById("plannerExpandBtn")?.addEventListener("click", () => {
-        calendar.classList.toggle("is-expanded");
-        document.getElementById("plannerExpandBtn").textContent = calendar.classList.contains("is-expanded") ? "-" : "+";
+    calendar.addEventListener("click", (event) => {
+        const target = event.target.closest("button");
+        if (!target) return;
+        if (target.id === "plannerPrevMonth") shiftEventPlannerMonth(-1);
+        if (target.id === "plannerNextMonth") shiftEventPlannerMonth(1);
+        if (target.id === "plannerAddBtn") startPlannerAddMode();
+        if (target.id === "plannerExpandBtn") togglePlannerPanelSize();
+        if (target.id === "plannerCloseBtn") closePlannerPanel();
     });
-    document.getElementById("plannerCloseBtn")?.addEventListener("click", () => {
-        calendar.classList.add("is-hidden");
-        calendar.setAttribute("aria-hidden", "true");
-    });
+    document.getElementById("plannerEventForm")?.addEventListener("submit", savePlannerTypedEvent);
+    window.startPlannerAddMode = startPlannerAddMode;
+    window.togglePlannerPanelSize = togglePlannerPanelSize;
+    window.closePlannerPanel = closePlannerPanel;
+}
+
+function togglePlannerPanelSize() {
+    const calendar = document.getElementById("openingCalendar");
+    const button = document.getElementById("plannerExpandBtn");
+    if (!calendar) return;
+    calendar.classList.toggle("is-expanded");
+    if (button) button.textContent = calendar.classList.contains("is-expanded") ? "−" : "□";
+}
+
+function closePlannerPanel() {
+    const calendar = document.getElementById("openingCalendar");
+    if (!calendar) return;
+    calendar.classList.add("is-hidden");
+    calendar.setAttribute("aria-hidden", "true");
 }
 
 function updateOpeningCalendarSelection() {
@@ -1149,6 +1170,8 @@ function getForecastLabel(code, chance) {
 const EVENT_PLANNER_STORAGE_KEY = "mzLuxEventPlannerDates";
 let eventPlannerMonth = new Date();
 let eventPlannerWeather = {};
+let pendingPlannerDate = "";
+let plannerAddMode = false;
 
 function shiftEventPlannerMonth(direction) {
     eventPlannerMonth = new Date(eventPlannerMonth.getFullYear(), eventPlannerMonth.getMonth() + direction, 1);
@@ -1189,6 +1212,7 @@ function renderEventPlannerCalendar() {
         button.setAttribute("aria-label", `${date.toLocaleDateString(undefined, { month: "long", day: "numeric" })}${event ? `, booked for ${event.type}` : ""}`);
         button.classList.toggle("is-today", key === todayKey);
         button.classList.toggle("has-event", Boolean(event));
+        button.classList.toggle("is-pending", key === pendingPlannerDate);
         if (weather?.state === "rainy") button.classList.add("is-rainy");
         if (weather?.state === "cloudy") button.classList.add("is-cloudy");
 
@@ -1198,24 +1222,76 @@ function renderEventPlannerCalendar() {
             ${event ? '<b class="event-planner-dot" aria-hidden="true"></b>' : ""}
             ${weather && weather.state !== "clear" ? `<em>${weather.label}</em><i class="calendar-weather-icon" aria-hidden="true"></i>` : ""}
         `;
-        button.addEventListener("click", () => togglePlannerEvent(key));
+        button.addEventListener("click", () => handlePlannerDateClick(key));
         grid.appendChild(button);
     }
 
     if (summary) {
         const eventCount = Object.keys(savedEvents).length;
-        summary.textContent = eventCount
+        summary.textContent = plannerAddMode
+            ? "Select a date, type the event, then save."
+            : eventCount
             ? `${eventCount} event${eventCount === 1 ? "" : "s"} saved. Click a booked date to clear it.`
             : "Tap a date to add your first event.";
     }
 }
 
-function togglePlannerEvent(dateKey) {
+function startPlannerAddMode() {
+    plannerAddMode = true;
+    pendingPlannerDate = "";
+    const form = document.getElementById("plannerEventForm");
+    const selected = document.getElementById("plannerSelectedDate");
+    const input = document.getElementById("plannerEventName");
+    document.getElementById("openingCalendar")?.classList.add("is-adding", "is-expanded");
+    document.getElementById("plannerExpandBtn").textContent = "−";
+    if (form) form.classList.add("is-active");
+    if (selected) selected.textContent = "Select a date";
+    if (input) input.value = "";
+    renderEventPlannerCalendar();
+}
+
+function handlePlannerDateClick(dateKey) {
+    if (plannerAddMode) {
+        pendingPlannerDate = dateKey;
+        const selected = document.getElementById("plannerSelectedDate");
+        if (selected) {
+            selected.textContent = new Date(`${dateKey}T12:00:00`).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            });
+        }
+        document.getElementById("plannerEventName")?.focus();
+        renderEventPlannerCalendar();
+        return;
+    }
+    togglePlannerEvent(dateKey);
+}
+
+function savePlannerTypedEvent(event) {
+    event.preventDefault();
+    const input = document.getElementById("plannerEventName");
+    const name = input?.value.trim();
+    if (!pendingPlannerDate || !name) {
+        const selected = document.getElementById("plannerSelectedDate");
+        if (selected) selected.textContent = pendingPlannerDate ? "Write event name" : "Select a date";
+        return;
+    }
+    togglePlannerEvent(pendingPlannerDate, name);
+    plannerAddMode = false;
+    pendingPlannerDate = "";
+    document.getElementById("openingCalendar")?.classList.remove("is-adding");
+    document.getElementById("plannerEventForm")?.classList.remove("is-active");
+    input.value = "";
+    renderEventPlannerCalendar();
+}
+
+function togglePlannerEvent(dateKey, customName = "") {
     const events = getPlannerEvents();
-    if (events[dateKey]) {
+    if (events[dateKey] && !customName) {
         delete events[dateKey];
     } else {
-        const type = document.getElementById("plannerEventType")?.value || "Gala";
+        const type = customName || document.getElementById("plannerEventType")?.value || "Gala";
         const outfit = [selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes]
             .filter(Boolean)
             .map((item) => item.name)
