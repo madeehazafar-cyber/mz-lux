@@ -1057,6 +1057,14 @@ function initOpeningClosetCalendar() {
 
     document.getElementById("plannerPrevMonth")?.addEventListener("click", () => shiftEventPlannerMonth(-1));
     document.getElementById("plannerNextMonth")?.addEventListener("click", () => shiftEventPlannerMonth(1));
+    document.getElementById("plannerExpandBtn")?.addEventListener("click", () => {
+        calendar.classList.toggle("is-expanded");
+        document.getElementById("plannerExpandBtn").textContent = calendar.classList.contains("is-expanded") ? "-" : "+";
+    });
+    document.getElementById("plannerCloseBtn")?.addEventListener("click", () => {
+        calendar.classList.add("is-hidden");
+        calendar.setAttribute("aria-hidden", "true");
+    });
 }
 
 function updateOpeningCalendarSelection() {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260612-suite">
+    <link rel="stylesheet" href="style.css?v=20260614-planner-tab">
 </head>
 <body>
 <header>
@@ -81,6 +81,10 @@
 
     <section id="openingCalendar" class="opening-calendar event-planner-calendar" aria-label="MZ LUX event planner calendar">
         <div class="opening-calendar-frame" aria-hidden="true"></div>
+        <div class="event-planner-tabbar">
+            <button id="plannerExpandBtn" class="event-planner-icon-btn" type="button" aria-label="Enlarge calendar">+</button>
+            <button id="plannerCloseBtn" class="event-planner-icon-btn" type="button" aria-label="Close calendar">x</button>
+        </div>
         <div class="opening-calendar-head">
             <span>Closet Calendar</span>
             <h2>Event Planner</h2>
@@ -111,7 +115,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260614-event-planner"></script>
+<script src="main.js?v=20260614-planner-tab"></script>
 <script>
 (function () {
     function revealCategorySections() {

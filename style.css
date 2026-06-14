@@ -4172,12 +4172,24 @@ body:has(.builder-page) {
 }
 
 /* Opening Closet Calendar */
+body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
+    position: fixed;
+    top: clamp(88px, 13vh, 112px);
+    right: clamp(12px, 3vw, 32px);
+    left: auto;
+    bottom: auto;
+    margin: 0;
+}
+
 .opening-calendar {
-    position: relative;
-    z-index: 5;
-    width: min(980px, 100%);
-    margin: clamp(18px, 4vw, 36px) auto 0;
-    padding: clamp(16px, 3vw, 24px);
+    position: fixed;
+    top: clamp(88px, 13vh, 112px);
+    right: clamp(12px, 3vw, 32px);
+    z-index: 9000;
+    width: min(250px, calc(100vw - 24px));
+    max-height: calc(100vh - 120px);
+    margin: 0;
+    padding: 14px;
     border: 1px solid rgba(221, 184, 101, 0.34);
     background:
         radial-gradient(circle at 8% 0%, rgba(221, 184, 101, 0.12), transparent 30%),
@@ -4188,7 +4200,7 @@ body:has(.builder-page) {
     opacity: 0;
     pointer-events: auto;
     overflow: hidden;
-    transform: translateY(18px) scale(0.985);
+    transform: translateX(26px) scale(0.985);
     transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.72s cubic-bezier(0.16, 1, 0.3, 1),
                 filter 0.48s ease;
@@ -4245,13 +4257,49 @@ body:has(.builder-page) {
 
 .opening-calendar.is-visible {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateX(0) scale(1);
 }
 
 .opening-calendar.is-hidden {
     opacity: 0;
     filter: blur(10px);
     transform: translateX(42px) scale(0.98);
+    pointer-events: none;
+}
+
+.opening-calendar.is-expanded {
+    width: min(760px, calc(100vw - 24px));
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+}
+
+.event-planner-tabbar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 4;
+    display: flex;
+    gap: 6px;
+}
+
+.event-planner-icon-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(221, 184, 101, 0.32);
+    background: rgba(255, 248, 234, 0.07);
+    color: var(--closet-gold);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 900;
+    line-height: 1;
+    transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+}
+
+.event-planner-icon-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(221, 184, 101, 0.72);
+    background: rgba(221, 184, 101, 0.14);
 }
 
 .opening-calendar.is-visible::before,
@@ -4268,7 +4316,7 @@ body:has(.builder-page) {
     position: relative;
     display: grid;
     gap: 8px;
-    padding: 10px 8px 14px;
+    padding: 8px 68px 12px 8px;
     text-align: center;
 }
 
@@ -4283,8 +4331,18 @@ body:has(.builder-page) {
 .opening-calendar-head h2 {
     margin: 0;
     color: var(--closet-ink);
-    font-size: clamp(1.5rem, 5vw, 2.6rem);
+    font-size: clamp(1.25rem, 3vw, 2rem);
     line-height: 0.95;
+}
+
+.opening-calendar:not(.is-expanded) .opening-calendar-head {
+    min-height: 58px;
+    align-content: center;
+    padding-bottom: 8px;
+}
+
+.opening-calendar:not(.is-expanded) .opening-calendar-head h2 {
+    font-size: 1.18rem;
 }
 
 .opening-calendar-head p {
@@ -4295,24 +4353,36 @@ body:has(.builder-page) {
     line-height: 1.55;
 }
 
+.opening-calendar:not(.is-expanded) .opening-calendar-head p,
+.opening-calendar:not(.is-expanded) .event-planner-toolbar,
+.opening-calendar:not(.is-expanded) .event-planner-weekdays,
+.opening-calendar:not(.is-expanded) .opening-calendar-grid,
+.opening-calendar:not(.is-expanded) .event-planner-summary {
+    display: none;
+}
+
 .event-planner-toolbar {
     position: relative;
     display: grid;
-    grid-template-columns: 42px 1fr 42px minmax(150px, 210px);
-    gap: 10px;
+    grid-template-columns: 34px 1fr 34px;
+    gap: 7px;
     align-items: center;
     margin: 6px 0 14px;
 }
 
+.event-planner-toolbar select {
+    grid-column: 1 / -1;
+}
+
 .event-planner-toolbar button,
 .event-planner-toolbar select {
-    min-height: 42px;
+    min-height: 36px;
     border: 1px solid rgba(221, 184, 101, 0.24);
     background: rgba(255, 248, 234, 0.06);
     color: var(--closet-ink);
     cursor: pointer;
     font: inherit;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     font-weight: 900;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -4329,7 +4399,7 @@ body:has(.builder-page) {
 .event-planner-toolbar strong {
     justify-self: center;
     color: var(--closet-ink);
-    font-size: clamp(1rem, 2.8vw, 1.65rem);
+    font-size: clamp(0.78rem, 2vw, 1.15rem);
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -4360,12 +4430,12 @@ body:has(.builder-page) {
     position: relative;
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 7px;
+    gap: 5px;
 }
 
 .opening-calendar-day {
     position: relative;
-    min-height: clamp(66px, 8vw, 92px);
+    min-height: 48px;
     display: grid;
     align-content: space-between;
     border: 1px solid rgba(221, 184, 101, 0.18);
@@ -4373,12 +4443,18 @@ body:has(.builder-page) {
     color: var(--closet-ink);
     cursor: pointer;
     font: inherit;
-    padding: 9px;
+    padding: 6px;
     opacity: 0;
     transform: translateY(14px);
     overflow: hidden;
     text-align: left;
     transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+}
+
+.opening-calendar.is-expanded .opening-calendar-day,
+.opening-calendar.is-expanded .event-planner-empty {
+    min-height: clamp(64px, 7vw, 86px);
+    padding: 9px;
 }
 
 .opening-calendar-day:hover {
@@ -4410,6 +4486,11 @@ body:has(.builder-page) {
     text-transform: uppercase;
 }
 
+.opening-calendar:not(.is-expanded) .opening-calendar-day strong,
+.opening-calendar:not(.is-expanded) .opening-calendar-day em {
+    display: none;
+}
+
 .opening-calendar-day em {
     color: rgba(255, 248, 234, 0.52);
     font-size: 0.66rem;
@@ -4420,7 +4501,7 @@ body:has(.builder-page) {
 }
 
 .event-planner-empty {
-    min-height: clamp(66px, 8vw, 92px);
+    min-height: 48px;
     border: 1px solid rgba(255, 248, 234, 0.035);
     background: rgba(255, 248, 234, 0.015);
 }
@@ -4602,8 +4683,15 @@ body:has(.builder-page) {
 
 @media (max-width: 720px) {
     .opening-calendar {
-        width: 100%;
+        top: 78px;
+        right: 10px;
+        width: min(310px, calc(100vw - 20px));
+        max-height: calc(100vh - 90px);
         padding: 15px;
+    }
+
+    .opening-calendar.is-expanded {
+        width: calc(100vw - 20px);
     }
 
     .event-planner-toolbar {
