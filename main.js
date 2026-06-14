@@ -1066,6 +1066,7 @@ function initOpeningClosetCalendar() {
         if (target.id === "plannerAddBtn") startPlannerAddMode();
         if (target.id === "plannerExpandBtn") togglePlannerPanelSize();
         if (target.id === "plannerCloseBtn") closePlannerPanel();
+        if (target.id === "plannerDeleteEventBtn") deletePlannerSelectedEvent();
     });
     document.getElementById("plannerEventForm")?.addEventListener("submit", savePlannerTypedEvent);
     window.startPlannerAddMode = startPlannerAddMode;
@@ -1086,6 +1087,7 @@ function closePlannerPanel() {
     if (!calendar) return;
     calendar.classList.add("is-hidden");
     calendar.setAttribute("aria-hidden", "true");
+    document.querySelector(".builder-page.clueless-closet")?.classList.add("planner-panel-closed");
 }
 
 function updateOpeningCalendarSelection() {
@@ -1242,18 +1244,24 @@ function startPlannerAddMode() {
     const form = document.getElementById("plannerEventForm");
     const selected = document.getElementById("plannerSelectedDate");
     const input = document.getElementById("plannerEventName");
+    const deleteButton = document.getElementById("plannerDeleteEventBtn");
     document.getElementById("openingCalendar")?.classList.add("is-adding", "is-expanded");
     document.getElementById("plannerExpandBtn").textContent = "−";
     if (form) form.classList.add("is-active");
     if (selected) selected.textContent = "Select a date";
     if (input) input.value = "";
+    if (deleteButton) deleteButton.disabled = true;
     renderEventPlannerCalendar();
 }
 
 function handlePlannerDateClick(dateKey) {
     if (plannerAddMode) {
         pendingPlannerDate = dateKey;
+        const events = getPlannerEvents();
+        const event = events[dateKey];
         const selected = document.getElementById("plannerSelectedDate");
+        const input = document.getElementById("plannerEventName");
+        const deleteButton = document.getElementById("plannerDeleteEventBtn");
         if (selected) {
             selected.textContent = new Date(`${dateKey}T12:00:00`).toLocaleDateString(undefined, {
                 month: "short",
@@ -1261,11 +1269,16 @@ function handlePlannerDateClick(dateKey) {
                 year: "numeric"
             });
         }
-        document.getElementById("plannerEventName")?.focus();
+        if (input) {
+            input.value = event?.type || "";
+            input.focus();
+        }
+        if (deleteButton) deleteButton.disabled = !event;
         renderEventPlannerCalendar();
         return;
     }
-    togglePlannerEvent(dateKey);
+    startPlannerAddMode();
+    handlePlannerDateClick(dateKey);
 }
 
 function savePlannerTypedEvent(event) {
@@ -1283,6 +1296,24 @@ function savePlannerTypedEvent(event) {
     document.getElementById("openingCalendar")?.classList.remove("is-adding");
     document.getElementById("plannerEventForm")?.classList.remove("is-active");
     input.value = "";
+    renderEventPlannerCalendar();
+}
+
+function deletePlannerSelectedEvent() {
+    if (!pendingPlannerDate) return;
+    const events = getPlannerEvents();
+    delete events[pendingPlannerDate];
+    localStorage.setItem(EVENT_PLANNER_STORAGE_KEY, JSON.stringify(events));
+    pendingPlannerDate = "";
+    plannerAddMode = false;
+    const form = document.getElementById("plannerEventForm");
+    const input = document.getElementById("plannerEventName");
+    const selected = document.getElementById("plannerSelectedDate");
+    const deleteButton = document.getElementById("plannerDeleteEventBtn");
+    if (form) form.classList.remove("is-active");
+    if (input) input.value = "";
+    if (selected) selected.textContent = "Select a date";
+    if (deleteButton) deleteButton.disabled = true;
     renderEventPlannerCalendar();
 }
 

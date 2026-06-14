@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260614-split-planner">
+    <link rel="stylesheet" href="style.css?v=20260614-delete-events">
 </head>
 <body>
 <header>
@@ -110,7 +110,10 @@
         <form id="plannerEventForm" class="event-planner-form" aria-label="Save event to calendar">
             <span id="plannerSelectedDate">Select a date</span>
             <input id="plannerEventName" type="text" placeholder="Wedding, gala, photoshoot..." aria-label="Event name">
-            <button type="submit">Save</button>
+            <div class="event-planner-form-actions">
+                <button type="submit">Save</button>
+                <button id="plannerDeleteEventBtn" class="event-delete-btn" type="button">Delete</button>
+            </div>
         </form>
         <p id="plannerEventSummary" class="event-planner-summary" aria-live="polite">Tap a date to add your first event.</p>
     </section>
@@ -121,7 +124,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260614-split-planner"></script>
+<script src="main.js?v=20260614-delete-events"></script>
 <script>
 (function () {
     function revealCategorySections() {
