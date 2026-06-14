@@ -286,6 +286,7 @@ document.addEventListener("DOMContentLoaded", initFeaturedCollectionIntro);
 document.addEventListener("DOMContentLoaded", initStylePreferencePopup);
 document.addEventListener("DOMContentLoaded", initThemeQuiz);
 document.addEventListener("DOMContentLoaded", initOpeningClosetCalendar);
+document.addEventListener("DOMContentLoaded", initReliableCategoryNavigation);
 
 if (document.readyState !== "loading") {
     initBuilder();
@@ -293,6 +294,20 @@ if (document.readyState !== "loading") {
 }
 
 window.showThemeItems = showThemeItems;
+
+function initReliableCategoryNavigation() {
+    document.querySelectorAll('a[href="categories.html"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const target = new URL("categories.html", window.location.href).href;
+            if (window.location.href.split("#")[0] === target) {
+                window.location.reload();
+                return;
+            }
+            window.location.href = target;
+        });
+    });
+}
 
 function initFeaturedCollectionIntro() {
     const grid = document.querySelector(".cinematic-featured-grid");
@@ -1121,17 +1136,7 @@ async function hydrateOpeningCalendarWeather() {
 
 function getForecastCoordinates() {
     const fallback = { latitude: 43.6532, longitude: -79.3832 };
-    if (!navigator.geolocation) return Promise.resolve(fallback);
-    return new Promise((resolve) => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => resolve({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            }),
-            () => resolve(fallback),
-            { enableHighAccuracy: false, timeout: 1800, maximumAge: 1000 * 60 * 30 }
-        );
-    });
+    return Promise.resolve(fallback);
 }
 
 function getForecastDayLabel(dateText, index) {
