@@ -79,39 +79,30 @@
         </div>
     </section>
 
-    <section id="openingCalendar" class="opening-calendar" aria-label="Closet calendar">
+    <section id="openingCalendar" class="opening-calendar event-planner-calendar" aria-label="MZ LUX event planner calendar">
         <div class="opening-calendar-frame" aria-hidden="true"></div>
         <div class="opening-calendar-head">
             <span>Closet Calendar</span>
-            <h2>This week in looks</h2>
-            <p id="openingCalendarLook">Build a look in the frame, then scroll to continue styling.</p>
+            <h2>Event Planner</h2>
+            <p id="openingCalendarLook">Choose an event type, then tap a date to reserve the outfit.</p>
         </div>
-        <div class="opening-calendar-grid">
-            <div class="opening-calendar-day is-today" data-weather-day="0" style="--day: 0">
-                <span>Today</span><strong>Tailored</strong><em>Checking sky</em>
-                <i class="calendar-weather-icon" aria-hidden="true"></i>
-            </div>
-            <div class="opening-calendar-day" data-weather-day="1" style="--day: 1">
-                <span>Day 2</span><strong>Minimal</strong><em>Checking sky</em>
-                <i class="calendar-weather-icon" aria-hidden="true"></i>
-            </div>
-            <div class="opening-calendar-day" data-weather-day="2" style="--day: 2">
-                <span>Day 3</span><strong>MZ LUX</strong><em>Checking sky</em>
-                <i class="calendar-weather-icon" aria-hidden="true"></i>
-            </div>
-            <div class="opening-calendar-day" data-weather-day="3" style="--day: 3">
-                <span>Day 4</span><strong>Brunch</strong><em>Checking sky</em>
-                <i class="calendar-weather-icon" aria-hidden="true"></i>
-            </div>
-            <div class="opening-calendar-day" data-weather-day="4" style="--day: 4">
-                <span>Day 5</span><strong>Evening</strong><em>Checking sky</em>
-                <i class="calendar-weather-icon" aria-hidden="true"></i>
-            </div>
-            <div class="opening-calendar-day" data-weather-day="5" style="--day: 5">
-                <span>Day 6</span><strong>Studio</strong><em>Checking sky</em>
-                <i class="calendar-weather-icon" aria-hidden="true"></i>
-            </div>
+        <div class="event-planner-toolbar" aria-label="Event planner controls">
+            <button id="plannerPrevMonth" type="button" aria-label="Previous month">&lt;</button>
+            <strong id="plannerMonthLabel">Month</strong>
+            <button id="plannerNextMonth" type="button" aria-label="Next month">&gt;</button>
+            <select id="plannerEventType" aria-label="Event type">
+                <option value="Wedding">Wedding</option>
+                <option value="Gala">Gala</option>
+                <option value="Photoshoot">Photoshoot</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Travel">Travel</option>
+            </select>
         </div>
+        <div class="event-planner-weekdays" aria-hidden="true">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div id="plannerCalendarGrid" class="opening-calendar-grid event-planner-grid" role="grid" aria-label="Monthly event planner"></div>
+        <p id="plannerEventSummary" class="event-planner-summary" aria-live="polite">Tap a date to add your first event.</p>
     </section>
 
     <div id="clashBanner" class="clash-banner" role="status" aria-live="polite">
@@ -120,7 +111,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260614-calendar-weather"></script>
+<script src="main.js?v=20260614-event-planner"></script>
 <script>
 (function () {
     function revealCategorySections() {

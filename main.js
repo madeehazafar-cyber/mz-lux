@@ -1048,33 +1048,15 @@ function initOpeningClosetCalendar() {
     const calendar = document.getElementById("openingCalendar");
     if (!calendar) return;
 
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-
     updateOpeningCalendarSelection();
+    renderEventPlannerCalendar();
     hydrateOpeningCalendarWeather();
     requestAnimationFrame(() => {
         setTimeout(() => calendar.classList.add("is-visible"), 120);
     });
 
-    let canDismiss = false;
-    setTimeout(() => {
-        canDismiss = true;
-    }, 480);
-
-    const dismissCalendar = () => {
-        if (!canDismiss) return;
-        if (calendar.classList.contains("is-hidden")) return;
-        calendar.classList.add("is-hidden");
-        calendar.setAttribute("aria-hidden", "true");
-        window.removeEventListener("scroll", dismissCalendar);
-        window.removeEventListener("wheel", dismissCalendar);
-        window.removeEventListener("touchmove", dismissCalendar);
-    };
-
-    window.addEventListener("scroll", dismissCalendar, { passive: true });
-    window.addEventListener("wheel", dismissCalendar, { passive: true, once: true });
-    window.addEventListener("touchmove", dismissCalendar, { passive: true, once: true });
+    document.getElementById("plannerPrevMonth")?.addEventListener("click", () => shiftEventPlannerMonth(-1));
+    document.getElementById("plannerNextMonth")?.addEventListener("click", () => shiftEventPlannerMonth(1));
 }
 
 function updateOpeningCalendarSelection() {
@@ -1089,9 +1071,6 @@ function updateOpeningCalendarSelection() {
 }
 
 async function hydrateOpeningCalendarWeather() {
-    const tiles = [...document.querySelectorAll("[data-weather-day]")];
-    if (!tiles.length) return;
-
     try {
         const coords = await getForecastCoordinates();
         const url = new URL("https://api.open-meteo.com/v1/forecast");
@@ -1099,7 +1078,7 @@ async function hydrateOpeningCalendarWeather() {
             latitude: coords.latitude,
             longitude: coords.longitude,
             daily: "weather_code,precipitation_probability_max",
-            forecast_days: "7",
+            forecast_days: "16",
             timezone: "auto"
         }).toString();
 
@@ -1110,27 +1089,21 @@ async function hydrateOpeningCalendarWeather() {
         const codes = data.daily?.weather_code || [];
         const rainChance = data.daily?.precipitation_probability_max || [];
 
-        tiles.forEach((tile, index) => {
+        eventPlannerWeather = {};
+        dates.forEach((date, index) => {
             const code = Number(codes[index]);
             const chance = Number(rainChance[index] || 0);
-            const rainy = isRainyForecast(code, chance);
-            const dayName = tile.querySelector("span");
-            const label = tile.querySelector("em");
-            if (dayName) dayName.textContent = getForecastDayLabel(dates[index], index);
-            tile.classList.toggle("is-rainy", rainy);
-            tile.classList.toggle("is-cloudy", !rainy && isCloudyForecast(code));
-            if (label) label.textContent = rainy ? (chance >= 20 ? `${chance}% rain` : "Showers") : getForecastLabel(code, chance);
+            eventPlannerWeather[date] = {
+                code,
+                chance,
+                label: isRainyForecast(code, chance) ? (chance >= 20 ? `${chance}% rain` : "Showers") : getForecastLabel(code, chance),
+                state: isRainyForecast(code, chance) ? "rainy" : isCloudyForecast(code) ? "cloudy" : "clear"
+            };
         });
+        renderEventPlannerCalendar();
     } catch (error) {
-        tiles.forEach((tile, index) => {
-            const dayName = tile.querySelector("span");
-            const label = tile.querySelector("em");
-            const rainy = index === 2 || index === 4;
-            if (dayName) dayName.textContent = getForecastDayLabel("", index);
-            tile.classList.toggle("is-rainy", rainy);
-            tile.classList.toggle("is-cloudy", !rainy);
-            if (label) label.textContent = rainy ? "Rain likely" : "Soft clouds";
-        });
+        eventPlannerWeather = createFallbackPlannerWeather();
+        renderEventPlannerCalendar();
     }
 }
 
@@ -1163,6 +1136,116 @@ function getForecastLabel(code, chance) {
     if (chance >= 25) return `${chance}% mist`;
     if (code === 0 || code === 1) return "Clear sky";
     return "Calm sky";
+}
+
+const EVENT_PLANNER_STORAGE_KEY = "mzLuxEventPlannerDates";
+let eventPlannerMonth = new Date();
+let eventPlannerWeather = {};
+
+function shiftEventPlannerMonth(direction) {
+    eventPlannerMonth = new Date(eventPlannerMonth.getFullYear(), eventPlannerMonth.getMonth() + direction, 1);
+    renderEventPlannerCalendar();
+}
+
+function renderEventPlannerCalendar() {
+    const grid = document.getElementById("plannerCalendarGrid");
+    const label = document.getElementById("plannerMonthLabel");
+    const summary = document.getElementById("plannerEventSummary");
+    if (!grid || !label) return;
+
+    const monthStart = new Date(eventPlannerMonth.getFullYear(), eventPlannerMonth.getMonth(), 1);
+    const firstDay = monthStart.getDay();
+    const daysInMonth = new Date(eventPlannerMonth.getFullYear(), eventPlannerMonth.getMonth() + 1, 0).getDate();
+    const todayKey = getPlannerDateKey(new Date());
+    const savedEvents = getPlannerEvents();
+
+    label.textContent = monthStart.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    grid.innerHTML = "";
+
+    for (let i = 0; i < firstDay; i += 1) {
+        const blank = document.createElement("span");
+        blank.className = "event-planner-empty";
+        grid.appendChild(blank);
+    }
+
+    for (let day = 1; day <= daysInMonth; day += 1) {
+        const date = new Date(eventPlannerMonth.getFullYear(), eventPlannerMonth.getMonth(), day);
+        const key = getPlannerDateKey(date);
+        const event = savedEvents[key];
+        const weather = eventPlannerWeather[key];
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "opening-calendar-day event-planner-day";
+        button.dataset.date = key;
+        button.style.setProperty("--day", String((firstDay + day) % 12));
+        button.setAttribute("aria-label", `${date.toLocaleDateString(undefined, { month: "long", day: "numeric" })}${event ? `, booked for ${event.type}` : ""}`);
+        button.classList.toggle("is-today", key === todayKey);
+        button.classList.toggle("has-event", Boolean(event));
+        if (weather?.state === "rainy") button.classList.add("is-rainy");
+        if (weather?.state === "cloudy") button.classList.add("is-cloudy");
+
+        button.innerHTML = `
+            <span>${day}</span>
+            <strong>${event?.type || ""}</strong>
+            ${event ? '<b class="event-planner-dot" aria-hidden="true"></b>' : ""}
+            ${weather && weather.state !== "clear" ? `<em>${weather.label}</em><i class="calendar-weather-icon" aria-hidden="true"></i>` : ""}
+        `;
+        button.addEventListener("click", () => togglePlannerEvent(key));
+        grid.appendChild(button);
+    }
+
+    if (summary) {
+        const eventCount = Object.keys(savedEvents).length;
+        summary.textContent = eventCount
+            ? `${eventCount} event${eventCount === 1 ? "" : "s"} saved. Click a booked date to clear it.`
+            : "Tap a date to add your first event.";
+    }
+}
+
+function togglePlannerEvent(dateKey) {
+    const events = getPlannerEvents();
+    if (events[dateKey]) {
+        delete events[dateKey];
+    } else {
+        const type = document.getElementById("plannerEventType")?.value || "Gala";
+        const outfit = [selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes]
+            .filter(Boolean)
+            .map((item) => item.name)
+            .join(" / ");
+        events[dateKey] = { type, outfit, savedAt: new Date().toISOString() };
+    }
+    localStorage.setItem(EVENT_PLANNER_STORAGE_KEY, JSON.stringify(events));
+    renderEventPlannerCalendar();
+}
+
+function getPlannerEvents() {
+    try {
+        return JSON.parse(localStorage.getItem(EVENT_PLANNER_STORAGE_KEY) || "{}");
+    } catch {
+        return {};
+    }
+}
+
+function getPlannerDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+function createFallbackPlannerWeather() {
+    const fallback = {};
+    [2, 4, 7, 11, 14].forEach((offset, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() + offset);
+        fallback[getPlannerDateKey(date)] = {
+            code: index % 2 ? 3 : 61,
+            chance: index % 2 ? 20 : 58,
+            label: index % 2 ? "Cloud layer" : "58% rain",
+            state: index % 2 ? "cloudy" : "rainy"
+        };
+    });
+    return fallback;
 }
 
 function initStylistSuite() {
