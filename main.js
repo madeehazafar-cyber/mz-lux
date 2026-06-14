@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => setTimeout(initClosetRails, 
 document.addEventListener("DOMContentLoaded", initFeaturedCollectionIntro);
 document.addEventListener("DOMContentLoaded", initStylePreferencePopup);
 document.addEventListener("DOMContentLoaded", initThemeQuiz);
-document.addEventListener("DOMContentLoaded", initStylistSuite);
+document.addEventListener("DOMContentLoaded", initOpeningClosetCalendar);
 
 if (document.readyState !== "loading") {
     initBuilder();
@@ -293,7 +293,6 @@ if (document.readyState !== "loading") {
 }
 
 window.showThemeItems = showThemeItems;
-window.openSuiteDrawer = openSuiteDrawer;
 
 function initFeaturedCollectionIntro() {
     const grid = document.querySelector(".cinematic-featured-grid");
@@ -1027,7 +1026,138 @@ function updateCurrentLookPreview() {
             : "<span>No accessories</span>";
     }
 
-    updateStylistSuite();
+    updateOpeningCalendarSelection();
+}
+
+function initOpeningClosetCalendar() {
+    const calendar = document.getElementById("openingCalendar");
+    if (!calendar) return;
+
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+    updateOpeningCalendarSelection();
+    hydrateOpeningCalendarWeather();
+    requestAnimationFrame(() => {
+        setTimeout(() => calendar.classList.add("is-visible"), 120);
+    });
+
+    let canDismiss = false;
+    setTimeout(() => {
+        canDismiss = true;
+    }, 480);
+
+    const dismissCalendar = () => {
+        if (!canDismiss) return;
+        if (calendar.classList.contains("is-hidden")) return;
+        calendar.classList.add("is-hidden");
+        calendar.setAttribute("aria-hidden", "true");
+        window.removeEventListener("scroll", dismissCalendar);
+        window.removeEventListener("wheel", dismissCalendar);
+        window.removeEventListener("touchmove", dismissCalendar);
+    };
+
+    window.addEventListener("scroll", dismissCalendar, { passive: true });
+    window.addEventListener("wheel", dismissCalendar, { passive: true, once: true });
+    window.addEventListener("touchmove", dismissCalendar, { passive: true, once: true });
+}
+
+function updateOpeningCalendarSelection() {
+    const lookLine = document.getElementById("openingCalendarLook");
+    if (!lookLine) return;
+    const names = [selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes]
+        .filter(Boolean)
+        .map((item) => item.name);
+    lookLine.textContent = names.length
+        ? `Today: ${names.join(" / ")}`
+        : "Build a look in the frame, then scroll to continue styling.";
+}
+
+async function hydrateOpeningCalendarWeather() {
+    const tiles = [...document.querySelectorAll("[data-weather-day]")];
+    if (!tiles.length) return;
+
+    try {
+        const coords = await getForecastCoordinates();
+        const url = new URL("https://api.open-meteo.com/v1/forecast");
+        url.search = new URLSearchParams({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            daily: "weather_code,precipitation_probability_max",
+            forecast_days: "7",
+            timezone: "auto"
+        }).toString();
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Forecast unavailable");
+        const data = await response.json();
+        const dates = data.daily?.time || [];
+        const codes = data.daily?.weather_code || [];
+        const rainChance = data.daily?.precipitation_probability_max || [];
+
+        tiles.forEach((tile, index) => {
+            const code = Number(codes[index]);
+            const chance = Number(rainChance[index] || 0);
+            const rainy = isRainyForecast(code, chance);
+            const dayName = tile.querySelector("span");
+            const label = tile.querySelector("em");
+            if (dayName) dayName.textContent = getForecastDayLabel(dates[index], index);
+            tile.classList.toggle("is-rainy", rainy);
+            tile.classList.toggle("is-cloudy", !rainy && isCloudyForecast(code));
+            if (label) label.textContent = rainy ? (chance >= 20 ? `${chance}% rain` : "Showers") : getForecastLabel(code, chance);
+        });
+    } catch (error) {
+        tiles.forEach((tile, index) => {
+            const dayName = tile.querySelector("span");
+            const label = tile.querySelector("em");
+            const rainy = index === 2 || index === 4;
+            if (dayName) dayName.textContent = getForecastDayLabel("", index);
+            tile.classList.toggle("is-rainy", rainy);
+            tile.classList.toggle("is-cloudy", !rainy);
+            if (label) label.textContent = rainy ? "Rain likely" : "Soft clouds";
+        });
+    }
+}
+
+function getForecastCoordinates() {
+    const fallback = { latitude: 43.6532, longitude: -79.3832 };
+    if (!navigator.geolocation) return Promise.resolve(fallback);
+    return new Promise((resolve) => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => resolve({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            }),
+            () => resolve(fallback),
+            { enableHighAccuracy: false, timeout: 1800, maximumAge: 1000 * 60 * 30 }
+        );
+    });
+}
+
+function getForecastDayLabel(dateText, index) {
+    if (index === 0) return "Today";
+    if (!dateText) {
+        const fallbackDate = new Date();
+        fallbackDate.setDate(fallbackDate.getDate() + index);
+        return fallbackDate.toLocaleDateString(undefined, { weekday: "short" });
+    }
+    const date = new Date(`${dateText}T12:00:00`);
+    return date.toLocaleDateString(undefined, { weekday: "short" });
+}
+
+function isRainyForecast(code, chance) {
+    return chance >= 45 || [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99].includes(code);
+}
+
+function isCloudyForecast(code) {
+    return [2, 3, 45, 48].includes(code);
+}
+
+function getForecastLabel(code, chance) {
+    if (isCloudyForecast(code)) return "Cloud layer";
+    if (chance >= 25) return `${chance}% mist`;
+    if (code === 0 || code === 1) return "Clear sky";
+    return "Calm sky";
 }
 
 function initStylistSuite() {
