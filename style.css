@@ -4975,16 +4975,39 @@ body:has(.clueless-closet) .style-me-btn {
 }
 
 /* Final Categories split-screen compacting */
+body:has(.clueless-closet) {
+    --mz-rail-card-w: clamp(104px, 12vw, 138px);
+    --mz-rail-frame-w: clamp(112px, 13vw, 148px);
+}
+
 body:has(.clueless-closet) .closet-stage {
     padding: 6px 0 !important;
 }
 
+body:has(.clueless-closet) .closet-viewfinder {
+    width: var(--mz-rail-frame-w) !important;
+    top: 12px !important;
+    bottom: 12px !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 246, 219, 0.06),
+        0 0 24px rgba(221, 184, 101, 0.1) !important;
+}
+
+body:has(.clueless-closet) .closet-viewfinder::before,
+body:has(.clueless-closet) .closet-viewfinder::after {
+    left: -12px !important;
+    right: -12px !important;
+}
+
 body:has(.clueless-closet) .clothing-display.closet-rails {
-    gap: 7px !important;
+    gap: 6px !important;
 }
 
 body:has(.clueless-closet) .closet-rails .category-section {
-    padding: 5px 0 6px !important;
+    padding: 2px 0 4px !important;
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 body:has(.clueless-closet) .closet-rails .category-section h2 {
@@ -5010,25 +5033,68 @@ body:has(.clueless-closet) .closet-rails .category-section h2 {
 }
 
 body:has(.clueless-closet) .closet-rails .clothing-grid {
-    padding-top: 23px !important;
-    padding-bottom: 2px !important;
+    gap: clamp(8px, 1vw, 12px) !important;
+    scroll-padding-inline: calc(50% - (var(--mz-rail-card-w) / 2)) !important;
+    padding: 21px calc(50% - (var(--mz-rail-card-w) / 2)) 1px !important;
+}
+
+body:has(.clueless-closet) .builder-page.clueless-closet.planner-panel-closed .closet-rails .clothing-grid {
+    padding-left: max(18px, calc(50% - (var(--mz-rail-card-w) / 2))) !important;
+    padding-right: max(18px, calc(50% - (var(--mz-rail-card-w) / 2))) !important;
 }
 
 body:has(.clueless-closet) .closet-rails .clothing-card {
-    flex-basis: clamp(118px, 14vw, 160px) !important;
+    flex-basis: var(--mz-rail-card-w) !important;
+    max-width: var(--mz-rail-card-w) !important;
     padding: 5px !important;
-    gap: 4px !important;
+    gap: 3px !important;
+    transform: scale(0.9) !important;
+    opacity: 0.56 !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card.in-viewfinder,
+body:has(.clueless-closet) .closet-rails .clothing-card.selected {
+    transform: scale(0.98) !important;
+    opacity: 1 !important;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28), 0 0 18px rgba(221, 184, 101, 0.08) !important;
+}
+
+body:has(.clueless-closet) .closet-card-lock {
+    width: 26px !important;
+    height: 26px !important;
+    top: 6px !important;
+    right: 6px !important;
+}
+
+body:has(.clueless-closet) .closet-card-lock::before {
+    width: 9px !important;
+    height: 7px !important;
+}
+
+body:has(.clueless-closet) .closet-card-lock::after {
+    top: 7px !important;
+    width: 8px !important;
+    height: 7px !important;
 }
 
 body:has(.clueless-closet) .closet-rails .clothing-card-media,
 body:has(.clueless-closet) .closet-rails .clothing-card img {
-    height: clamp(46px, 7vh, 72px) !important;
-    min-height: clamp(46px, 7vh, 72px) !important;
+    height: clamp(42px, 6.5vh, 64px) !important;
+    min-height: clamp(42px, 6.5vh, 64px) !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card img {
+    padding: 4px !important;
 }
 
 body:has(.clueless-closet) .closet-rails .clothing-card p {
-    min-height: 18px !important;
-    font-size: clamp(0.56rem, 0.8vw, 0.66rem) !important;
+    min-height: 16px !important;
+    font-size: clamp(0.52rem, 0.72vw, 0.62rem) !important;
+    letter-spacing: 0.08em !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card.in-viewfinder img {
+    transform: scale(1.02) !important;
 }
 
 body:has(.clueless-closet) .closet-action-bar {
@@ -7976,4 +8042,48 @@ body:has(.clueless-closet) nav a {
     .clash-banner.is-visible {
         transform: translateY(0);
     }
+}
+
+/* Final rail sizing polish */
+body:has(.clueless-closet) {
+    --mz-rail-card-w: clamp(96px, 11vw, 128px);
+    --mz-rail-frame-w: clamp(104px, 12vw, 136px);
+}
+
+body:has(.clueless-closet) .closet-viewfinder {
+    width: var(--mz-rail-frame-w) !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-grid {
+    gap: clamp(7px, 0.9vw, 10px) !important;
+    scroll-padding-inline: calc(50% - (var(--mz-rail-card-w) / 2)) !important;
+    padding-left: calc(50% - (var(--mz-rail-card-w) / 2)) !important;
+    padding-right: calc(50% - (var(--mz-rail-card-w) / 2)) !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card {
+    flex: 0 0 var(--mz-rail-card-w) !important;
+    width: var(--mz-rail-card-w) !important;
+    min-width: var(--mz-rail-card-w) !important;
+    max-width: var(--mz-rail-card-w) !important;
+    padding: 5px !important;
+    transform: scale(0.9) !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card.in-viewfinder,
+body:has(.clueless-closet) .closet-rails .clothing-card.selected {
+    transform: scale(0.98) !important;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28), 0 0 16px rgba(221, 184, 101, 0.08) !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card-media,
+body:has(.clueless-closet) .closet-rails .clothing-card img {
+    height: clamp(40px, 6vh, 60px) !important;
+    min-height: clamp(40px, 6vh, 60px) !important;
+}
+
+body:has(.clueless-closet) .closet-rails .clothing-card p {
+    min-height: 16px !important;
+    font-size: clamp(0.5rem, 0.7vw, 0.6rem) !important;
+    letter-spacing: 0.07em !important;
 }
