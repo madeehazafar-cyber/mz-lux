@@ -1205,9 +1205,19 @@ function renderOutfitInsights(palette, items) {
     const meta = document.getElementById("outfitInsightMeta");
     if (!swatches || !advice || !meta) return;
 
-    swatches.innerHTML = palette
-        .map((color) => `<span style="--swatch:${color}" title="${color}"></span>`)
-        .join("");
+    const wheelStops = palette
+        .map((color, index) => {
+            const start = index * 20;
+            return `${color} ${start}% ${start + 20}%`;
+        })
+        .join(",");
+    swatches.innerHTML = `
+        <div class="outfit-color-wheel" style="--wheel:conic-gradient(${wheelStops})" aria-hidden="true">
+            <span>MZ</span>
+        </div>
+        <div class="outfit-wheel-chips" aria-label="Generated outfit palette colors">
+            ${palette.map((color) => `<span style="--swatch:${color}" title="${color}">${color}</span>`).join("")}
+        </div>`;
     advice.textContent = buildOutfitAdvice(items, palette);
     meta.innerHTML = items.length
         ? items.slice(0, 4).map((item) => `<span>${item.name}</span>`).join("")

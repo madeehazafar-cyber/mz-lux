@@ -8548,21 +8548,77 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
     padding: 14px;
 }
 
-.outfit-swatch-strip {
+.outfit-color-wheel-wrap {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: minmax(112px, 138px) minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
     margin-top: 12px;
 }
 
-.outfit-swatch-strip span {
-    display: block;
-    min-height: 54px;
-    border: 1px solid rgba(255, 246, 219, 0.08);
+.outfit-color-wheel {
+    position: relative;
+    width: clamp(112px, 12vw, 138px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--wheel, conic-gradient(#0B0B0B 0 20%, #18130D 20% 40%, #DDB865 40% 60%, #F8EFE0 60% 80%, #4A3A22 80% 100%));
+    border: 1px solid rgba(221, 184, 101, 0.42);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 246, 219, 0.08),
+        inset 0 0 36px rgba(0, 0, 0, 0.28),
+        0 18px 42px rgba(0, 0, 0, 0.32),
+        0 0 28px rgba(221, 184, 101, 0.1);
+}
+
+.outfit-color-wheel::before {
+    content: "";
+    position: absolute;
+    inset: 18%;
+    border-radius: inherit;
     background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent),
-        var(--swatch, #0B0B0B);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+        radial-gradient(circle at 32% 24%, rgba(255, 246, 219, 0.22), transparent 34%),
+        #0b0b0b;
+    border: 1px solid rgba(221, 184, 101, 0.32);
+}
+
+.outfit-color-wheel span {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: rgba(255, 241, 190, 0.86);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.outfit-wheel-chips {
+    display: grid;
+    gap: 7px;
+}
+
+.outfit-wheel-chips span {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    align-items: center;
+    gap: 8px;
+    min-height: 28px;
+    color: rgba(248, 239, 224, 0.78);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.outfit-wheel-chips span::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 246, 219, 0.14);
+    background: var(--swatch, #0B0B0B);
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.22);
 }
 
 .outfit-advice-panel p {
@@ -8606,8 +8662,12 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
         grid-template-columns: 1fr;
     }
 
-    .outfit-swatch-strip span {
-        min-height: 42px;
+    .outfit-color-wheel-wrap {
+        grid-template-columns: 104px minmax(0, 1fr);
+    }
+
+    .outfit-color-wheel {
+        width: 104px;
     }
 }
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260618-insights">
+    <link rel="stylesheet" href="style.css?v=20260619-color-wheel">
 </head>
 <body>
 <header>
@@ -76,13 +76,18 @@
         </div>
         <div class="outfit-insights-body">
             <div class="outfit-palette-panel">
-                <span class="outfit-insights-label">Palette</span>
-                <div id="outfitInsightSwatches" class="outfit-swatch-strip" aria-label="Generated outfit color palette">
-                    <span style="--swatch:#0B0B0B"></span>
-                    <span style="--swatch:#18130D"></span>
-                    <span style="--swatch:#DDB865"></span>
-                    <span style="--swatch:#F8EFE0"></span>
-                    <span style="--swatch:#4A3A22"></span>
+                <span class="outfit-insights-label">Color Wheel</span>
+                <div id="outfitInsightSwatches" class="outfit-color-wheel-wrap" aria-label="Generated outfit color wheel">
+                    <div class="outfit-color-wheel" style="--wheel:conic-gradient(#0B0B0B 0 20%,#18130D 20% 40%,#DDB865 40% 60%,#F8EFE0 60% 80%,#4A3A22 80% 100%)">
+                        <span>MZ</span>
+                    </div>
+                    <div class="outfit-wheel-chips" aria-label="Generated outfit palette colors">
+                        <span style="--swatch:#0B0B0B">#0B0B0B</span>
+                        <span style="--swatch:#18130D">#18130D</span>
+                        <span style="--swatch:#DDB865">#DDB865</span>
+                        <span style="--swatch:#F8EFE0">#F8EFE0</span>
+                        <span style="--swatch:#4A3A22">#4A3A22</span>
+                    </div>
                 </div>
             </div>
             <div class="outfit-advice-panel">
@@ -151,7 +156,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260618-insights"></script>
+<script src="main.js?v=20260619-color-wheel"></script>
 <script>
 (function () {
     function revealCategorySections() {
