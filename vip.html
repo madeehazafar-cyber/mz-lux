@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MZ LUX | VIP Club</title>
+    <link rel="stylesheet" href="style.css?v=20260618-vip4">
+</head>
+<body class="vip-page">
+<header>
+    <div class="logo"><span class="logo-initials">MZ</span></div>
+    <div>
+        <h1 class="brand-name">MZ LUX</h1>
+        <p class="tagline">VIP Membership</p>
+    </div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="themes.html">Themes</a>
+    <a href="vip.html" aria-current="page">VIP Club</a>
+    <a href="categories.html">Categories</a>
+    <a href="camera.html">Camera</a>
+    <a href="favourites.html">Favourites</a>
+</nav>
+
+<main class="vip-shell">
+    <section class="vip-hero" aria-labelledby="vipTitle">
+        <div class="vip-copy">
+            <span class="vip-kicker">Members-only styling</span>
+            <h2 id="vipTitle">MZ LUX VIP Club</h2>
+            <p>Unlock early drops, birthday rewards, Lux Points, and personal style perks in one polished membership space.</p>
+            <div class="vip-actions">
+                <button type="button" class="vip-primary-btn" id="openVipModal">Join VIP</button>
+                <span class="vip-free-badge">Free tier available</span>
+            </div>
+        </div>
+
+        <aside class="vip-member-card" aria-label="VIP member card">
+            <span class="vip-card-label">MZ LUX</span>
+            <h3 id="vipMemberName">VIP Member</h3>
+            <p><strong id="vipPoints">0</strong> Lux Points</p>
+            <div class="vip-progress" aria-label="Progress to next reward">
+                <span id="vipProgressBar"></span>
+            </div>
+            <small id="vipNextReward">Next reward: 200 points</small>
+        </aside>
+    </section>
+
+    <section class="vip-dashboard" aria-label="VIP membership options">
+        <div class="vip-tier-grid">
+            <article class="vip-tier">
+                <span>Glow</span>
+                <h3>Free</h3>
+                <p>Early access, style tips, and monthly edit previews.</p>
+            </article>
+            <article class="vip-tier vip-tier-featured">
+                <span>Luxe</span>
+                <h3>$5/mo</h3>
+                <p>10% off, birthday reward, and VIP drop alerts.</p>
+            </article>
+            <article class="vip-tier">
+                <span>Diamond</span>
+                <h3>$12/mo</h3>
+                <p>20% off, private picks, and priority styling help.</p>
+            </article>
+        </div>
+
+        <div class="vip-side-panel">
+            <section class="vip-perks" aria-label="VIP perks">
+                <article><span>01</span><strong>Early Drops</strong></article>
+                <article><span>02</span><strong>Birthday Gift</strong></article>
+                <article><span>03</span><strong>Lux Points</strong></article>
+                <article><span>04</span><strong>Member Deals</strong></article>
+            </section>
+
+            <section class="vip-accessibility" aria-label="VIP accessibility controls">
+                <button type="button" id="vipTextToggle" aria-pressed="false">Bigger Text</button>
+                <button type="button" id="vipContrastToggle" aria-pressed="false">High Contrast</button>
+            </section>
+        </div>
+    </section>
+</main>
+
+<div class="vip-modal" id="vipModal" role="dialog" aria-modal="true" aria-labelledby="vipModalTitle" hidden>
+    <div class="vip-modal-backdrop" data-close-vip></div>
+    <form class="vip-modal-card" id="vipJoinForm">
+        <button type="button" class="vip-modal-close" data-close-vip aria-label="Close VIP form">x</button>
+        <span class="vip-kicker">Join the club</span>
+        <h2 id="vipModalTitle">Create Your VIP Pass</h2>
+
+        <label for="vipName">Name</label>
+        <input id="vipName" name="vipName" type="text" autocomplete="name" required>
+
+        <label for="vipEmail">Email</label>
+        <input id="vipEmail" name="vipEmail" type="email" autocomplete="email" required>
+
+        <label for="vipStyle">Favorite style</label>
+        <select id="vipStyle" name="vipStyle">
+            <option>Soft glam</option>
+            <option>Old money</option>
+            <option>Street luxe</option>
+            <option>Minimalist</option>
+            <option>Formal</option>
+        </select>
+
+        <label for="vipBirthday">Birthday month</label>
+        <select id="vipBirthday" name="vipBirthday">
+            <option>January</option><option>February</option><option>March</option><option>April</option>
+            <option>May</option><option>June</option><option>July</option><option>August</option>
+            <option>September</option><option>October</option><option>November</option><option>December</option>
+        </select>
+
+        <button type="submit" class="vip-primary-btn">Activate VIP</button>
+        <p id="vipStatus" class="vip-status" role="status" aria-live="polite"></p>
+    </form>
+</div>
+
+<script>
+    const vipModal = document.getElementById("vipModal");
+    const openVipModal = document.getElementById("openVipModal");
+    const vipJoinForm = document.getElementById("vipJoinForm");
+    const vipStatus = document.getElementById("vipStatus");
+    const vipMemberName = document.getElementById("vipMemberName");
+    const vipPoints = document.getElementById("vipPoints");
+    const vipProgressBar = document.getElementById("vipProgressBar");
+    const vipNextReward = document.getElementById("vipNextReward");
+
+    function renderVipCard() {
+        const member = JSON.parse(localStorage.getItem("mzLuxVipMember") || "null");
+        if (!member) return;
+        vipMemberName.textContent = member.name || "VIP Member";
+        vipPoints.textContent = "50";
+        vipProgressBar.style.width = "25%";
+        vipNextReward.textContent = "Welcome reward active: 50 / 200 points";
+    }
+
+    openVipModal.addEventListener("click", () => {
+        vipModal.hidden = false;
+        document.body.classList.add("vip-modal-open");
+        document.getElementById("vipName").focus();
+    });
+
+    document.querySelectorAll("[data-close-vip]").forEach((el) => {
+        el.addEventListener("click", () => {
+            vipModal.hidden = true;
+            document.body.classList.remove("vip-modal-open");
+            openVipModal.focus();
+        });
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !vipModal.hidden) {
+            vipModal.hidden = true;
+            document.body.classList.remove("vip-modal-open");
+            openVipModal.focus();
+        }
+    });
+
+    vipJoinForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(vipJoinForm);
+        const member = {
+            name: formData.get("vipName"),
+            email: formData.get("vipEmail"),
+            style: formData.get("vipStyle"),
+            birthday: formData.get("vipBirthday")
+        };
+        localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
+        vipStatus.textContent = "Welcome to MZ LUX VIP. Your member pass is active.";
+        renderVipCard();
+        setTimeout(() => {
+            vipModal.hidden = true;
+            document.body.classList.remove("vip-modal-open");
+            openVipModal.textContent = "VIP Active";
+            openVipModal.focus();
+        }, 1200);
+    });
+
+    document.getElementById("vipTextToggle").addEventListener("click", (event) => {
+        const enabled = document.body.classList.toggle("vip-large-text");
+        event.currentTarget.setAttribute("aria-pressed", String(enabled));
+    });
+
+    document.getElementById("vipContrastToggle").addEventListener("click", (event) => {
+        const enabled = document.body.classList.toggle("vip-high-contrast");
+        event.currentTarget.setAttribute("aria-pressed", String(enabled));
+    });
+
+    renderVipCard();
+</script>
+</body>
+</html>

@@ -156,6 +156,8 @@ const outfits = {
 
 const selectedOutfit = { top: null, bottom: null, shoes: null, accessories: [] };
 const themeLabels = { oldMoney: "Old Money", streetwear: "Streetwear", minimalist: "Minimalist", casual: "Casual", formal: "Formal" };
+const DEFAULT_INSIGHT_COLORS = ["#0B0B0B", "#18130D", "#DDB865", "#F8EFE0", "#4A3A22"];
+let outfitInsightsRequest = 0;
 const themeSelect     = document.getElementById("themeSelect");
 const clothingDisplay = document.getElementById("clothingDisplay");
 const instructionBox  = document.getElementById("instructionBox");
@@ -1041,7 +1043,193 @@ function updateCurrentLookPreview() {
             : "<span>No accessories</span>";
     }
 
+    updateOutfitInsights();
     updateOpeningCalendarSelection();
+}
+
+function getOutfitInsightItems() {
+    return [selectedOutfit.top, selectedOutfit.bottom, selectedOutfit.shoes, ...selectedOutfit.accessories]
+        .filter((item) => item && item.image);
+}
+
+// Lightweight color helpers keep the Outfit Insights palette dependency-free.
+function rgbToHex({ r, g, b }) {
+    return `#${[r, g, b].map((value) => Math.max(0, Math.min(255, value)).toString(16).padStart(2, "0")).join("")}`;
+}
+
+function hexToRgb(hex) {
+    const clean = hex.replace("#", "");
+    const value = parseInt(clean.length === 3 ? clean.split("").map((x) => x + x).join("") : clean, 16);
+    return { r: (value >> 16) & 255, g: (value >> 8) & 255, b: value & 255 };
+}
+
+function rgbToHsl({ r, g, b }) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0;
+    let s = 0;
+    const l = (max + min) / 2;
+
+    if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+        if (max === g) h = (b - r) / d + 2;
+        if (max === b) h = (r - g) / d + 4;
+        h /= 6;
+    }
+
+    return { h, s, l };
+}
+
+function hslToRgb({ h, s, l }) {
+    const hueToRgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+    };
+
+    if (s === 0) {
+        const value = Math.round(l * 255);
+        return { r: value, g: value, b: value };
+    }
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    return {
+        r: Math.round(hueToRgb(p, q, h + 1 / 3) * 255),
+        g: Math.round(hueToRgb(p, q, h) * 255),
+        b: Math.round(hueToRgb(p, q, h - 1 / 3) * 255)
+    };
+}
+
+function shiftColor(hex, options = {}) {
+    const hsl = rgbToHsl(hexToRgb(hex));
+    const shifted = {
+        h: (hsl.h + (options.hue || 0) + 1) % 1,
+        s: Math.max(0.08, Math.min(0.82, hsl.s + (options.saturation || 0))),
+        l: Math.max(0.12, Math.min(0.88, hsl.l + (options.lightness || 0)))
+    };
+    return rgbToHex(hslToRgb(shifted));
+}
+
+function getDominantImageColor(src) {
+    return new Promise((resolve) => {
+        if (!src) {
+            resolve(DEFAULT_INSIGHT_COLORS[2]);
+            return;
+        }
+
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.decoding = "async";
+        img.onload = () => {
+            try {
+                const canvas = document.createElement("canvas");
+                const size = 48;
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext("2d", { willReadFrequently: true });
+                ctx.drawImage(img, 0, 0, size, size);
+                const pixels = ctx.getImageData(0, 0, size, size).data;
+                const buckets = new Map();
+
+                for (let i = 0; i < pixels.length; i += 16) {
+                    const r = pixels[i];
+                    const g = pixels[i + 1];
+                    const b = pixels[i + 2];
+                    const a = pixels[i + 3];
+                    const brightness = (r + g + b) / 3;
+                    if (a < 180 || brightness < 12 || brightness > 244) continue;
+                    const key = `${Math.round(r / 24) * 24},${Math.round(g / 24) * 24},${Math.round(b / 24) * 24}`;
+                    buckets.set(key, (buckets.get(key) || 0) + 1);
+                }
+
+                const [dominant] = [...buckets.entries()].sort((a, b) => b[1] - a[1])[0] || [];
+                if (!dominant) {
+                    resolve(DEFAULT_INSIGHT_COLORS[2]);
+                    return;
+                }
+                const [r, g, b] = dominant.split(",").map(Number);
+                resolve(rgbToHex({ r, g, b }));
+            } catch {
+                resolve(DEFAULT_INSIGHT_COLORS[2]);
+            }
+        };
+        img.onerror = () => resolve(DEFAULT_INSIGHT_COLORS[2]);
+        img.src = src;
+    });
+}
+
+// Build a five-color story from sampled garments plus one complementary accent.
+function buildOutfitPalette(dominantColors) {
+    const base = dominantColors.filter(Boolean);
+    if (!base.length) return DEFAULT_INSIGHT_COLORS;
+    const primary = base[0];
+    const secondary = base[1] || shiftColor(primary, { lightness: -0.18 });
+    const accent = shiftColor(primary, { hue: 0.5, saturation: 0.08, lightness: 0.08 });
+    const soft = shiftColor(secondary, { saturation: -0.1, lightness: 0.22 });
+    const shadow = shiftColor(primary, { saturation: -0.08, lightness: -0.28 });
+    return [primary, secondary, accent, soft, shadow].slice(0, 5);
+}
+
+function buildOutfitAdvice(items, palette) {
+    if (!items.length) {
+        return "Center the rails to unlock a palette, hardware direction, and accessory recommendation for the active look.";
+    }
+
+    const names = items.map((item) => item.name.toLowerCase()).join(" ");
+    const currentTheme = themeLabels[themeSelect?.value] || "MZ LUX";
+    const vibe = document.getElementById("vibeSelect")?.selectedOptions?.[0]?.textContent || "editorial";
+    const warmPalette = palette.map(hexToRgb).some(({ r, g, b }) => r > g && g > b);
+    const hardware = /silver|grey|gray|black|navy/.test(names) && !/gold|brown|beige|cream/.test(names)
+        ? "silver hardware"
+        : warmPalette ? "brushed gold hardware" : "mixed-metal hardware";
+    const shoeNote = /loafers|boots|heels/.test(names)
+        ? "keep the shoe line clean and polished"
+        : "finish with matte leather boots or sharp loafers";
+    const layerNote = /blazer|jacket|coat/.test(names)
+        ? "let the outer layer be the strongest silhouette"
+        : "add a structured black blazer for more depth";
+
+    return `${currentTheme} / ${vibe}: pairs best with ${hardware}, ${layerNote}, and ${shoeNote}. Keep accessories intentional so the center-frame outfit stays premium.`;
+}
+
+function renderOutfitInsights(palette, items) {
+    const swatches = document.getElementById("outfitInsightSwatches");
+    const advice = document.getElementById("outfitInsightAdvice");
+    const meta = document.getElementById("outfitInsightMeta");
+    if (!swatches || !advice || !meta) return;
+
+    swatches.innerHTML = palette
+        .map((color) => `<span style="--swatch:${color}" title="${color}"></span>`)
+        .join("");
+    advice.textContent = buildOutfitAdvice(items, palette);
+    meta.innerHTML = items.length
+        ? items.slice(0, 4).map((item) => `<span>${item.name}</span>`).join("")
+        : "<span>No look selected</span>";
+}
+
+async function updateOutfitInsights() {
+    const swatches = document.getElementById("outfitInsightSwatches");
+    if (!swatches) return;
+
+    // Ignore slower image reads when the user shuffles again before they finish.
+    const requestId = ++outfitInsightsRequest;
+    const items = getOutfitInsightItems();
+
+    try {
+        const sampledColors = await Promise.all(items.slice(0, 4).map((item) => getDominantImageColor(item.image)));
+        if (requestId !== outfitInsightsRequest) return;
+        renderOutfitInsights(buildOutfitPalette(sampledColors), items);
+    } catch {
+        if (requestId !== outfitInsightsRequest) return;
+        renderOutfitInsights(DEFAULT_INSIGHT_COLORS, items);
+    }
 }
 
 function initOpeningClosetCalendar() {

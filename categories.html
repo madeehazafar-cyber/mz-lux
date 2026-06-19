@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260614-visible-cards">
+    <link rel="stylesheet" href="style.css?v=20260618-insights">
 </head>
 <body>
 <header>
@@ -18,6 +18,7 @@
 <nav>
     <a href="index.html">Home</a>
     <a href="themes.html">Themes</a>
+    <a href="vip.html">VIP Club</a>
     <a href="categories.html">Categories</a>
     <a href="camera.html">Camera</a>
     <a href="favourites.html">Favourites</a>
@@ -66,6 +67,32 @@
             <span></span>
         </div>
         <div id="clothingDisplay" class="clothing-display closet-rails"></div>
+    </section>
+
+    <section id="outfitInsights" class="outfit-insights-card" aria-labelledby="outfitInsightsTitle">
+        <div class="outfit-insights-head">
+            <span class="outfit-insights-kicker">Expanded Look</span>
+            <h2 id="outfitInsightsTitle">Outfit Insights</h2>
+        </div>
+        <div class="outfit-insights-body">
+            <div class="outfit-palette-panel">
+                <span class="outfit-insights-label">Palette</span>
+                <div id="outfitInsightSwatches" class="outfit-swatch-strip" aria-label="Generated outfit color palette">
+                    <span style="--swatch:#0B0B0B"></span>
+                    <span style="--swatch:#18130D"></span>
+                    <span style="--swatch:#DDB865"></span>
+                    <span style="--swatch:#F8EFE0"></span>
+                    <span style="--swatch:#4A3A22"></span>
+                </div>
+            </div>
+            <div class="outfit-advice-panel">
+                <span class="outfit-insights-label">Styling Direction</span>
+                <p id="outfitInsightAdvice" aria-live="polite">Center the rails to generate a palette and accessory direction for the look.</p>
+                <div id="outfitInsightMeta" class="outfit-insight-tags" aria-label="Current outfit details">
+                    <span>No look selected</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="closet-action-bar" aria-label="Outfit actions">
@@ -124,7 +151,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260614-delete-events"></script>
+<script src="main.js?v=20260618-insights"></script>
 <script>
 (function () {
     function revealCategorySections() {
