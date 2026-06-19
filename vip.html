@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260619-google-signin">
+    <link rel="stylesheet" href="style.css?v=20260619-profile-chip">
 </head>
 <body class="vip-page">
 <header>
@@ -12,6 +12,14 @@
     <div>
         <h1 class="brand-name">MZ LUX</h1>
         <p class="tagline">VIP Membership</p>
+    </div>
+    <div class="vip-profile-chip" id="vipProfileChip" hidden>
+        <span class="vip-profile-avatar" id="vipProfileAvatar">MZ</span>
+        <span class="vip-profile-copy">
+            <strong id="vipProfileName">VIP Member</strong>
+            <small id="vipProfileEmail">Signed in</small>
+        </span>
+        <button type="button" id="vipProfileSignOut">Sign out</button>
     </div>
 </header>
 
@@ -137,10 +145,31 @@
     const vipProgressBar = document.getElementById("vipProgressBar");
     const vipNextReward = document.getElementById("vipNextReward");
     const vipGoogleSignIn = document.getElementById("vipGoogleSignIn");
+    const vipProfileChip = document.getElementById("vipProfileChip");
+    const vipProfileAvatar = document.getElementById("vipProfileAvatar");
+    const vipProfileName = document.getElementById("vipProfileName");
+    const vipProfileEmail = document.getElementById("vipProfileEmail");
+    const vipProfileSignOut = document.getElementById("vipProfileSignOut");
+
+    function renderVipProfile(member) {
+        if (!member) {
+            vipProfileChip.hidden = true;
+            return;
+        }
+        vipProfileChip.hidden = false;
+        vipProfileName.textContent = member.name || "VIP Member";
+        vipProfileEmail.textContent = member.email || "MZ LUX VIP";
+        vipProfileAvatar.textContent = (member.name || member.email || "MZ").slice(0, 1).toUpperCase();
+        vipProfileAvatar.style.backgroundImage = member.photo ? `url("${member.photo}")` : "";
+        vipProfileAvatar.classList.toggle("has-photo", Boolean(member.photo));
+    }
 
     function renderVipCard() {
         const member = JSON.parse(localStorage.getItem("mzLuxVipMember") || "null");
-        if (!member) return;
+        if (!member) {
+            renderVipProfile(null);
+            return;
+        }
         vipMemberName.textContent = member.name || "VIP Member";
         openVipModal.textContent = "Sign In";
         vipPoints.textContent = "50";
@@ -148,6 +177,7 @@
         vipNextReward.textContent = member.provider === "google"
             ? "Google VIP pass active: 50 / 200 points"
             : "Welcome reward active: 50 / 200 points";
+        renderVipProfile(member);
     }
 
     openVipModal.addEventListener("click", () => {
@@ -179,7 +209,8 @@
             name: formData.get("vipName"),
             email: formData.get("vipEmail"),
             style: formData.get("vipStyle"),
-            birthday: formData.get("vipBirthday")
+            birthday: formData.get("vipBirthday"),
+            provider: "form"
         };
         localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
         vipStatus.textContent = "Welcome to MZ LUX VIP. Your member pass is active.";
@@ -200,6 +231,19 @@
     document.getElementById("vipContrastToggle").addEventListener("click", (event) => {
         const enabled = document.body.classList.toggle("vip-high-contrast");
         event.currentTarget.setAttribute("aria-pressed", String(enabled));
+    });
+
+    vipProfileSignOut.addEventListener("click", async () => {
+        try {
+            await window.mzLuxVipSignOut?.();
+        } catch {}
+        localStorage.removeItem("mzLuxVipMember");
+        vipMemberName.textContent = "VIP Member";
+        vipPoints.textContent = "0";
+        vipProgressBar.style.width = "0";
+        vipNextReward.textContent = "Next reward: 200 points";
+        openVipModal.textContent = "Sign In";
+        renderVipProfile(null);
     });
 
     renderVipCard();
@@ -248,6 +292,7 @@
         };
         localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
         renderGoogleVipCard(member);
+        window.renderVipCard?.();
     }
 
     googleButton?.addEventListener("click", async () => {
