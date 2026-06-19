@@ -303,6 +303,56 @@
     color: #2d2116;
 }
 
+.vip-google-btn {
+    width: 100%;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid rgba(176, 141, 87, 0.34);
+    border-radius: 999px;
+    background: #fffdf7;
+    color: #2d2116;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 12px 28px rgba(95, 66, 32, 0.12);
+}
+
+.vip-google-btn span {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4285f4, #34a853 42%, #fbbc05 68%, #ea4335);
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+.vip-google-btn:hover,
+.vip-google-btn:focus-visible {
+    border-color: #9b762f;
+    outline: 3px solid rgba(212, 175, 55, 0.28);
+    outline-offset: 3px;
+}
+
+.vip-google-btn:disabled {
+    cursor: wait;
+    opacity: 0.72;
+}
+
+.vip-google-note {
+    margin: 8px 0 16px;
+    color: #6d5a46;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
 .vip-modal-card label {
     display: block;
     margin: 12px 0 6px;
@@ -368,6 +418,12 @@
 .vip-high-contrast .vip-tier-featured {
     background: #000;
     color: #fff;
+}
+
+.vip-high-contrast .vip-google-btn {
+    border-color: #000;
+    background: #fff;
+    color: #000;
 }
 
 @media (max-width: 900px) {

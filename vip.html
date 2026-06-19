@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260618-vip4">
+    <link rel="stylesheet" href="style.css?v=20260619-google-vip">
 </head>
 <body class="vip-page">
 <header>
@@ -89,6 +89,12 @@
         <span class="vip-kicker">Join the club</span>
         <h2 id="vipModalTitle">Create Your VIP Pass</h2>
 
+        <button type="button" class="vip-google-btn" id="vipGoogleSignIn">
+            <span aria-hidden="true">G</span>
+            Sign in with Google
+        </button>
+        <p class="vip-google-note">Use Google to activate your VIP pass instantly.</p>
+
         <label for="vipName">Name</label>
         <input id="vipName" name="vipName" type="text" autocomplete="name" required>
 
@@ -125,14 +131,18 @@
     const vipPoints = document.getElementById("vipPoints");
     const vipProgressBar = document.getElementById("vipProgressBar");
     const vipNextReward = document.getElementById("vipNextReward");
+    const vipGoogleSignIn = document.getElementById("vipGoogleSignIn");
 
     function renderVipCard() {
         const member = JSON.parse(localStorage.getItem("mzLuxVipMember") || "null");
         if (!member) return;
         vipMemberName.textContent = member.name || "VIP Member";
+        openVipModal.textContent = "VIP Active";
         vipPoints.textContent = "50";
         vipProgressBar.style.width = "25%";
-        vipNextReward.textContent = "Welcome reward active: 50 / 200 points";
+        vipNextReward.textContent = member.provider === "google"
+            ? "Google VIP pass active: 50 / 200 points"
+            : "Welcome reward active: 50 / 200 points";
     }
 
     openVipModal.addEventListener("click", () => {
@@ -188,6 +198,81 @@
     });
 
     renderVipCard();
+    window.renderVipCard = renderVipCard;
+</script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+        getAuth,
+        GoogleAuthProvider,
+        onAuthStateChanged,
+        signInWithPopup,
+        signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBxXTBZZUFocZYfSq1ReYBzdyItl4Mia_w",
+        authDomain: "mz-lux.firebaseapp.com",
+        projectId: "mz-lux",
+        storageBucket: "mz-lux.firebasestorage.app",
+        messagingSenderId: "52040352989",
+        appId: "1:52040352989:web:974c5855d754431ed84734",
+        measurementId: "G-DYRHR7CWT3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const googleButton = document.getElementById("vipGoogleSignIn");
+    const vipStatus = document.getElementById("vipStatus");
+
+    function renderGoogleVipCard(member) {
+        document.getElementById("vipMemberName").textContent = member.name || "VIP Member";
+        document.getElementById("vipPoints").textContent = "50";
+        document.getElementById("vipProgressBar").style.width = "25%";
+        document.getElementById("vipNextReward").textContent = "Google VIP pass active: 50 / 200 points";
+        document.getElementById("openVipModal").textContent = "VIP Active";
+    }
+
+    function saveGoogleVipMember(user) {
+        const member = {
+            name: user.displayName || "VIP Member",
+            email: user.email || "",
+            photo: user.photoURL || "",
+            provider: "google"
+        };
+        localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
+        renderGoogleVipCard(member);
+    }
+
+    googleButton?.addEventListener("click", async () => {
+        googleButton.disabled = true;
+        googleButton.textContent = "Signing in...";
+        try {
+            const result = await signInWithPopup(auth, provider);
+            saveGoogleVipMember(result.user);
+            vipStatus.textContent = "Google sign-in complete. Welcome to MZ LUX VIP.";
+            setTimeout(() => {
+                document.getElementById("vipModal").hidden = true;
+                document.body.classList.remove("vip-modal-open");
+                document.getElementById("openVipModal").focus();
+            }, 900);
+        } catch (error) {
+            console.error("Google VIP sign-in failed:", error);
+            vipStatus.textContent = error.code === "auth/unauthorized-domain"
+                ? "This domain needs to be added in Firebase Authorized domains."
+                : "Google sign-in was not completed. Please try again.";
+        } finally {
+            googleButton.disabled = false;
+            googleButton.innerHTML = '<span aria-hidden="true">G</span> Sign in with Google';
+        }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) saveGoogleVipMember(user);
+    });
+
+    window.mzLuxVipSignOut = () => signOut(auth);
 </script>
 </body>
 </html>
