@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260621-polish">
+    <link rel="stylesheet" href="style.css?v=20260621-match-click">
 </head>
 <body>
 <header>
@@ -67,6 +67,17 @@
             <span></span>
         </div>
         <div id="clothingDisplay" class="clothing-display closet-rails"></div>
+    </section>
+
+    <section id="selectedItemPanel" class="selected-item-panel" aria-live="polite">
+        <div class="selected-item-media">
+            <img id="selectedItemImage" src="images/placeholders/top-placeholder.svg" alt="Selected item preview">
+        </div>
+        <div class="selected-item-copy">
+            <span id="selectedItemType">Tap an item</span>
+            <h2 id="selectedItemName">Your selected piece will show here</h2>
+            <p id="selectedItemNote">Pick a card from any rail to add it to the active outfit.</p>
+        </div>
     </section>
 
     <section id="outfitInsights" class="outfit-insights-card" aria-labelledby="outfitInsightsTitle">
@@ -156,7 +167,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260621-polish"></script>
+<script src="main.js?v=20260621-match-click"></script>
 <script>
 (function () {
     function revealCategorySections() {

@@ -1,74 +1,5 @@
 // ── PROXY URL ──
 const PROXY_URL = "https://mz-3i9crjfoy-mz5.vercel.app/api/proxy";
-const PRODUCT_PHOTO_URLS = {
-    "oversized hoodie": "https://images.unsplash.com/photo-1556821840-3a63f15732ce?auto=format&fit=crop&w=520&q=90",
-    "graphic t shirt": "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=520&q=90",
-    "denim jacket": "https://images.unsplash.com/photo-1548126032-079a0fb0099d?auto=format&fit=crop&w=520&q=90",
-    "cropped hoodie": "https://images.unsplash.com/photo-1556821840-3a63f15732ce?auto=format&fit=crop&w=520&q=90",
-    "varsity jacket": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=520&q=90",
-    "cargo pants": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=520&q=90",
-    "baggy jeans": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=520&q=90",
-    "blue jeans": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=520&q=90",
-    "jogger pants": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=520&q=90",
-    "denim skirt": "https://images.unsplash.com/photo-1604176424472-17cd740f0197?auto=format&fit=crop&w=520&q=90",
-    "wide leg jeans": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=520&q=90",
-    "chunky sneakers": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=520&q=90",
-    "high top canvas shoes": "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?auto=format&fit=crop&w=520&q=90",
-    "platform sneakers": "https://images.unsplash.com/photo-1607522370275-f6fd0d31a94a?auto=format&fit=crop&w=520&q=90",
-    "combat boots": "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=520&q=90",
-    "skate shoes": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=520&q=90",
-    "baseball cap": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=520&q=90",
-    "fashion bag": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=520&q=90",
-    "silver chain jewelry": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=520&q=90",
-    "beanie hat": "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&w=520&q=90",
-    "hoop earrings": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=520&q=90",
-    "plain white t shirt": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=520&q=90",
-    "black tank top": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=520&q=90",
-    "grey sweater": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=520&q=90",
-    "cream blouse": "https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=520&q=90",
-    "basic cardigan": "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=520&q=90",
-    "straight leg jeans": "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?auto=format&fit=crop&w=520&q=90",
-    "black trousers": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=520&q=90",
-    "neutral skirt": "https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&w=520&q=90",
-    "cream pants": "https://images.unsplash.com/photo-1594938298603-c8148c4b4d04?auto=format&fit=crop&w=520&q=90",
-    "grey wide leg pants": "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?auto=format&fit=crop&w=520&q=90",
-    "white ballet flats": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=520&q=90",
-    "ballet flats": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=520&q=90",
-    "white sneakers": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=520&q=90",
-    "black flats": "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?auto=format&fit=crop&w=520&q=90",
-    "neutral sandals": "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?auto=format&fit=crop&w=520&q=90",
-    "clean loafers": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=520&q=90",
-    "simple tote bag": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=520&q=90",
-    "gold stud earrings": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=520&q=90",
-    "thin belt": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=520&q=90",
-    "minimal watch": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=520&q=90",
-    "small necklace": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=520&q=90",
-    "flannel shirt": "https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&w=520&q=90",
-    "black leggings": "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=520&q=90",
-    "denim shorts": "https://images.unsplash.com/photo-1591195853828-11db59a44f43?auto=format&fit=crop&w=520&q=90",
-    "casual skirt": "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&w=520&q=90",
-    "casual boots": "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=520&q=90",
-    "scrunchie": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=520&q=90",
-    "black blazer": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=520&q=90",
-    "satin shirt": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=520&q=90",
-    "dressy fashion top": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=520&q=90",
-    "tailored jacket": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=520&q=90",
-    "white blouse": "https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=520&q=90",
-    "dress pants": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=520&q=90",
-    "pencil skirt": "https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&w=520&q=90",
-    "midi skirt": "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&w=520&q=90",
-    "black heels": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=520&q=90",
-    "nude heels": "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?auto=format&fit=crop&w=520&q=90",
-    "pointed flats": "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?auto=format&fit=crop&w=520&q=90",
-    "ankle boots": "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=520&q=90",
-    "pearl earrings": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=520&q=90",
-    "clutch bag": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=520&q=90",
-    "gold bracelet": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=520&q=90",
-    "backpack": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=520&q=90",
-    "simple bracelet": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=520&q=90"
-};
-const productPhoto = (query) => PRODUCT_PHOTO_URLS[query] || PRODUCT_PHOTO_URLS["plain white t shirt"];
-
 const outfits = {
     oldMoney: {
         tops: [
@@ -102,125 +33,124 @@ const outfits = {
     },
     streetwear: {
         tops: [
-            { name: "Cream Sweater",    image: "images/models/cream sweater.webp" },
-            { name: "Graphic Tee",      image: productPhoto("graphic t shirt") },
-            { name: "Denim Jacket",     image: productPhoto("denim jacket") },
-            { name: "Cropped Cream Sweater", image: "images/models/cream sweater cropped.webp" },
-            { name: "Varsity Jacket",   image: productPhoto("varsity jacket") }
+            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
+            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
+            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
+            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
+            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" }
         ],
         bottoms: [
-            { name: "Black Pants",    image: "images/models/black pants.webp" },
-            { name: "Baggy Jeans",    image: productPhoto("baggy jeans") },
-            { name: "Joggers",        image: productPhoto("jogger pants") },
-            { name: "Pleated Skirt",  image: "images/models/pleated skirt.webp" },
-            { name: "Wide Leg Jeans", image: productPhoto("wide leg jeans") }
+            { name: "Black Pants",       image: "images/models/black pants.webp" },
+            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
+            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" },
+            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
+            { name: "White Linen Pants", image: "images/models/white linen pants.webp" }
         ],
         shoes: [
-            { name: "Chunky Sneakers",   image: productPhoto("chunky sneakers") },
-            { name: "High Tops",         image: productPhoto("high top canvas shoes") },
-            { name: "White Sneakers",    image: "images/models/white sneakers.webp" },
-            { name: "Combat Boots",      image: productPhoto("combat boots") },
-            { name: "Skate Shoes",       image: productPhoto("skate shoes") }
+            { name: "White Sneakers", image: "images/models/white sneakers.webp" },
+            { name: "Leather Boots",  image: "images/models/leather boots.webp" },
+            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
+            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
+            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" }
         ],
         accessories: [
-            { name: "Baseball Cap",  image: productPhoto("baseball cap") },
-            { name: "Shoulder Bag",  image: productPhoto("fashion bag") },
-            { name: "Silver Chain",  image: productPhoto("silver chain jewelry") },
-            { name: "Beanie",        image: productPhoto("beanie hat") },
-            { name: "Hoop Earrings", image: productPhoto("hoop earrings") }
+            { name: "Sunglasses",     image: "images/models/sunglasses.webp" },
+            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
+            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
+            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
+            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" }
         ]
     },
     minimalist: {
         tops: [
-            { name: "White Tee",      image: productPhoto("plain white t shirt") },
-            { name: "Black Tank Top", image: productPhoto("black tank top") },
-            { name: "Grey Sweater",   image: productPhoto("grey sweater") },
-            { name: "Cream Blouse",   image: productPhoto("cream blouse") },
-            { name: "Cream Sweater",  image: "images/models/cream sweater.webp" }
+            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
+            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
+            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
+            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
+            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" }
         ],
         bottoms: [
-            { name: "Straight Jeans",  image: productPhoto("straight leg jeans") },
-            { name: "Black Trousers",  image: productPhoto("black trousers") },
-            { name: "Neutral Skirt",   image: productPhoto("neutral skirt") },
-            { name: "Beige Trousers",  image: "images/models/beige trousers.webp" },
-            { name: "White Linen Pants", image: "images/models/white linen pants.webp" }
+            { name: "White Linen Pants", image: "images/models/white linen pants.webp" },
+            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
+            { name: "Black Pants",       image: "images/models/black pants.webp" },
+            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
+            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" }
         ],
         shoes: [
-            { name: "White Flats",     image: productPhoto("white ballet flats") },
-            { name: "Simple Sneakers", image: productPhoto("white sneakers") },
-            { name: "Black Flats",     image: productPhoto("black flats") },
-            { name: "Neutral Sandals", image: productPhoto("neutral sandals") },
-            { name: "Clean Loafers",   image: productPhoto("clean loafers") }
+            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
+            { name: "White Sneakers", image: "images/models/white sneakers.webp" },
+            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
+            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
+            { name: "Leather Boots",  image: "images/models/leather boots.webp" }
         ],
         accessories: [
-            { name: "Simple Tote",    image: productPhoto("simple tote bag") },
-            { name: "Gold Studs",     image: productPhoto("gold stud earrings") },
-            { name: "Thin Belt",      image: productPhoto("thin belt") },
-            { name: "Minimal Watch",  image: productPhoto("minimal watch") },
-            { name: "Small Necklace", image: productPhoto("small necklace") }
+            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
+            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" },
+            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
+            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
+            { name: "Sunglasses",     image: "images/models/sunglasses.webp" }
         ]
     },
     casual: {
         tops: [
-            { name: "Cream Sweater",  image: "images/models/cream sweater.webp" },
-            { name: "Plain Tee",      image: productPhoto("plain white t shirt") },
-            { name: "Flannel Shirt",  image: productPhoto("flannel shirt") },
-            { name: "Zip-Up Sweater", image: productPhoto("grey sweater") },
-            { name: "Casual Blouse",  image: productPhoto("cream blouse") }
+            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
+            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
+            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
+            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
+            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" }
         ],
         bottoms: [
-            { name: "Blue Jeans",   image: productPhoto("blue jeans") },
-            { name: "Leggings",     image: productPhoto("black leggings") },
-            { name: "Joggers",      image: productPhoto("jogger pants") },
-            { name: "Denim Shorts", image: productPhoto("denim shorts") },
-            { name: "Casual Skirt", image: productPhoto("casual skirt") }
+            { name: "Black Pants",       image: "images/models/black pants.webp" },
+            { name: "White Linen Pants", image: "images/models/white linen pants.webp" },
+            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
+            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" },
+            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" }
         ],
         shoes: [
-            { name: "White Sneakers", image: productPhoto("white sneakers") },
-            { name: "Slip Ons",       image: productPhoto("skate shoes") },
-            { name: "Casual Boots",   image: productPhoto("casual boots") },
-            { name: "Canvas Shoes",   image: productPhoto("high top canvas shoes") },
-            { name: "Running Shoes",  image: productPhoto("chunky sneakers") }
+            { name: "White Sneakers", image: "images/models/white sneakers.webp" },
+            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
+            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
+            { name: "Leather Boots",  image: "images/models/leather boots.webp" },
+            { name: "Black Loafers",  image: "images/models/black loafers.webp" }
         ],
         accessories: [
-            { name: "Backpack",        image: productPhoto("backpack") },
-            { name: "Scrunchie",       image: productPhoto("scrunchie") },
-            { name: "Crossbody Bag",   image: productPhoto("fashion bag") },
-            { name: "Casual Cap",      image: productPhoto("baseball cap") },
-            { name: "Simple Bracelet", image: productPhoto("simple bracelet") }
+            { name: "Sunglasses",     image: "images/models/sunglasses.webp" },
+            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
+            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
+            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
+            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" }
         ]
     },
     formal: {
         tops: [
-            { name: "White Blouse",    image: productPhoto("white blouse") },
-            { name: "Black Blazer",    image: productPhoto("black blazer") },
-            { name: "Satin Shirt",     image: productPhoto("satin shirt") },
-            { name: "Dressy Top",      image: productPhoto("dressy fashion top") },
-            { name: "Tailored Jacket", image: productPhoto("tailored jacket") }
+            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" },
+            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
+            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
+            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
+            { name: "Navy Polo",              image: "images/models/navy polo.webp" }
         ],
         bottoms: [
-            { name: "Dress Pants",       image: productPhoto("dress pants") },
-            { name: "Pencil Skirt",      image: productPhoto("pencil skirt") },
-            { name: "Black Trousers",    image: productPhoto("black trousers") },
-            { name: "Midi Skirt",        image: productPhoto("midi skirt") },
-            { name: "Wide Leg Trousers", image: productPhoto("grey wide leg pants") }
+            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
+            { name: "Black Pants",       image: "images/models/black pants.webp" },
+            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
+            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" },
+            { name: "White Linen Pants", image: "images/models/white linen pants.webp" }
         ],
         shoes: [
-            { name: "Black Heels",   image: productPhoto("black heels") },
-            { name: "Nude Heels",    image: productPhoto("nude heels") },
-            { name: "Pointed Flats", image: productPhoto("pointed flats") },
-            { name: "Dress Loafers", image: productPhoto("clean loafers") },
-            { name: "Ankle Boots",   image: productPhoto("ankle boots") }
+            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
+            { name: "Leather Boots",  image: "images/models/leather boots.webp" },
+            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
+            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
+            { name: "White Sneakers", image: "images/models/white sneakers.webp" }
         ],
         accessories: [
-            { name: "Pearl Earrings", image: productPhoto("pearl earrings") },
-            { name: "Clutch Bag",     image: productPhoto("clutch bag") },
-            { name: "Gold Bracelet",  image: productPhoto("gold bracelet") },
-            { name: "Elegant Watch",  image: productPhoto("minimal watch") },
-            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" }
+            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" },
+            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
+            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
+            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
+            { name: "Sunglasses",     image: "images/models/sunglasses.webp" }
         ]
-    }
-};
+    }};
 
 const selectedOutfit = { top: null, bottom: null, shoes: null, accessories: [] };
 const themeLabels = { oldMoney: "Old Money", streetwear: "Streetwear", minimalist: "Minimalist", casual: "Casual", formal: "Formal" };
@@ -1077,7 +1007,31 @@ function selectItem(type, item) {
     }
     saveCurrentOutfit();
     updatePreview(type, type === "accessory" ? selectedOutfit.accessories : item);
+    updateSelectedItemPanel(type, item);
     updateSelectionHighlights();
+}
+
+function updateSelectedItemPanel(type, item) {
+    const panel = document.getElementById("selectedItemPanel");
+    if (!panel || !item) return;
+    const img = document.getElementById("selectedItemImage");
+    const itemType = document.getElementById("selectedItemType");
+    const itemName = document.getElementById("selectedItemName");
+    const note = document.getElementById("selectedItemNote");
+    const label = getLabel(type);
+
+    if (img) {
+        img.src = item.image || getPlaceholderImage(type);
+        img.alt = item.name;
+    }
+    if (itemType) itemType.textContent = `${label} selected`;
+    if (itemName) itemName.textContent = item.name;
+    if (note) note.textContent = type === "accessory"
+        ? "Accessory added to the look. Tap another accessory to swap the detail."
+        : `This ${label.toLowerCase()} is now in the active outfit.`;
+    panel.classList.remove("is-pulsing");
+    void panel.offsetWidth;
+    panel.classList.add("is-active", "is-pulsing");
 }
 
 function updatePreview(type, item) {
