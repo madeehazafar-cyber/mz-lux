@@ -8871,3 +8871,473 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 .vip-perks article {
     padding: 10px !important;
 }
+
+/* 2026 polish pass: compact pages, better vibes, safer viewport width */
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.home-page .home-editorial-shell {
+    width: min(1160px, calc(100% - 28px)) !important;
+    margin: 16px auto 12px !important;
+}
+
+.home-page .home-editorial-shell .luxury-hero {
+    min-height: clamp(500px, 72vh, 680px) !important;
+    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr) !important;
+    gap: clamp(18px, 3.2vw, 48px) !important;
+    padding: clamp(24px, 4vw, 54px) !important;
+    overflow: hidden;
+}
+
+.home-page .home-editorial-shell .hero-copy-block {
+    max-width: 540px !important;
+}
+
+.home-page .home-editorial-shell .luxury-hero h2 {
+    font-size: clamp(3.6rem, 10vw, 8.6rem) !important;
+    line-height: 0.82 !important;
+}
+
+.home-page .home-editorial-shell .luxury-hero p {
+    max-width: 470px !important;
+}
+
+.home-page .home-editorial-shell .hero-runway {
+    min-height: clamp(360px, 58vh, 560px) !important;
+    transform: translateZ(0);
+}
+
+.home-page .home-editorial-shell .runway-card {
+    border-color: rgba(221, 184, 101, 0.28) !important;
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.26) !important;
+}
+
+.home-page .cinematic-featured-heading {
+    width: min(1160px, calc(100% - 28px)) !important;
+    margin: 10px auto 10px !important;
+    padding: 12px 0 !important;
+}
+
+.home-about-note {
+    width: min(1160px, calc(100% - 28px));
+    margin: 0 auto 10px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    border: 1px solid rgba(185, 145, 69, 0.18);
+    background: linear-gradient(135deg, rgba(255, 250, 242, 0.82), rgba(244, 234, 217, 0.7));
+    color: #3b2a20;
+}
+
+.home-about-note span {
+    color: #8a623a;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.home-about-note p {
+    margin: 0;
+    color: rgba(59, 42, 32, 0.78);
+    font-size: clamp(0.78rem, 1.2vw, 0.94rem);
+    line-height: 1.55;
+}
+
+.home-page .cinematic-featured-grid {
+    width: min(1160px, calc(100% - 28px)) !important;
+    margin: 0 auto 28px !important;
+    gap: 12px !important;
+}
+
+.home-page .luxury-motion-strip .featured-card {
+    min-height: 250px !important;
+}
+
+.home-page .featured-card figure,
+.home-page .featured-card figure img {
+    min-height: 250px !important;
+}
+
+.instruction-box {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    min-height: 0 !important;
+    padding: 9px 12px !important;
+}
+
+.instruction-box #vibeMoodLabel {
+    color: var(--closet-gold, #ddb865);
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.instruction-box #vibeMoodCopy {
+    color: rgba(248, 239, 224, 0.78);
+    font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+    line-height: 1.35;
+    text-align: right;
+}
+
+.clueless-closet .closet-destination-backdrop,
+.clueless-closet::before {
+    transition: background 520ms ease, opacity 520ms ease, filter 520ms ease;
+}
+
+.clueless-closet[data-vibe="minimalist"] .closet-destination-backdrop {
+    background:
+        linear-gradient(115deg, rgba(255,255,255,0.06), transparent 30%),
+        radial-gradient(circle at 70% 24%, rgba(221, 184, 101, 0.16), transparent 34%),
+        linear-gradient(135deg, #060606 0%, #11100e 52%, #050505 100%) !important;
+}
+
+.clueless-closet[data-vibe="brunch"] .closet-destination-backdrop {
+    background:
+        radial-gradient(circle at 25% 18%, rgba(255, 239, 211, 0.32), transparent 28%),
+        radial-gradient(circle at 78% 42%, rgba(221, 184, 101, 0.2), transparent 35%),
+        linear-gradient(135deg, #150f0a 0%, #2a1d14 52%, #0b0705 100%) !important;
+}
+
+.clueless-closet[data-vibe="cocktail"] .closet-destination-backdrop {
+    background:
+        radial-gradient(circle at 72% 14%, rgba(221, 184, 101, 0.28), transparent 30%),
+        radial-gradient(circle at 18% 76%, rgba(111, 36, 80, 0.24), transparent 34%),
+        linear-gradient(135deg, #050505 0%, #170c13 48%, #050505 100%) !important;
+}
+
+.clueless-closet[data-vibe="office"] .closet-destination-backdrop {
+    background:
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(221,184,101,0.13), transparent 28%),
+        linear-gradient(135deg, #070707 0%, #121211 52%, #050505 100%) !important;
+    background-size: 54px 100%, auto, auto !important;
+}
+
+.clueless-closet::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.42;
+    background: linear-gradient(100deg, transparent 0%, rgba(255, 246, 219, 0.055) 44%, transparent 58%);
+    transform: translateX(-100%);
+    animation: vibeLightSweep 7s ease-in-out infinite;
+}
+
+body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
+    width: min(980px, calc(100% - 24px)) !important;
+    margin: 10px auto 24px !important;
+    padding: 13px !important;
+    border-color: rgba(221, 184, 101, 0.24) !important;
+    background:
+        linear-gradient(135deg, rgba(221, 184, 101, 0.08), transparent 34%),
+        rgba(7, 6, 5, 0.9) !important;
+}
+
+.opening-calendar-head {
+    gap: 4px !important;
+    margin-bottom: 10px !important;
+}
+
+.opening-calendar-head h2 {
+    font-size: clamp(1.1rem, 2vw, 1.55rem) !important;
+}
+
+.opening-calendar-head p {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+}
+
+.event-planner-tabbar {
+    top: 10px !important;
+    right: 10px !important;
+    gap: 6px !important;
+}
+
+.event-planner-icon-btn {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    font-size: 0.78rem !important;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease !important;
+}
+
+.event-planner-icon-btn:hover {
+    transform: translateY(-2px) scale(1.04) !important;
+}
+
+.event-planner-toolbar {
+    gap: 7px !important;
+    margin-bottom: 8px !important;
+}
+
+.opening-calendar-grid,
+.event-planner-weekdays {
+    gap: 5px !important;
+}
+
+.opening-calendar-day,
+.event-planner-empty {
+    min-height: 50px !important;
+    padding: 6px !important;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
+}
+
+.opening-calendar-day:hover {
+    transform: translateY(-2px) !important;
+}
+
+.opening-calendar-day em {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.event-planner-form {
+    gap: 7px !important;
+    margin-top: 8px !important;
+}
+
+.event-planner-summary {
+    margin-top: 8px !important;
+}
+
+.camera-studio-page .camera-page {
+    width: min(1180px, calc(100% - 28px)) !important;
+    padding: 18px 0 34px !important;
+}
+
+.camera-studio-page .camera-hero {
+    padding: clamp(18px, 3vw, 32px) !important;
+    margin-bottom: 12px !important;
+}
+
+.camera-studio-page .camera-hero h2 {
+    font-size: clamp(2rem, 5.5vw, 4rem) !important;
+}
+
+.camera-studio-page .studio-shell {
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.82fr) !important;
+    gap: 12px !important;
+}
+
+.camera-studio-page .camera-intake-grid {
+    gap: 10px !important;
+}
+
+.camera-studio-page .studio-shell > *,
+.camera-studio-page .camera-stack,
+.camera-studio-page .camera-intake-grid,
+.camera-studio-page .camera-editorial-panel,
+.camera-studio-page .camera-chat-panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+.camera-studio-page .camera-editorial-panel,
+.camera-studio-page .camera-chat-panel {
+    padding: 14px !important;
+}
+
+.camera-studio-page .camera-inputs {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+    gap: 8px !important;
+}
+
+.camera-studio-page .camera-field-preview {
+    min-height: clamp(98px, 18vh, 150px) !important;
+}
+
+.camera-studio-page .camera-chat-messages {
+    max-height: clamp(220px, 42vh, 390px) !important;
+}
+
+.camera-studio-page .camera-results {
+    margin-top: 12px !important;
+}
+
+.vip-offer-btn {
+    width: 100%;
+    margin-top: auto;
+    border: 1px solid rgba(221, 184, 101, 0.36);
+    background:
+        linear-gradient(135deg, rgba(221, 184, 101, 0.18), rgba(255, 241, 190, 0.06)),
+        rgba(8, 7, 6, 0.72);
+    color: #fff1be;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    padding: 11px 12px;
+    text-transform: uppercase;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.vip-offer-btn:hover,
+.vip-offer-btn:focus-visible {
+    border-color: rgba(255, 241, 190, 0.72);
+    background: rgba(221, 184, 101, 0.18);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.vip-purchase-summary {
+    border: 1px solid rgba(221, 184, 101, 0.18);
+    background: rgba(221, 184, 101, 0.08);
+    color: rgba(248, 239, 224, 0.82);
+    line-height: 1.55;
+    margin: 2px 0 4px;
+    padding: 12px;
+}
+
+.vip-confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 14000;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.vip-confetti span {
+    position: absolute;
+    left: var(--x);
+    top: -20px;
+    width: 9px;
+    height: 14px;
+    background: var(--color);
+    opacity: 0;
+    transform: rotate(0deg);
+}
+
+.vip-confetti.is-active span {
+    animation: vipConfettiFall 1.95s cubic-bezier(0.17, 0.67, 0.31, 1) var(--delay) forwards;
+}
+
+@keyframes vibeLightSweep {
+    0%, 60% { transform: translateX(-100%); opacity: 0; }
+    72% { opacity: 0.42; }
+    100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes vipConfettiFall {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, -10vh, 0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(-38px, 110vh, 0) rotate(var(--spin));
+    }
+}
+
+@media (max-width: 860px) {
+    .home-page .home-editorial-shell .luxury-hero,
+    .camera-studio-page .studio-shell {
+        grid-template-columns: 1fr !important;
+    }
+
+    .home-page .home-editorial-shell .luxury-hero {
+        min-height: auto !important;
+    }
+
+    .home-page .home-editorial-shell .hero-runway {
+        min-height: 320px !important;
+    }
+
+    .home-about-note {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .instruction-box {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    .instruction-box #vibeMoodCopy {
+        text-align: left;
+    }
+}
+
+@media (max-width: 620px) {
+    header,
+    .vip-page header {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    nav {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+
+    body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
+        width: calc(100% - 16px) !important;
+        padding: 10px !important;
+    }
+
+    .opening-calendar-head {
+        padding-right: 108px !important;
+    }
+
+    .opening-calendar-day,
+    .event-planner-empty {
+        min-height: 44px !important;
+    }
+
+    .opening-calendar-day em {
+        display: none;
+    }
+
+    .camera-studio-page .camera-page {
+        width: calc(100% - 20px) !important;
+    }
+
+    .camera-studio-page .camera-inputs {
+        grid-template-columns: 1fr !important;
+    }
+
+    .camera-studio-page .camera-chat-form {
+        grid-template-columns: 1fr !important;
+    }
+
+    .camera-studio-page .camera-chat-form button {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .camera-studio-page .studio-panel-heading {
+        grid-template-columns: 44px minmax(0, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .camera-studio-page .studio-panel-heading span {
+        font-size: 2rem !important;
+    }
+}

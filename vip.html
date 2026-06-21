@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260619-profile-chip">
+    <link rel="stylesheet" href="style.css?v=20260621-polish">
 </head>
 <body class="vip-page">
 <header>
@@ -25,7 +25,6 @@
 
 <nav>
     <a href="index.html">Home</a>
-    <a href="themes.html">Themes</a>
     <a href="vip.html" aria-current="page">VIP Club</a>
     <a href="categories.html">Categories</a>
     <a href="camera.html">Camera</a>
@@ -40,7 +39,7 @@
             <p>Unlock early drops, birthday rewards, Lux Points, and personal style perks in one polished membership space.</p>
             <div class="vip-actions">
                 <button type="button" class="vip-primary-btn" id="openVipModal">Sign In</button>
-                <span class="vip-free-badge">Free tier available</span>
+                <span class="vip-free-badge" id="vipFreeBadge">Free tier available</span>
             </div>
         </div>
 
@@ -61,16 +60,19 @@
                 <span>Glow</span>
                 <h3>Free</h3>
                 <p>Early access, style tips, and monthly edit previews.</p>
+                <button class="vip-offer-btn" type="button" data-vip-tier="Glow" data-vip-price="Free">Choose this offer</button>
             </article>
             <article class="vip-tier vip-tier-featured">
                 <span>Luxe</span>
                 <h3>$5/mo</h3>
                 <p>10% off, birthday reward, and VIP drop alerts.</p>
+                <button class="vip-offer-btn" type="button" data-vip-tier="Luxe" data-vip-price="$5/mo">Choose this offer</button>
             </article>
             <article class="vip-tier">
                 <span>Diamond</span>
                 <h3>$12/mo</h3>
                 <p>20% off, private picks, and priority styling help.</p>
+                <button class="vip-offer-btn" type="button" data-vip-tier="Diamond" data-vip-price="$12/mo">Choose this offer</button>
             </article>
         </div>
 
@@ -135,11 +137,34 @@
     </form>
 </div>
 
+<div class="vip-modal vip-purchase-modal" id="vipPurchaseModal" role="dialog" aria-modal="true" aria-labelledby="vipPurchaseTitle" hidden>
+    <div class="vip-modal-backdrop" data-close-purchase></div>
+    <form class="vip-modal-card vip-purchase-card" id="vipPurchaseForm">
+        <button type="button" class="vip-modal-close" data-close-purchase aria-label="Close membership checkout">x</button>
+        <span class="vip-kicker">Membership offer</span>
+        <h2 id="vipPurchaseTitle">Choose Your VIP Plan</h2>
+        <p class="vip-purchase-summary" id="vipPurchaseSummary">Pick a plan to continue.</p>
+
+        <label for="vipBuyerName">Your name</label>
+        <input id="vipBuyerName" name="vipBuyerName" type="text" autocomplete="name" placeholder="Enter your name" required>
+
+        <button type="submit" class="vip-primary-btn">Proceed</button>
+        <p id="vipPurchaseStatus" class="vip-status" role="status" aria-live="polite"></p>
+    </form>
+</div>
+
+<div class="vip-confetti" id="vipConfetti" aria-hidden="true"></div>
+
 <script>
     const vipModal = document.getElementById("vipModal");
+    const vipPurchaseModal = document.getElementById("vipPurchaseModal");
     const openVipModal = document.getElementById("openVipModal");
     const vipJoinForm = document.getElementById("vipJoinForm");
+    const vipPurchaseForm = document.getElementById("vipPurchaseForm");
     const vipStatus = document.getElementById("vipStatus");
+    const vipPurchaseStatus = document.getElementById("vipPurchaseStatus");
+    const vipPurchaseSummary = document.getElementById("vipPurchaseSummary");
+    const vipBuyerName = document.getElementById("vipBuyerName");
     const vipMemberName = document.getElementById("vipMemberName");
     const vipPoints = document.getElementById("vipPoints");
     const vipProgressBar = document.getElementById("vipProgressBar");
@@ -150,6 +175,42 @@
     const vipProfileName = document.getElementById("vipProfileName");
     const vipProfileEmail = document.getElementById("vipProfileEmail");
     const vipProfileSignOut = document.getElementById("vipProfileSignOut");
+    const vipFreeBadge = document.getElementById("vipFreeBadge");
+    let selectedVipOffer = { tier: "Luxe", price: "$5/mo" };
+
+    function setVipSignedInState(isSignedIn) {
+        openVipModal.hidden = isSignedIn;
+        vipFreeBadge.hidden = isSignedIn;
+    }
+
+    function launchVipConfetti() {
+        const confetti = document.getElementById("vipConfetti");
+        confetti.innerHTML = "";
+        confetti.classList.add("is-active");
+        const colors = ["#ddb865", "#fff1be", "#ffffff", "#b99145", "#6f2450"];
+        for (let i = 0; i < 34; i += 1) {
+            const piece = document.createElement("span");
+            piece.style.setProperty("--x", `${Math.random() * 100}%`);
+            piece.style.setProperty("--delay", `${Math.random() * 0.24}s`);
+            piece.style.setProperty("--spin", `${Math.random() * 520 - 260}deg`);
+            piece.style.setProperty("--color", colors[i % colors.length]);
+            confetti.appendChild(piece);
+        }
+        setTimeout(() => {
+            confetti.classList.remove("is-active");
+            confetti.innerHTML = "";
+        }, 2400);
+    }
+
+    function openPurchaseModal(tier, price) {
+        selectedVipOffer = { tier, price };
+        vipPurchaseSummary.textContent = `${tier} membership - ${price}. No card details needed for this demo checkout.`;
+        vipPurchaseStatus.textContent = "";
+        vipPurchaseForm.reset();
+        vipPurchaseModal.hidden = false;
+        document.body.classList.add("vip-modal-open");
+        vipBuyerName.focus();
+    }
 
     function renderVipProfile(member) {
         if (!member) {
@@ -167,16 +228,20 @@
     function renderVipCard() {
         const member = JSON.parse(localStorage.getItem("mzLuxVipMember") || "null");
         if (!member) {
+            setVipSignedInState(false);
             renderVipProfile(null);
             return;
         }
-        vipMemberName.textContent = member.name || "VIP Member";
-        openVipModal.textContent = "Sign In";
-        vipPoints.textContent = "50";
-        vipProgressBar.style.width = "25%";
-        vipNextReward.textContent = member.provider === "google"
-            ? "Google VIP pass active: 50 / 200 points"
-            : "Welcome reward active: 50 / 200 points";
+        const membershipPoints = member.tier === "Diamond" ? "120" : member.tier === "Luxe" ? "85" : "50";
+        vipMemberName.textContent = member.tier ? `${member.name || "VIP Member"} - ${member.tier}` : member.name || "VIP Member";
+        setVipSignedInState(true);
+        vipPoints.textContent = membershipPoints;
+        vipProgressBar.style.width = `${Math.min(Number(membershipPoints) / 2, 100)}%`;
+        vipNextReward.textContent = member.tier
+            ? `${member.tier} membership active: ${membershipPoints} / 200 points`
+            : member.provider === "google"
+                ? "Google VIP pass active: 50 / 200 points"
+                : "Welcome reward active: 50 / 200 points";
         renderVipProfile(member);
     }
 
@@ -194,12 +259,29 @@
         });
     });
 
+    document.querySelectorAll("[data-close-purchase]").forEach((el) => {
+        el.addEventListener("click", () => {
+            vipPurchaseModal.hidden = true;
+            document.body.classList.remove("vip-modal-open");
+        });
+    });
+
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && !vipModal.hidden) {
             vipModal.hidden = true;
             document.body.classList.remove("vip-modal-open");
             openVipModal.focus();
         }
+        if (event.key === "Escape" && !vipPurchaseModal.hidden) {
+            vipPurchaseModal.hidden = true;
+            document.body.classList.remove("vip-modal-open");
+        }
+    });
+
+    document.querySelectorAll(".vip-offer-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+            openPurchaseModal(button.dataset.vipTier, button.dataset.vipPrice);
+        });
     });
 
     vipJoinForm.addEventListener("submit", (event) => {
@@ -218,9 +300,29 @@
         setTimeout(() => {
             vipModal.hidden = true;
             document.body.classList.remove("vip-modal-open");
-            openVipModal.textContent = "Sign In";
-            openVipModal.focus();
         }, 1200);
+    });
+
+    vipPurchaseForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const buyerName = new FormData(vipPurchaseForm).get("vipBuyerName") || "VIP Member";
+        const points = selectedVipOffer.tier === "Diamond" ? "120" : selectedVipOffer.tier === "Luxe" ? "85" : "50";
+        const member = {
+            name: buyerName,
+            email: "Membership checkout",
+            provider: "membership",
+            tier: selectedVipOffer.tier,
+            price: selectedVipOffer.price
+        };
+        localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
+        renderVipCard();
+        vipNextReward.textContent = `${selectedVipOffer.tier} membership bought. ${points} / 200 points`;
+        vipPurchaseStatus.textContent = `${selectedVipOffer.tier} membership bought. Welcome, ${buyerName}.`;
+        launchVipConfetti();
+        setTimeout(() => {
+            vipPurchaseModal.hidden = true;
+            document.body.classList.remove("vip-modal-open");
+        }, 1450);
     });
 
     document.getElementById("vipTextToggle").addEventListener("click", (event) => {
@@ -242,6 +344,7 @@
         vipPoints.textContent = "0";
         vipProgressBar.style.width = "0";
         vipNextReward.textContent = "Next reward: 200 points";
+        setVipSignedInState(false);
         openVipModal.textContent = "Sign In";
         renderVipProfile(null);
     });
@@ -280,7 +383,6 @@
         document.getElementById("vipPoints").textContent = "50";
         document.getElementById("vipProgressBar").style.width = "25%";
         document.getElementById("vipNextReward").textContent = "Google VIP pass active: 50 / 200 points";
-        document.getElementById("openVipModal").textContent = "Sign In";
     }
 
     function saveGoogleVipMember(user) {
@@ -305,7 +407,6 @@
             setTimeout(() => {
                 document.getElementById("vipModal").hidden = true;
                 document.body.classList.remove("vip-modal-open");
-                document.getElementById("openVipModal").focus();
             }, 900);
         } catch (error) {
             console.error("Google VIP sign-in failed:", error);

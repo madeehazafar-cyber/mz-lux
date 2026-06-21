@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260619-color-wheel">
+    <link rel="stylesheet" href="style.css?v=20260621-polish">
 </head>
 <body>
 <header>
@@ -17,7 +17,6 @@
 
 <nav>
     <a href="index.html">Home</a>
-    <a href="themes.html">Themes</a>
     <a href="vip.html">VIP Club</a>
     <a href="categories.html">Categories</a>
     <a href="camera.html">Camera</a>
@@ -49,16 +48,17 @@
         <div class="theme-control">
             <label for="vibeSelect">Vibe</label>
             <select id="vibeSelect">
-                <option value="minimalist" selected>Minimalist Studio</option>
-                <option value="brunch">Brunch Cafe</option>
-                <option value="cocktail">Cocktail Party</option>
-                <option value="office">Chic Office</option>
+                <option value="minimalist" selected>Gallery Minimal</option>
+                <option value="brunch">Soft Brunch Glow</option>
+                <option value="cocktail">After Dark Luxe</option>
+                <option value="office">Chic Executive</option>
             </select>
         </div>
     </section>
 
     <section id="instructionBox" class="instruction-box">
-        Scroll each rail into the center frame, or press Style Me for a full outfit shuffle.
+        <span id="vibeMoodLabel">Gallery Minimal</span>
+        <span id="vibeMoodCopy">Clean lines, sharp contrast, and polished gold details.</span>
     </section>
 
     <section class="closet-stage" aria-label="Interactive outfit builder">
@@ -156,7 +156,7 @@
     </div>
 </main>
 
-<script src="main.js?v=20260619-color-wheel"></script>
+<script src="main.js?v=20260621-polish"></script>
 <script>
 (function () {
     function revealCategorySections() {

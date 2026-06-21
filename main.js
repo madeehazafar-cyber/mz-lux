@@ -796,7 +796,19 @@ function shuffleUnlockedClosetRows() {
 function setClosetVibe(vibe) {
     const page = document.querySelector(".clueless-closet");
     if (!page) return;
-    page.dataset.vibe = vibe || "minimalist";
+    const activeVibe = vibe || "minimalist";
+    const vibeDetails = {
+        minimalist: ["Gallery Minimal", "Clean lines, sharp contrast, and polished gold details."],
+        brunch: ["Soft Brunch Glow", "Creamy layers, warm light, and relaxed brunch-ready styling."],
+        cocktail: ["After Dark Luxe", "Glossy evening energy with dramatic contrast and metallic accents."],
+        office: ["Chic Executive", "Sharper tailoring, confident structure, and expensive neutral polish."]
+    };
+    page.dataset.vibe = activeVibe;
+    const [label, copy] = vibeDetails[activeVibe] || vibeDetails.minimalist;
+    const vibeMoodLabel = document.getElementById("vibeMoodLabel");
+    const vibeMoodCopy = document.getElementById("vibeMoodCopy");
+    if (vibeMoodLabel) vibeMoodLabel.textContent = label;
+    if (vibeMoodCopy) vibeMoodCopy.textContent = copy;
 }
 
 function evaluateClosetMatch() {
