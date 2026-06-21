@@ -8890,46 +8890,25 @@ svg {
     display: none !important;
 }
 
-.home-page .home-editorial-shell {
-    width: min(1160px, calc(100% - 28px)) !important;
-    margin: 16px auto 12px !important;
+.home-page::after {
+    content: "";
+    position: fixed;
+    inset: -18%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(255, 250, 242, 0.36), transparent 24%),
+        radial-gradient(circle at 80% 18%, rgba(185, 145, 69, 0.16), transparent 28%),
+        radial-gradient(circle at 68% 78%, rgba(255, 250, 242, 0.2), transparent 22%);
+    filter: blur(8px);
+    opacity: 0.58;
+    transform: translate3d(0, 0, 0) scale(1);
+    animation: homeSoftDrift 24s ease-in-out infinite alternate;
 }
 
-.home-page .home-editorial-shell .luxury-hero {
-    min-height: clamp(500px, 72vh, 680px) !important;
-    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr) !important;
-    gap: clamp(18px, 3.2vw, 48px) !important;
-    padding: clamp(24px, 4vw, 54px) !important;
-    overflow: hidden;
-}
-
-.home-page .home-editorial-shell .hero-copy-block {
-    max-width: 540px !important;
-}
-
-.home-page .home-editorial-shell .luxury-hero h2 {
-    font-size: clamp(3.6rem, 10vw, 8.6rem) !important;
-    line-height: 0.82 !important;
-}
-
-.home-page .home-editorial-shell .luxury-hero p {
-    max-width: 470px !important;
-}
-
-.home-page .home-editorial-shell .hero-runway {
-    min-height: clamp(360px, 58vh, 560px) !important;
-    transform: translateZ(0);
-}
-
-.home-page .home-editorial-shell .runway-card {
-    border-color: rgba(221, 184, 101, 0.28) !important;
-    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.26) !important;
-}
-
-.home-page .cinematic-featured-heading {
-    width: min(1160px, calc(100% - 28px)) !important;
-    margin: 10px auto 10px !important;
-    padding: 12px 0 !important;
+.home-page .page-content {
+    position: relative;
+    z-index: 1;
 }
 
 .home-about-note {
@@ -8962,18 +8941,7 @@ svg {
 }
 
 .home-page .cinematic-featured-grid {
-    width: min(1160px, calc(100% - 28px)) !important;
-    margin: 0 auto 28px !important;
-    gap: 12px !important;
-}
-
-.home-page .luxury-motion-strip .featured-card {
-    min-height: 250px !important;
-}
-
-.home-page .featured-card figure,
-.home-page .featured-card figure img {
-    min-height: 250px !important;
+    margin-top: 14px;
 }
 
 .instruction-box {
@@ -9255,18 +9223,21 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     }
 }
 
+@keyframes homeSoftDrift {
+    0% {
+        transform: translate3d(-1.5%, -1%, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(1.5%, 1%, 0) scale(1.025);
+    }
+    100% {
+        transform: translate3d(-0.5%, 1.5%, 0) scale(1.015);
+    }
+}
+
 @media (max-width: 860px) {
-    .home-page .home-editorial-shell .luxury-hero,
     .camera-studio-page .studio-shell {
         grid-template-columns: 1fr !important;
-    }
-
-    .home-page .home-editorial-shell .luxury-hero {
-        min-height: auto !important;
-    }
-
-    .home-page .home-editorial-shell .hero-runway {
-        min-height: 320px !important;
     }
 
     .home-about-note {
