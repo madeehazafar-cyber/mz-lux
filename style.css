@@ -2055,6 +2055,10 @@ button:hover {
     font-size: 0.95rem;
 }
 
+.chat-bubble p {
+    white-space: pre-line;
+}
+
 .chat-bubble.assistant {
     background: rgba(212, 175, 55, 0.14);
     color: #5b4324;
@@ -2107,6 +2111,12 @@ button:hover {
 .camera-chat-form button {
     padding: 12px 18px;
     border-radius: 999px;
+}
+
+.camera-chat-form input:disabled,
+.camera-chat-form button:disabled {
+    cursor: wait;
+    opacity: 0.64;
 }
 
 .camera-results-grid {
