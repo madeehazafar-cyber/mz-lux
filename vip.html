@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260622-vip-tiers">
+    <link rel="stylesheet" href="style.css?v=20260622-vip-comments">
 </head>
 <body class="vip-page">
+<!-- Top branding area. The profile chip stays hidden until someone signs in or buys a plan. -->
 <header>
     <div class="logo"><span class="logo-initials">MZ</span></div>
     <div>
@@ -23,6 +24,7 @@
     </div>
 </header>
 
+<!-- Main site navigation so users can move between the pages. -->
 <nav>
     <a href="index.html">Home</a>
     <a href="vip.html" aria-current="page">VIP Club</a>
@@ -32,6 +34,7 @@
 </nav>
 
 <main class="vip-shell">
+    <!-- Hero section for the VIP club intro and the live member points card. -->
     <section class="vip-hero" aria-labelledby="vipTitle">
         <div class="vip-copy">
             <span class="vip-kicker">Members-only styling</span>
@@ -54,6 +57,7 @@
         </aside>
     </section>
 
+    <!-- These are the three membership choices. The data attributes tell JavaScript which plan was clicked. -->
     <section class="vip-dashboard" aria-label="VIP membership options">
         <div class="vip-tier-grid">
             <article class="vip-tier">
@@ -77,6 +81,7 @@
         </div>
 
         <div class="vip-side-panel">
+            <!-- Quick perk cards make the membership benefits easy to scan. -->
             <section class="vip-perks" aria-label="VIP perks">
                 <article><span>01</span><strong>Early Drops</strong></article>
                 <article><span>02</span><strong>Birthday Gift</strong></article>
@@ -84,6 +89,7 @@
                 <article><span>04</span><strong>Member Deals</strong></article>
             </section>
 
+            <!-- Accessibility buttons let users quickly change text size or contrast. -->
             <section class="vip-accessibility" aria-label="VIP accessibility controls">
                 <button type="button" id="vipTextToggle" aria-pressed="false">Bigger Text</button>
                 <button type="button" id="vipContrastToggle" aria-pressed="false">High Contrast</button>
@@ -92,6 +98,7 @@
     </section>
 </main>
 
+<!-- Sign-in / join modal. Users can use Google or fill out the small form. -->
 <div class="vip-modal" id="vipModal" role="dialog" aria-modal="true" aria-labelledby="vipModalTitle" hidden>
     <div class="vip-modal-backdrop" data-close-vip></div>
     <form class="vip-modal-card" id="vipJoinForm">
@@ -137,6 +144,7 @@
     </form>
 </div>
 
+<!-- Simple checkout modal for choosing a membership without real payment details. -->
 <div class="vip-modal vip-purchase-modal" id="vipPurchaseModal" role="dialog" aria-modal="true" aria-labelledby="vipPurchaseTitle" hidden>
     <div class="vip-modal-backdrop" data-close-purchase></div>
     <form class="vip-modal-card vip-purchase-card" id="vipPurchaseForm">
@@ -153,9 +161,11 @@
     </form>
 </div>
 
+<!-- Empty container that JavaScript fills with confetti pieces after a membership is bought. -->
 <div class="vip-confetti" id="vipConfetti" aria-hidden="true"></div>
 
 <script>
+    // Grab the VIP page elements once so the rest of the code can reuse them.
     const vipModal = document.getElementById("vipModal");
     const vipPurchaseModal = document.getElementById("vipPurchaseModal");
     const openVipModal = document.getElementById("openVipModal");
@@ -178,11 +188,13 @@
     const vipFreeBadge = document.getElementById("vipFreeBadge");
     let selectedVipOffer = { tier: "Luxe", price: "$5/mo" };
 
+    // Hide the sign-in button after the member is already active.
     function setVipSignedInState(isSignedIn) {
         openVipModal.hidden = isSignedIn;
         vipFreeBadge.hidden = isSignedIn;
     }
 
+    // Creates a short gold confetti animation when someone finishes buying a membership.
     function launchVipConfetti() {
         const confetti = document.getElementById("vipConfetti");
         confetti.innerHTML = "";
@@ -202,6 +214,7 @@
         }, 2400);
     }
 
+    // Opens the membership form with the plan name and price that were clicked.
     function openPurchaseModal(tier, price) {
         selectedVipOffer = { tier, price };
         vipPurchaseSummary.textContent = `${tier} membership - ${price}. No card details needed for this demo checkout.`;
@@ -212,6 +225,7 @@
         vipBuyerName.focus();
     }
 
+    // Updates the small profile chip in the top right of the VIP page.
     function renderVipProfile(member) {
         if (!member) {
             vipProfileChip.hidden = true;
@@ -225,6 +239,7 @@
         vipProfileAvatar.classList.toggle("has-photo", Boolean(member.photo));
     }
 
+    // Reads saved member info and refreshes the points card on the page.
     function renderVipCard() {
         const member = JSON.parse(localStorage.getItem("mzLuxVipMember") || "null");
         if (!member) {
@@ -245,12 +260,14 @@
         renderVipProfile(member);
     }
 
+    // Open and close behavior for the regular VIP sign-in modal.
     openVipModal.addEventListener("click", () => {
         vipModal.hidden = false;
         document.body.classList.add("vip-modal-open");
         document.getElementById("vipName").focus();
     });
 
+    // Close the VIP modal when the backdrop or x button is clicked.
     document.querySelectorAll("[data-close-vip]").forEach((el) => {
         el.addEventListener("click", () => {
             vipModal.hidden = true;
@@ -259,6 +276,7 @@
         });
     });
 
+    // Close the purchase modal when the backdrop or x button is clicked.
     document.querySelectorAll("[data-close-purchase]").forEach((el) => {
         el.addEventListener("click", () => {
             vipPurchaseModal.hidden = true;
@@ -266,6 +284,7 @@
         });
     });
 
+    // Escape key closes any open modal for easier keyboard use.
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && !vipModal.hidden) {
             vipModal.hidden = true;
@@ -278,12 +297,14 @@
         }
     });
 
+    // Each plan button opens the checkout modal with its own tier details.
     document.querySelectorAll(".vip-offer-btn").forEach((button) => {
         button.addEventListener("click", () => {
             openPurchaseModal(button.dataset.vipTier, button.dataset.vipPrice);
         });
     });
 
+    // Saves the manual VIP form to localStorage so the page remembers the member.
     vipJoinForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const formData = new FormData(vipJoinForm);
@@ -303,6 +324,7 @@
         }, 1200);
     });
 
+    // This fake checkout saves the selected plan, updates points, and launches confetti.
     vipPurchaseForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const buyerName = new FormData(vipPurchaseForm).get("vipBuyerName") || "VIP Member";
@@ -325,6 +347,7 @@
         }, 1450);
     });
 
+    // Accessibility toggles for bigger text and higher contrast.
     document.getElementById("vipTextToggle").addEventListener("click", (event) => {
         const enabled = document.body.classList.toggle("vip-large-text");
         event.currentTarget.setAttribute("aria-pressed", String(enabled));
@@ -335,6 +358,7 @@
         event.currentTarget.setAttribute("aria-pressed", String(enabled));
     });
 
+    // Sign out clears the saved VIP member and resets the points card.
     vipProfileSignOut.addEventListener("click", async () => {
         try {
             await window.mzLuxVipSignOut?.();
@@ -353,6 +377,7 @@
     window.renderVipCard = renderVipCard;
 </script>
 <script type="module">
+    // Firebase is used here only for the Google sign-in button.
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import {
         getAuth,
@@ -378,6 +403,7 @@
     const googleButton = document.getElementById("vipGoogleSignIn");
     const vipStatus = document.getElementById("vipStatus");
 
+    // Updates the points card after Google sign-in.
     function renderGoogleVipCard(member) {
         document.getElementById("vipMemberName").textContent = member.name || "VIP Member";
         document.getElementById("vipPoints").textContent = "50";
@@ -385,6 +411,7 @@
         document.getElementById("vipNextReward").textContent = "Google VIP pass active: 50 / 200 points";
     }
 
+    // Saves the Google account info in the same localStorage format as the form.
     function saveGoogleVipMember(user) {
         const member = {
             name: user.displayName || "VIP Member",
@@ -397,6 +424,7 @@
         window.renderVipCard?.();
     }
 
+    // Starts the Google popup and handles success or error messages.
     googleButton?.addEventListener("click", async () => {
         googleButton.disabled = true;
         googleButton.textContent = "Signing in...";
@@ -424,6 +452,7 @@
         }
     });
 
+    // If Firebase already knows the user is signed in, keep the VIP page updated.
     onAuthStateChanged(auth, (user) => {
         if (user) saveGoogleVipMember(user);
     });
