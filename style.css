@@ -8921,8 +8921,30 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
     font-size: clamp(1.9rem, 4.4vw, 3.2rem) !important;
 }
 
+.vip-copy,
+.vip-member-card,
+.vip-tier,
+.vip-side-panel,
+.vip-perks article {
+    min-width: 0 !important;
+}
+
+.vip-copy h2,
+.vip-member-card h3,
+.vip-tier h3,
+.vip-perks strong {
+    overflow-wrap: anywhere;
+}
+
+.vip-copy h2 {
+    max-width: 720px;
+    letter-spacing: 0.025em !important;
+    text-wrap: balance;
+}
+
 .vip-copy p {
     line-height: 1.6 !important;
+    text-wrap: pretty;
 }
 
 .vip-actions {
@@ -8941,8 +8963,19 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier {
-    min-height: 118px !important;
-    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    padding: 14px !important;
+    gap: 4px !important;
+    border-radius: 20px !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+}
+
+.vip-tier:hover {
+    transform: translateY(-3px);
+    border-color: rgba(176, 141, 87, 0.46);
+    box-shadow: 0 18px 34px rgba(95, 66, 32, 0.14);
 }
 
 .vip-tier h3 {
@@ -8951,8 +8984,10 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier p {
+    margin-bottom: 8px !important;
     line-height: 1.45 !important;
     font-size: 0.88rem !important;
+    text-wrap: pretty;
 }
 
 .vip-side-panel {
@@ -8961,6 +8996,10 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 
 .vip-perks article {
     padding: 10px !important;
+}
+
+.vip-perks strong {
+    line-height: 1.22 !important;
 }
 
 /* 2026 polish pass: compact pages, better vibes, safer viewport width */
@@ -9242,36 +9281,50 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 .vip-offer-btn {
     width: 100%;
     margin-top: auto;
-    border: 1px solid rgba(221, 184, 101, 0.36);
+    border: 1px solid rgba(176, 141, 87, 0.38);
+    border-radius: 999px;
     background:
-        linear-gradient(135deg, rgba(221, 184, 101, 0.18), rgba(255, 241, 190, 0.06)),
-        rgba(8, 7, 6, 0.72);
-    color: #fff1be;
+        linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(236, 214, 165, 0.86));
+    color: #2d2116;
     cursor: pointer;
     font: inherit;
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     font-weight: 900;
-    letter-spacing: 0.16em;
-    padding: 11px 12px;
+    letter-spacing: 0.13em;
+    line-height: 1.15;
+    padding: 10px 10px;
     text-transform: uppercase;
-    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    box-shadow: 0 10px 22px rgba(95, 66, 32, 0.12);
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.vip-tier-featured .vip-offer-btn {
+    border-color: rgba(255, 241, 190, 0.52);
+    background:
+        linear-gradient(135deg, #fff7d5, #d4af37);
+    color: #2d2116;
 }
 
 .vip-offer-btn:hover,
 .vip-offer-btn:focus-visible {
-    border-color: rgba(255, 241, 190, 0.72);
-    background: rgba(221, 184, 101, 0.18);
-    outline: none;
+    border-color: rgba(141, 104, 31, 0.72);
+    background:
+        linear-gradient(135deg, #fffdf7, #d4af37);
+    outline: 3px solid rgba(212, 175, 55, 0.22);
+    outline-offset: 3px;
+    box-shadow: 0 14px 28px rgba(95, 66, 32, 0.18);
     transform: translateY(-2px);
 }
 
 .vip-purchase-summary {
-    border: 1px solid rgba(221, 184, 101, 0.18);
-    background: rgba(221, 184, 101, 0.08);
-    color: rgba(248, 239, 224, 0.82);
+    border: 1px solid rgba(176, 141, 87, 0.28);
+    border-radius: 16px;
+    background: rgba(255, 250, 240, 0.7);
+    color: #4d3a26;
     line-height: 1.55;
     margin: 2px 0 4px;
     padding: 12px;
+    text-wrap: pretty;
 }
 
 .vip-confetti {
@@ -9361,6 +9414,27 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     }
 }
 
+@media (max-width: 720px) {
+    .vip-tier-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        overflow: visible !important;
+        scroll-snap-type: none !important;
+    }
+
+    .vip-dashboard {
+        padding: 10px !important;
+    }
+
+    .vip-tier {
+        width: 100% !important;
+    }
+
+    .vip-offer-btn {
+        white-space: normal;
+        min-height: 42px;
+    }
+}
+
 @media (max-width: 620px) {
     header,
     .vip-page header {
@@ -9416,5 +9490,38 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
     .camera-studio-page .studio-panel-heading span {
         font-size: 2rem !important;
+    }
+
+    .vip-page .brand-name {
+        font-size: 1.45rem !important;
+        letter-spacing: 0.04em !important;
+    }
+
+    .vip-copy h2 {
+        font-size: clamp(1.58rem, 9vw, 2.25rem) !important;
+        line-height: 1.04 !important;
+        letter-spacing: 0.025em !important;
+    }
+
+    .vip-tier-grid {
+        grid-template-columns: 1fr !important;
+        overflow: visible !important;
+    }
+
+    .vip-dashboard {
+        padding: 10px !important;
+    }
+
+    .vip-tier {
+        min-height: 0 !important;
+    }
+
+    .vip-perks {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .vip-offer-btn {
+        white-space: normal;
+        min-height: 42px;
     }
 }
