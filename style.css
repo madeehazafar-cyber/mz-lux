@@ -9141,10 +9141,16 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     height: 30px !important;
     border-radius: 50% !important;
     font-size: 0.78rem !important;
+    background: rgba(255, 250, 240, 0.96) !important;
+    color: #2f2217 !important;
+    border-color: rgba(221, 184, 101, 0.62) !important;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18) !important;
     transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease !important;
 }
 
 .event-planner-icon-btn:hover {
+    background: #d4af37 !important;
+    color: #111111 !important;
     transform: translateY(-2px) scale(1.04) !important;
 }
 
@@ -9724,17 +9730,75 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 .camera-studio-page,
 .camera-studio-page .camera-page {
-    background: #121212 !important;
+    background:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.9), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(212, 175, 55, 0.18), transparent 28%),
+        linear-gradient(135deg, #f8efe1 0%, #eadbc2 58%, #fff8ea 100%) !important;
 }
 
 .studio-hero {
-    background: #121212 !important;
-    background-image: none !important;
+    background:
+        linear-gradient(115deg, rgba(255, 250, 242, 0.94), rgba(236, 218, 188, 0.9)),
+        radial-gradient(circle at 88% 12%, rgba(191, 149, 63, 0.26), transparent 30%) !important;
+    color: #3b2818 !important;
 }
 
 .studio-hero::after {
     content: none !important;
     display: none !important;
+}
+
+.camera-studio-page .camera-hero h2,
+.camera-studio-page .studio-panel-heading h3,
+.camera-studio-page .camera-chat-header h3,
+.camera-studio-page .camera-outfit-copy h4 {
+    color: #3b2818 !important;
+}
+
+.camera-studio-page .camera-hero p,
+.camera-studio-page .studio-panel-heading p,
+.camera-studio-page .camera-chat-header p,
+.camera-studio-page .camera-ai-comments p,
+.camera-studio-page .camera-hats li {
+    color: #6b5747 !important;
+}
+
+.camera-studio-page .camera-editorial-panel,
+.camera-studio-page .camera-chat-panel,
+.camera-studio-page .camera-outfit-card,
+.camera-studio-page .camera-empty {
+    background: rgba(255, 250, 242, 0.92) !important;
+    border-color: rgba(176, 141, 87, 0.28) !important;
+    color: #3b2818 !important;
+    box-shadow: 0 18px 46px rgba(95, 66, 32, 0.12);
+}
+
+.camera-studio-page .camera-field {
+    background: rgba(255, 253, 248, 0.74) !important;
+    border-color: rgba(176, 141, 87, 0.34) !important;
+}
+
+.camera-studio-page .camera-field-header,
+.camera-studio-page .camera-mood,
+.camera-studio-page .camera-hats span {
+    color: #8a623a !important;
+}
+
+.camera-studio-page .camera-chat-form input {
+    background: #fffdf8 !important;
+    color: #2f2217 !important;
+}
+
+.camera-studio-page .camera-chat-form button,
+.camera-studio-page .camera-actions button {
+    background: linear-gradient(135deg, #3d2d21, #8a623a 52%, #d4af37) !important;
+    color: #fffaf0 !important;
+    border: 1px solid rgba(176, 141, 87, 0.46) !important;
+}
+
+.camera-studio-page .camera-actions button:disabled {
+    cursor: wait;
+    opacity: 0.72;
 }
 
 .camera-results-heading {
@@ -9747,14 +9811,14 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 .camera-results-heading h3 {
     margin: 0;
-    color: #fffaf2;
+    color: #3b2818;
     letter-spacing: 0.18em;
     text-transform: uppercase;
 }
 
 .camera-results-heading p {
     margin: 0;
-    color: #d4af37;
+    color: #8a623a;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -9766,6 +9830,10 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 .camera-outfit-card {
     position: relative;
+}
+
+.camera-outfit-media.has-two-tops {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .camera-best-badge {
@@ -9786,15 +9854,15 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 .planner-mini-button {
     position: fixed;
-    top: 108px;
-    right: 18px;
+    top: 92px;
+    right: 14px;
     z-index: 9000;
     display: grid;
     gap: 2px;
-    min-width: 116px;
+    min-width: 138px;
     border: 1px solid rgba(221, 184, 101, 0.52);
     border-radius: 999px;
-    padding: 10px 14px;
+    padding: 12px 16px;
     background:
         linear-gradient(135deg, rgba(15, 13, 10, 0.94), rgba(66, 45, 22, 0.92));
     color: #fffaf0;
