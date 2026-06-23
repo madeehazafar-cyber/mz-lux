@@ -13,6 +13,7 @@
             background: linear-gradient(180deg, #f4ead8 0%, #efe2c8 46%, #12100d 100%) !important;
             color: #1c1712 !important;
             overflow-x: hidden;
+            isolation: isolate;
         }
 
         body.vip-page header,
@@ -26,6 +27,12 @@
             display: block !important;
             position: relative;
             z-index: 2;
+        }
+
+        body.vip-page::before,
+        body.vip-page::after {
+            content: none !important;
+            display: none !important;
         }
     </style>
 </head>
