@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260623-scoped-clean">
+    <link rel="stylesheet" href="style.css?v=20260623-vip-buttons">
 </head>
 <body class="vip-page">
 <header>
@@ -185,6 +185,7 @@
             const tier = button?.dataset.vipTier || "";
             const isCurrent = Boolean(activeTier && tier === activeTier);
             card.classList.toggle("is-current", isCurrent);
+            card.parentElement?.classList.toggle("has-current-tier", Boolean(activeTier));
             if (button) {
                 button.textContent = member ? "Change offer to this" : "Choose this offer";
                 button.setAttribute("aria-label", member ? `Change offer to ${tier}` : `Choose ${tier} offer`);
@@ -308,10 +309,11 @@
         localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
         vipStatus.textContent = "Welcome to MZ LUX VIP. Your member pass is active.";
         renderVipCard();
+        launchVipConfetti();
         setTimeout(() => {
             vipModal.hidden = true;
             document.body.classList.remove("vip-modal-open");
-        }, 1200);
+        }, 1450);
     });
 
     vipPurchaseForm.addEventListener("submit", (event) => {
@@ -353,6 +355,7 @@
 
     renderVipCard();
     window.renderVipCard = renderVipCard;
+    window.launchVipConfetti = launchVipConfetti;
 </script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -406,10 +409,11 @@
             const result = await signInWithPopup(auth, provider);
             saveGoogleVipMember(result.user);
             vipStatus.textContent = "Google sign-in complete. Welcome to MZ LUX VIP.";
+            window.launchVipConfetti?.();
             setTimeout(() => {
                 document.getElementById("vipModal").hidden = true;
                 document.body.classList.remove("vip-modal-open");
-            }, 900);
+            }, 1450);
         } catch (error) {
             console.error("Google VIP sign-in failed:", error);
             vipStatus.textContent = error.code === "auth/unauthorized-domain"

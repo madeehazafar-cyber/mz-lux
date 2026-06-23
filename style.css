@@ -9512,6 +9512,10 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     align-items: stretch;
 }
 
+.vip-tier-grid.has-current-tier {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
 .vip-tier {
     min-width: 0;
     min-height: 238px !important;
@@ -9546,6 +9550,7 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 .vip-google-btn {
     position: relative;
     overflow: hidden;
+    isolation: isolate;
 }
 
 .vip-offer-btn::after,
@@ -9564,6 +9569,78 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 .vip-primary-btn:hover::after,
 .vip-google-btn:hover::after {
     transform: translateX(360%) skewX(-18deg);
+}
+
+.vip-page .vip-modal-backdrop {
+    background: rgba(0, 0, 0, 0.76) !important;
+    backdrop-filter: blur(12px);
+}
+
+.vip-page .vip-modal-card {
+    background:
+        radial-gradient(circle at 18% 0%, rgba(191, 149, 63, 0.18), transparent 34%),
+        linear-gradient(180deg, #151515, #090909) !important;
+    border: 1px solid rgba(191, 149, 63, 0.34) !important;
+    color: #ffffff !important;
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.5), 0 0 44px rgba(191, 149, 63, 0.18) !important;
+}
+
+.vip-page .vip-modal-card h2,
+.vip-page .vip-modal-card label {
+    color: #ffffff !important;
+}
+
+.vip-page .vip-modal-card input,
+.vip-page .vip-modal-card select {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(191, 149, 63, 0.36) !important;
+    color: #ffffff !important;
+}
+
+.vip-page .vip-modal-card input::placeholder {
+    color: rgba(255, 255, 255, 0.56);
+}
+
+.vip-page .vip-modal-card select option {
+    color: #111111;
+}
+
+.vip-page .vip-modal-close {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff1be !important;
+}
+
+.vip-page .vip-google-btn {
+    background: #ffffff !important;
+    color: #151515 !important;
+    border-color: rgba(252, 246, 186, 0.7) !important;
+}
+
+.vip-page .vip-primary-btn,
+.vip-page .vip-offer-btn {
+    min-height: 46px;
+    border: 1px solid rgba(252, 246, 186, 0.46) !important;
+    background:
+        linear-gradient(135deg, rgba(191, 149, 63, 0.95), rgba(252, 246, 186, 0.78) 48%, rgba(170, 119, 28, 0.96)),
+        #111111 !important;
+    color: #100d08 !important;
+    box-shadow: 0 10px 28px rgba(191, 149, 63, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+.vip-page .vip-primary-btn:hover,
+.vip-page .vip-primary-btn:focus-visible,
+.vip-page .vip-offer-btn:hover,
+.vip-page .vip-offer-btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px rgba(191, 149, 63, 0.34), 0 0 28px rgba(252, 246, 186, 0.18);
+}
+
+.vip-page .vip-google-btn:disabled,
+.vip-page .vip-primary-btn:disabled,
+.vip-page .vip-offer-btn:disabled {
+    cursor: wait;
+    opacity: 0.7;
+    transform: none;
 }
 
 .vip-side-panel {
@@ -9686,6 +9763,7 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 @media (max-width: 900px) {
     .vip-tier-grid,
+    .vip-tier-grid.has-current-tier,
     .camera-results-grid {
         grid-template-columns: 1fr !important;
     }
