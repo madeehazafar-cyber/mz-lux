@@ -10513,3 +10513,30 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     }
 }
 
+/* Keeps the VIP Club page visible on GitHub Pages even if older cached animation classes load. */
+body.vip-page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f4ead8 0%, #efe2c8 46%, #12100d 100%) !important;
+    color: #1c1712 !important;
+    overflow-x: hidden;
+}
+
+body.vip-page header,
+body.vip-page nav,
+body.vip-page .vip-shell {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+body.vip-page .vip-modal[hidden],
+body.vip-page .vip-profile-chip[hidden],
+body.vip-page [hidden] {
+    display: none !important;
+}
+
+body.vip-page .vip-shell {
+    display: block !important;
+    position: relative;
+    z-index: 2;
+}
+
