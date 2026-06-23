@@ -1043,27 +1043,31 @@ function generateCameraOutfits() {
     }
     if (trigger) {
         trigger.disabled = true;
-        trigger.textContent = "Generating the best two options...";
+        trigger.textContent = "Generating 3 best options...";
     }
-    results.innerHTML = '<div class="camera-empty">Generating the best two options...</div>';
+    results.innerHTML = '<div class="camera-empty">Generating 3 best options...</div>';
     setTimeout(() => {
-        const moodScore = (mood) => mood === "luxury tailoring" ? 3 : mood === "soft elegance" ? 2 : mood === "casual cool" ? 1 : 0;
-        const sourcePairs = tops.flatMap(top => bottoms.map(bottom => ({
+        const firstBottom = bottoms[0];
+        const lastBottom = bottoms[bottoms.length - 1] || firstBottom;
+        const requestedPairs = [
+            { top: tops[0], bottom: firstBottom },
+            { top: tops[1] || tops[0], bottom: firstBottom },
+            { top: tops[0], bottom: lastBottom }
+        ];
+        const fallbackPairs = tops.flatMap(top => bottoms.map(bottom => ({
             top,
-            bottom,
-            mood: getOutfitMood(top, bottom),
-            key: `${top.label}::${bottom.label}`
-        }))).sort((a,b) => moodScore(b.mood) - moodScore(a.mood));
+            bottom
+        })));
         const bestPairs = [];
-        sourcePairs.forEach((pair) => {
-            if (bestPairs.length >= 2) return;
-            const repeatsPair = bestPairs.some((picked) => picked.key === pair.key);
-            const repeatsTopAndBottom = bestPairs.some((picked) => picked.top.label === pair.top.label && picked.bottom.label === pair.bottom.label);
-            if (!repeatsPair && !repeatsTopAndBottom) bestPairs.push(pair);
-        });
-        sourcePairs.forEach((pair) => {
-            if (bestPairs.length >= 2) return;
-            if (!bestPairs.some((picked) => picked.key === pair.key)) bestPairs.push(pair);
+        [...requestedPairs, ...fallbackPairs].forEach((pair) => {
+            if (!pair.top || !pair.bottom || bestPairs.length >= 3) return;
+            const key = `${pair.top.label}::${pair.bottom.label}`;
+            if (bestPairs.some((picked) => picked.key === key)) return;
+            bestPairs.push({
+                ...pair,
+                key,
+                mood: getOutfitMood(pair.top, pair.bottom)
+            });
         });
         const rankedPairs = bestPairs.map((pair, index) => ({
             ...pair,
@@ -1071,9 +1075,9 @@ function generateCameraOutfits() {
             hats: getHatOptions(pair.mood),
             comments: getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, index < 2 ? "luxurious" : "fun")
         }));
-        results.innerHTML = `<div class="camera-results-heading"><h3>Best two options</h3><p>One top + one bottom</p></div><div class="camera-results-grid">${rankedPairs.map(({top,bottom,mood,hats,comments,rank}) => `
+        results.innerHTML = `<div class="camera-results-heading"><h3>3 best options</h3><p>One top + one bottom</p></div><div class="camera-results-grid">${rankedPairs.map(({top,bottom,mood,hats,comments,rank}) => `
             <article class="camera-outfit-card">
-                ${rank <= 2 ? `<span class="camera-best-badge">${rank === 1 ? "MZ LUX PICK" : "BEST MATCH"}</span>` : ""}
+                ${rank === 1 ? `<span class="camera-best-badge">MZ LUX PICK</span>` : rank === 2 ? `<span class="camera-best-badge">BEST MATCH</span>` : `<span class="camera-best-badge">THIRD OPTION</span>`}
                 <div class="camera-outfit-media">
                     ${top.preview ? `<img src="${top.preview}" alt="${top.label}">` : ""}
                     ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
@@ -1087,7 +1091,7 @@ function generateCameraOutfits() {
             </article>`).join("")}</div>`;
         if (trigger) {
             trigger.disabled = false;
-            trigger.textContent = "Generate best two options";
+            trigger.textContent = "Generate 3 best options";
         }
     }, 520);
 }
