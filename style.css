@@ -8894,8 +8894,7 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
     }
 }
 
-/* VIP compact override
-   This section tightens the VIP page so the hero, card, and tiers fit better on one screen. */
+/* VIP compact override */
 .vip-page header {
     padding: 10px 40px !important;
 }
@@ -8927,7 +8926,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 .vip-tier,
 .vip-side-panel,
 .vip-perks article {
-    /* Stops long text from forcing the layout wider than the screen. */
     min-width: 0 !important;
 }
 
@@ -8965,7 +8963,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier {
-    /* Each membership plan is a flexible card so the button can stay at the bottom. */
     position: relative;
     overflow: hidden;
     display: flex !important;
@@ -8980,7 +8977,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier::before {
-    /* Thin gold strip at the top makes each plan feel more premium. */
     content: "";
     position: absolute;
     inset: 0 0 auto;
@@ -8989,7 +8985,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier::after {
-    /* Soft circle highlight adds depth without needing an image. */
     content: "";
     position: absolute;
     right: -38px;
@@ -9008,7 +9003,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier:nth-child(1) {
-    /* Glow is the soft/free option, so it uses a warmer light gold. */
     border-color: rgba(194, 145, 91, 0.34) !important;
     background:
         radial-gradient(circle at 88% 12%, rgba(255, 231, 190, 0.42), transparent 34%),
@@ -9016,7 +9010,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier:nth-child(3) {
-    /* Diamond is the highest plan, so it has a cleaner pearl-style background. */
     border-color: rgba(130, 108, 80, 0.34) !important;
     background:
         radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.72), transparent 34%),
@@ -9024,7 +9017,6 @@ body:has(.clueless-closet) .closet-rails .clothing-card p {
 }
 
 .vip-tier-featured {
-    /* Luxe is featured, so this one gets the strongest contrast. */
     border-color: rgba(255, 241, 190, 0.42) !important;
     background:
         radial-gradient(circle at 88% 14%, rgba(255, 241, 190, 0.26), transparent 36%),
@@ -9373,7 +9365,6 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 }
 
 .vip-offer-btn {
-    /* Shared button style for choosing any VIP offer. */
     width: 100%;
     margin-top: auto;
     border: 1px solid rgba(176, 141, 87, 0.38);
@@ -9423,7 +9414,6 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 }
 
 .vip-confetti {
-    /* Covers the viewport only while the JavaScript confetti animation runs. */
     position: fixed;
     inset: 0;
     z-index: 14000;
