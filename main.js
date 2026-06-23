@@ -1043,55 +1043,51 @@ function generateCameraOutfits() {
     }
     if (trigger) {
         trigger.disabled = true;
-        trigger.textContent = "Generating...";
+        trigger.textContent = "Generating the best two options...";
     }
-    results.innerHTML = '<div class="camera-empty">AI stylist is building layered outfit pairings...</div>';
+    results.innerHTML = '<div class="camera-empty">Generating the best two options...</div>';
     setTimeout(() => {
         const moodScore = (mood) => mood === "luxury tailoring" ? 3 : mood === "soft elegance" ? 2 : mood === "casual cool" ? 1 : 0;
-        const topLayers = tops.map((top, index) => ({
+        const sourcePairs = tops.flatMap(top => bottoms.map(bottom => ({
             top,
-            secondTop: tops.length > 1 ? tops[(index + 1) % tops.length] : null
-        }));
-        const sourcePairs = topLayers.flatMap(layer => bottoms.map(bottom => {
-            const topLabel = layer.secondTop ? `${layer.top.label} ${layer.secondTop.label}` : layer.top.label;
-            return {
-                ...layer,
-                bottom,
-                mood: getOutfitMood({ label: topLabel }, bottom)
-            };
-        })).sort((a,b) => moodScore(b.mood) - moodScore(a.mood));
-        const pairs = Array.from({ length: 6 }, (_, i) => {
-            const pair = sourcePairs[i % sourcePairs.length];
-            const outfitForComments = {
-                top: { label: pair.secondTop ? `${pair.top.label} layered with ${pair.secondTop.label}` : pair.top.label },
-                bottom: pair.bottom
-            };
-            return {
-                ...pair,
-                rank: i + 1,
-                hats: getHatOptions(pair.mood),
-                comments: getOutfitStyleComments(outfitForComments, pair.mood, i < 2 ? "luxurious" : "fun")
-            };
+            bottom,
+            mood: getOutfitMood(top, bottom),
+            key: `${top.label}::${bottom.label}`
+        }))).sort((a,b) => moodScore(b.mood) - moodScore(a.mood));
+        const bestPairs = [];
+        sourcePairs.forEach((pair) => {
+            if (bestPairs.length >= 2) return;
+            const repeatsPair = bestPairs.some((picked) => picked.key === pair.key);
+            const repeatsTopAndBottom = bestPairs.some((picked) => picked.top.label === pair.top.label && picked.bottom.label === pair.bottom.label);
+            if (!repeatsPair && !repeatsTopAndBottom) bestPairs.push(pair);
         });
-        const bestPairs = pairs.slice(0, 2);
-        results.innerHTML = `<div class="camera-results-heading"><h3>6 outfit combos</h3><p>The best ones</p></div><div class="camera-results-grid">${bestPairs.map(({top,secondTop,bottom,mood,hats,comments,rank}) => `
+        sourcePairs.forEach((pair) => {
+            if (bestPairs.length >= 2) return;
+            if (!bestPairs.some((picked) => picked.key === pair.key)) bestPairs.push(pair);
+        });
+        const rankedPairs = bestPairs.map((pair, index) => ({
+            ...pair,
+            rank: index + 1,
+            hats: getHatOptions(pair.mood),
+            comments: getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, index < 2 ? "luxurious" : "fun")
+        }));
+        results.innerHTML = `<div class="camera-results-heading"><h3>Best two options</h3><p>One top + one bottom</p></div><div class="camera-results-grid">${rankedPairs.map(({top,bottom,mood,hats,comments,rank}) => `
             <article class="camera-outfit-card">
                 ${rank <= 2 ? `<span class="camera-best-badge">${rank === 1 ? "MZ LUX PICK" : "BEST MATCH"}</span>` : ""}
-                <div class="camera-outfit-media ${secondTop ? "has-two-tops" : ""}">
+                <div class="camera-outfit-media">
                     ${top.preview ? `<img src="${top.preview}" alt="${top.label}">` : ""}
-                    ${secondTop?.preview ? `<img src="${secondTop.preview}" alt="${secondTop.label}">` : ""}
                     ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
                 </div>
                 <div class="camera-outfit-copy">
-                    <h4>${top.label}${secondTop ? ` + ${secondTop.label}` : ""} + ${bottom.label}</h4>
-                    <p class="camera-mood">${mood}${secondTop ? " / layered top combo" : ""}</p>
+                    <h4>${top.label} + ${bottom.label}</h4>
+                    <p class="camera-mood">${mood}</p>
                     <div class="camera-ai-comments">${comments.map(c=>`<p>${c}</p>`).join("")}</div>
                     <div class="camera-hats"><span>Hat options</span><ul>${hats.map(h=>`<li>${h}</li>`).join("")}</ul></div>
                 </div>
             </article>`).join("")}</div>`;
         if (trigger) {
             trigger.disabled = false;
-            trigger.textContent = "Generate 6 outfit combos";
+            trigger.textContent = "Generate best two options";
         }
     }, 520);
 }

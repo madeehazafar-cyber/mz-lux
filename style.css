@@ -5736,6 +5736,565 @@ body:has(.clueless-closet) .style-me-btn {
     font-size: 0.66rem !important;
 }
 
+.category-story-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 16000;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 42%, rgba(221, 184, 101, 0.22), transparent 32%),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.92), rgba(12, 9, 6, 0.82), rgba(0, 0, 0, 0.92));
+    animation: categoryIntroExit 3.3s ease forwards;
+}
+
+.category-story-intro::before,
+.category-story-intro::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background:
+        linear-gradient(90deg, rgba(255, 248, 234, 0.08), transparent 18%),
+        #050505;
+    box-shadow: inset 0 0 0 1px rgba(221, 184, 101, 0.14);
+    animation: categoryIntroDoor 1.1s cubic-bezier(0.85, 0, 0.15, 1) 1.15s forwards;
+}
+
+.category-story-intro::before {
+    left: 0;
+    transform-origin: left center;
+}
+
+.category-story-intro::after {
+    right: 0;
+    transform-origin: right center;
+    animation-name: categoryIntroDoorRight;
+}
+
+.category-story-panel {
+    position: relative;
+    z-index: 2;
+    width: min(820px, 100%);
+    text-align: center;
+    padding: clamp(36px, 7vw, 72px) clamp(18px, 5vw, 52px);
+    border: 1px solid rgba(221, 184, 101, 0.4);
+    background:
+        linear-gradient(135deg, rgba(255, 248, 234, 0.08), transparent 36%),
+        rgba(7, 6, 5, 0.72);
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.5), 0 0 44px rgba(221, 184, 101, 0.14);
+    backdrop-filter: blur(16px);
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    animation: categoryStoryPanel 2.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    overflow: hidden;
+}
+
+.category-story-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 0%, rgba(252, 246, 186, 0.22) 46%, transparent 58%);
+    transform: translateX(-120%);
+    animation: categoryStorySweep 1.25s ease 0.7s forwards;
+}
+
+.category-story-panel span,
+.category-story-panel h2,
+.category-story-panel p {
+    position: relative;
+    z-index: 1;
+}
+
+.category-story-panel span {
+    display: block;
+    color: #ddb865;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.category-story-panel h2 {
+    margin: 12px auto 10px;
+    color: #fff8dc;
+    font-size: clamp(2.4rem, 8vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow: 0 0 34px rgba(221, 184, 101, 0.22);
+}
+
+.category-story-panel p {
+    margin: 0;
+    color: rgba(255, 248, 234, 0.76);
+    font-size: clamp(0.86rem, 1.4vw, 1.05rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+@keyframes categoryStoryPanel {
+    0% { opacity: 0; transform: translateY(30px) scale(0.9); filter: blur(8px); }
+    18%, 72% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    100% { opacity: 0; transform: translateY(-18px) scale(0.98); filter: blur(4px); }
+}
+
+@keyframes categoryStorySweep {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(120%); }
+}
+
+@keyframes categoryIntroDoor {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-104%); }
+}
+
+@keyframes categoryIntroDoorRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(104%); }
+}
+
+@keyframes categoryIntroExit {
+    0%, 82% { opacity: 1; visibility: visible; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+.outfit-runway-reveal {
+    position: fixed;
+    inset: 0;
+    z-index: 15000;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    background:
+        radial-gradient(circle at 50% 34%, rgba(221, 184, 101, 0.18), transparent 38%),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.82), transparent 26%, transparent 74%, rgba(0, 0, 0, 0.82)),
+        rgba(3, 3, 3, 0.86);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 340ms ease;
+    backdrop-filter: blur(14px);
+}
+
+.styleme-runway-static {
+    position: fixed;
+    inset: 0;
+    z-index: 14999;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    background:
+        radial-gradient(circle at 50% 34%, rgba(252, 246, 186, 0.22), transparent 38%),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.9), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.9)),
+        rgba(3, 3, 3, 0.88);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    backdrop-filter: blur(14px);
+}
+
+body.runway-static-live .styleme-runway-static {
+    visibility: visible;
+    animation: runwayStaticShow 4.2s ease both;
+}
+
+.styleme-runway-static .runway-reveal-stage {
+    transform: translateY(20px) scale(0.94);
+}
+
+body.runway-static-live .styleme-runway-static .runway-reveal-stage {
+    animation: runwayStageBlast 4.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+body.runway-static-live .styleme-runway-static .runway-door-left {
+    animation: runwayDoorLeft 0.7s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+}
+
+body.runway-static-live .styleme-runway-static .runway-door-right {
+    animation: runwayDoorRight 0.7s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+}
+
+body.runway-static-live .styleme-runway-static .runway-reveal-line {
+    animation: runwayLineBlast 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.22s both;
+}
+
+body.runway-static-live .styleme-runway-static .runway-reveal-piece {
+    animation:
+        runwayCardBlast 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(0.48s + var(--runway-i) * 0.09s) both,
+        runwayPieceFloat 1.2s ease-in-out calc(1.25s + var(--runway-i) * 0.08s) infinite alternate;
+}
+
+body.runway-static-live .styleme-runway-static .runway-reveal-stamp {
+    animation: runwayStampHit 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.95s both;
+}
+
+body.runway-static-live .styleme-runway-static .runway-reveal-sparks i {
+    animation: runwaySparkBurst 1.35s ease-out calc(0.25s + var(--spark-i) * 0.045s) forwards;
+}
+
+body.runway-static-live .styleme-runway-static .runway-reveal-beams span {
+    animation: runwayBeamSweep 1.3s ease-in-out 0.18s infinite alternate;
+}
+
+.outfit-runway-reveal.is-live {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.outfit-runway-reveal.is-leaving {
+    opacity: 0;
+}
+
+.runway-reveal-stage {
+    position: relative;
+    width: min(1040px, 100%);
+    min-height: min(640px, calc(100vh - 36px));
+    overflow: hidden;
+    border: 1px solid rgba(221, 184, 101, 0.38);
+    border-radius: 28px;
+    background:
+        linear-gradient(120deg, rgba(255, 248, 234, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(16, 14, 12, 0.96), rgba(5, 5, 5, 0.98));
+    box-shadow: 0 34px 110px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(255, 248, 234, 0.12);
+    transform: translateY(18px) scale(0.98);
+    transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    isolation: isolate;
+}
+
+.outfit-runway-reveal.is-live .runway-reveal-stage {
+    transform: translateY(0) scale(1);
+}
+
+.runway-reveal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(221, 184, 101, 0.48);
+    border-radius: 50%;
+    background: rgba(255, 248, 234, 0.08);
+    color: #fff1be;
+    cursor: pointer;
+}
+
+.runway-reveal-light {
+    position: absolute;
+    inset: -28% 18% auto;
+    height: 62%;
+    background: radial-gradient(ellipse at center, rgba(255, 248, 214, 0.26), transparent 68%);
+    transform: translateY(-18%);
+    pointer-events: none;
+    animation: runwayLightPulse 1.8s ease-in-out infinite alternate;
+}
+
+.runway-reveal-door {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    width: 50.5%;
+    background:
+        linear-gradient(90deg, rgba(255, 248, 234, 0.08), transparent 18%),
+        linear-gradient(180deg, #050505, #14100b 48%, #050505);
+    box-shadow: inset 0 0 0 1px rgba(221, 184, 101, 0.18);
+    transform: translateX(0);
+    pointer-events: none;
+}
+
+.runway-door-left {
+    left: 0;
+    right: auto;
+}
+
+.runway-door-right {
+    left: auto;
+    right: 0;
+    background:
+        linear-gradient(270deg, rgba(255, 248, 234, 0.08), transparent 18%),
+        linear-gradient(180deg, #050505, #14100b 48%, #050505);
+}
+
+.outfit-runway-reveal.is-live .runway-door-left {
+    animation: runwayDoorLeft 1.05s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+}
+
+.outfit-runway-reveal.is-live .runway-door-right {
+    animation: runwayDoorRight 1.05s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+}
+
+.runway-reveal-beams {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.runway-reveal-beams span {
+    position: absolute;
+    top: -28%;
+    left: calc(20% + var(--beam-x, 0%));
+    width: 20%;
+    height: 150%;
+    opacity: 0;
+    background: linear-gradient(180deg, rgba(255, 248, 214, 0.34), transparent 72%);
+    filter: blur(10px);
+    transform: rotate(var(--beam-rotate, 18deg)) translateY(-12%);
+    transform-origin: top center;
+}
+
+.runway-reveal-beams span:nth-child(1) { --beam-x: -4%; --beam-rotate: 20deg; }
+.runway-reveal-beams span:nth-child(2) { --beam-x: 28%; --beam-rotate: 0deg; }
+.runway-reveal-beams span:nth-child(3) { --beam-x: 56%; --beam-rotate: -20deg; }
+
+.outfit-runway-reveal.is-live .runway-reveal-beams span {
+    animation: runwayBeamSweep 2.8s ease-in-out 0.4s infinite alternate;
+}
+
+.runway-reveal-sparks {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.runway-reveal-sparks i {
+    position: absolute;
+    left: calc(4% + var(--spark-i) * 5.1%);
+    top: calc(16% + var(--spark-i) * 2.7%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fcf6ba;
+    opacity: 0;
+    box-shadow: 0 0 16px rgba(252, 246, 186, 0.9);
+    transform: translate3d(0, 20px, 0) scale(0.4);
+}
+
+.outfit-runway-reveal.is-live .runway-reveal-sparks i {
+    animation: runwaySparkBurst 1.6s ease-out calc(0.55s + var(--spark-i) * 0.055s) forwards;
+}
+
+.runway-reveal-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    padding: clamp(28px, 5vw, 54px) clamp(22px, 5vw, 58px) 12px;
+}
+
+.runway-reveal-copy span {
+    color: #ddb865;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+}
+
+.runway-reveal-copy h2 {
+    margin: 8px 0 10px;
+    color: #fff8dc;
+    font-size: clamp(2.4rem, 8vw, 6.4rem);
+    line-height: 0.9;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.runway-reveal-copy p {
+    color: rgba(255, 248, 234, 0.76);
+    font-size: clamp(0.76rem, 1.4vw, 0.95rem);
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    text-transform: uppercase;
+}
+
+.runway-reveal-line {
+    position: absolute;
+    left: 50%;
+    bottom: 44px;
+    width: min(72%, 680px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(221, 184, 101, 0.8), transparent);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1) 220ms;
+}
+
+.outfit-runway-reveal.is-live .runway-reveal-line {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.runway-reveal-pieces {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(10px, 2vw, 18px);
+    padding: 12px clamp(18px, 5vw, 58px) 78px;
+}
+
+.runway-reveal-piece {
+    min-width: 0;
+    border: 1px solid rgba(221, 184, 101, 0.24);
+    border-radius: 18px;
+    padding: 10px;
+    background: rgba(255, 248, 234, 0.08);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.26);
+    opacity: 0;
+    transform: translate3d(0, 44px, 0) scale(0.94);
+    transition:
+        opacity 520ms ease calc(360ms + var(--runway-i) * 130ms),
+        transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(360ms + var(--runway-i) * 130ms);
+}
+
+.outfit-runway-reveal.is-live .runway-reveal-piece {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    animation: runwayPieceFloat 1.8s ease-in-out calc(1.25s + var(--runway-i) * 0.08s) infinite alternate;
+}
+
+.runway-reveal-piece img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff8ea, #eadbc2);
+}
+
+.runway-reveal-piece span,
+.runway-reveal-piece strong {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.runway-reveal-piece span {
+    margin-top: 9px;
+    color: #ddb865;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.runway-reveal-piece strong {
+    margin-top: 4px;
+    color: #fff8dc;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.runway-reveal-stamp {
+    position: absolute;
+    right: clamp(22px, 5vw, 60px);
+    bottom: 24px;
+    z-index: 3;
+    border: 1px solid rgba(221, 184, 101, 0.7);
+    border-radius: 999px;
+    padding: 12px 18px;
+    color: #111111;
+    background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
+    font-size: clamp(0.72rem, 1.2vw, 0.92rem);
+    font-weight: 1000;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: rotate(-8deg) scale(0.74);
+    transition: opacity 380ms ease 1180ms, transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1) 1180ms;
+}
+
+.outfit-runway-reveal.is-live .runway-reveal-stamp {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+    animation: runwayStampHit 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 1.18s both;
+}
+
+@keyframes runwayDoorLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-105%); }
+}
+
+@keyframes runwayDoorRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(105%); }
+}
+
+@keyframes runwayLightPulse {
+    0% { opacity: 0.42; transform: translateY(-18%) scale(0.94); }
+    100% { opacity: 0.82; transform: translateY(-14%) scale(1.08); }
+}
+
+@keyframes runwayBeamSweep {
+    0% { opacity: 0.08; transform: rotate(var(--beam-rotate)) translate3d(-18px, -12%, 0); }
+    50% { opacity: 0.34; }
+    100% { opacity: 0.16; transform: rotate(calc(var(--beam-rotate) * -0.85)) translate3d(22px, -8%, 0); }
+}
+
+@keyframes runwaySparkBurst {
+    0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.35); }
+    28% { opacity: 1; }
+    100% { opacity: 0; transform: translate3d(calc((var(--spark-i) - 9) * 8px), -150px, 0) scale(1.15); }
+}
+
+@keyframes runwayPieceFloat {
+    0% { translate: 0 0; }
+    100% { translate: 0 -8px; }
+}
+
+@keyframes runwayStampHit {
+    0% { opacity: 0; transform: rotate(-18deg) scale(2.6); filter: blur(6px); }
+    42% { opacity: 1; transform: rotate(-8deg) scale(0.88); filter: blur(0); }
+    66% { transform: rotate(-8deg) scale(1.08); }
+    100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+}
+
+@keyframes runwayStaticShow {
+    0% { opacity: 0; }
+    8%, 82% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes runwayStageBlast {
+    0% { transform: translateY(28px) scale(0.86); filter: blur(8px); }
+    18% { transform: translateY(0) scale(1.02); filter: blur(0); }
+    80% { transform: translateY(0) scale(1); filter: blur(0); }
+    100% { transform: translateY(-12px) scale(0.98); filter: blur(5px); }
+}
+
+@keyframes runwayLineBlast {
+    0% { transform: translateX(-50%) scaleX(0); opacity: 0; }
+    38% { opacity: 1; }
+    100% { transform: translateX(-50%) scaleX(1); opacity: 1; }
+}
+
+@keyframes runwayCardBlast {
+    0% { opacity: 0; transform: translate3d(0, 90px, 0) rotateX(28deg) scale(0.72); filter: blur(8px); }
+    58% { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg) scale(1); filter: blur(0); }
+}
+
+@media (max-width: 720px) {
+    .runway-reveal-stage {
+        min-height: calc(100vh - 28px);
+        border-radius: 22px;
+    }
+
+    .runway-reveal-pieces {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-bottom: 88px;
+    }
+
+    .runway-reveal-copy h2 {
+        font-size: clamp(2.2rem, 15vw, 4rem);
+    }
+}
+
 /* MZ LUX Stylist Suite */
 .stylist-suite {
     display: none;
