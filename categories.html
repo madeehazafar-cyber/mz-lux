@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Categories</title>
-    <link rel="stylesheet" href="style.css?v=20260619-color-wheel">
+    <link rel="stylesheet" href="style.css?v=20260623-fashion-story-camera">
 </head>
 <body>
 
@@ -18,9 +18,8 @@
 
 <nav>
     <a href="index.html">Home</a>
-    <a href="themes.html">Themes</a>
-    <a href="vip.html">VIP Club</a>
     <a href="categories.html">Categories</a>
+    <a href="vip.html">VIP Club</a>
     <a href="camera.html">Camera</a>
     <a href="favourites.html">Favourites</a>
 </nav>
@@ -52,16 +51,17 @@
         <div class="theme-control">
             <label for="vibeSelect">Vibe</label>
             <select id="vibeSelect">
-                <option value="minimalist" selected>Minimalist Studio</option>
-                <option value="brunch">Brunch Cafe</option>
-                <option value="cocktail">Cocktail Party</option>
-                <option value="office">Chic Office</option>
+                <option value="minimalist" selected>Gallery Minimal</option>
+                <option value="brunch">Soft Brunch Glow</option>
+                <option value="cocktail">After Dark Luxe</option>
+                <option value="office">Chic Executive</option>
             </select>
         </div>
     </section>
 
     <section id="instructionBox" class="instruction-box">
-        Scroll each rail into the center frame, or press Style Me for a full outfit shuffle.
+        <span id="vibeMoodLabel">Gallery Minimal</span>
+        <span id="vibeMoodCopy">Clean lines, sharp contrast, and polished gold details.</span>
     </section>
 
     <section class="closet-stage" aria-label="Interactive outfit builder">
@@ -70,6 +70,17 @@
             <span></span>
         </div>
         <div id="clothingDisplay" class="clothing-display closet-rails"></div>
+    </section>
+
+    <section id="selectedItemPanel" class="selected-item-panel" aria-live="polite">
+        <div class="selected-item-media">
+            <img id="selectedItemImage" src="images/placeholders/top-placeholder.svg" alt="Selected item preview">
+        </div>
+        <div class="selected-item-copy">
+            <span id="selectedItemType">Tap an item</span>
+            <h2 id="selectedItemName">Your selected piece will show here</h2>
+            <p id="selectedItemNote">Pick a card from any rail to add it to the active outfit.</p>
+        </div>
     </section>
 
     <section id="outfitInsights" class="outfit-insights-card" aria-labelledby="outfitInsightsTitle">
@@ -96,7 +107,7 @@
             
             <div class="outfit-advice-panel">
                 <span class="outfit-insights-label">Styling Direction</span>
-                <p id="outfitInsightAdvice" aria-live="polite">Center the rails to generate a palette and accessory direction for the look.</p>
+                <p id="outfitInsightAdvice" aria-live="polite">Use Style Me to build the look, then let the color wheel add matching palette and accessory suggestions.</p>
                 <div id="outfitInsightMeta" class="outfit-insight-tags" aria-label="Current outfit details">
                     <span>No look selected</span>
                 </div>
@@ -120,7 +131,7 @@
         
         <div class="event-planner-tabbar">
             <button id="plannerAddBtn" class="event-planner-icon-btn" type="button" aria-label="Add calendar event">+</button>
-            <button id="plannerExpandBtn" class="event-planner-icon-btn" type="button" aria-label="Enlarge calendar">□</button>
+            <button id="plannerExpandBtn" class="event-planner-icon-btn" type="button" aria-label="Minimize calendar">−</button>
             <button id="plannerCloseBtn" class="event-planner-icon-btn" type="button" aria-label="Close calendar">x</button>
         </div>
         

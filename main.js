@@ -1,6 +1,5 @@
 // ── PROXY URL ──
 const PROXY_URL = "https://mz-3i9crjfoy-mz5.vercel.app/api/proxy";
-
 const outfits = {
     oldMoney: {
         tops: [
@@ -34,125 +33,124 @@ const outfits = {
     },
     streetwear: {
         tops: [
-            { name: "Oversized Hoodie", image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&q=80" },
-            { name: "Graphic Tee",      image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&q=80" },
-            { name: "Denim Jacket",     image: "https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=400&q=80" },
-            { name: "Crop Hoodie",      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" },
-            { name: "Varsity Jacket",   image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80" }
+            { name: "Oversized Graphic Tee", image: "images/kitty-wardrobe/oversized graphic tee 1.webp" },
+            { name: "Cropped Hoodie",        image: "images/kitty-wardrobe/cropped hoodie.webp" },
+            { name: "Varsity Jacket",        image: "images/kitty-wardrobe/varsity jacket.webp" },
+            { name: "Mesh Layer Top",        image: "images/kitty-wardrobe/mesh layer top.webp" },
+            { name: "Boxy Zip Jacket",       image: "images/kitty-wardrobe/boxy zip jacket.webp" }
         ],
         bottoms: [
-            { name: "Cargo Pants",    image: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=400&q=80" },
-            { name: "Baggy Jeans",    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80" },
-            { name: "Joggers",        image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&q=80" },
-            { name: "Denim Skirt",    image: "https://images.unsplash.com/photo-1604176424472-17cd740f0197?w=400&q=80" },
-            { name: "Wide Leg Jeans", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&q=80" }
+            { name: "Cargo Trousers",     image: "images/kitty-wardrobe/cargo trousres.webp" },
+            { name: "Baggy Denim",        image: "images/kitty-wardrobe/baggy denim.webp" },
+            { name: "Parachute Pants",    image: "images/kitty-wardrobe/parachite pants.webp" },
+            { name: "Utility Mini Skirt", image: "images/kitty-wardrobe/utility mini skirt.webp" },
+            { name: "Wide Track Pants",   image: "images/kitty-wardrobe/wide track pants.webp" }
         ],
         shoes: [
-            { name: "Chunky Sneakers",   image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80" },
-            { name: "High Tops",         image: "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=400&q=80" },
-            { name: "Platform Sneakers", image: "https://images.unsplash.com/photo-1607522370275-f6fd0d31a94a?w=400&q=80" },
-            { name: "Combat Boots",      image: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=400&q=80" },
-            { name: "Skate Shoes",       image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80" }
+            { name: "Chunky Sneakers", image: "images/kitty-wardrobe/chuky sneakers.webp" },
+            { name: "Platform Boots",  image: "images/kitty-wardrobe/platform boots.webp" },
+            { name: "Retro Trainers",  image: "images/kitty-wardrobe/retro trainers.webp" },
+            { name: "Skate Sneakers",  image: "images/kitty-wardrobe/skate sneakers.webp" },
+            { name: "Combat Boots",    image: "images/kitty-wardrobe/combat boots.webp" }
         ],
         accessories: [
-            { name: "Baseball Cap",  image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&q=80" },
-            { name: "Shoulder Bag",  image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" },
-            { name: "Silver Chain",  image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" },
-            { name: "Beanie",        image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&q=80" },
-            { name: "Hoop Earrings", image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" }
+            { name: "Shield Sunglasses", image: "images/kitty-wardrobe/shield sunglasses.webp" },
+            { name: "Chain Belt",        image: "images/kitty-wardrobe/chai belts.webp" },
+            { name: "Baseball Cap",      image: "images/kitty-wardrobe/baseball cap.webp" },
+            { name: "Mini Crossbody",    image: "images/kitty-wardrobe/mini crossbody bag.webp" },
+            { name: "Stacked Rings",     image: "images/kitty-wardrobe/stacked rings.webp" }
         ]
     },
     minimalist: {
         tops: [
-            { name: "White Tee",      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80" },
-            { name: "Black Tank Top", image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80" },
-            { name: "Grey Sweater",   image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=80" },
-            { name: "Cream Blouse",   image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" },
-            { name: "Basic Cardigan", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&q=80" }
+            { name: "Ivory Tank",        image: "images/kitty-wardrobe/ivory tank.webp" },
+            { name: "Black Knit Top",    image: "images/kitty-wardrobe/black knit top.webp" },
+            { name: "Clean Poplin Shirt", image: "images/kitty-wardrobe/clean poplin shirt.webp" },
+            { name: "Soft Grey Tee",     image: "images/kitty-wardrobe/soft grey tee.webp" },
+            { name: "Sleeveless Vest",   image: "images/kitty-wardrobe/sleveless vest.webp" }
         ],
         bottoms: [
-            { name: "Straight Jeans",  image: "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?w=400&q=80" },
-            { name: "Black Trousers",  image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80" },
-            { name: "Neutral Skirt",   image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=400&q=80" },
-            { name: "Cream Pants",     image: "https://images.unsplash.com/photo-1594938298603-c8148c4b4d04?w=400&q=80" },
-            { name: "Grey Wide Pants", image: "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=400&q=80" }
+            { name: "Straight Black Trouser", image: "images/kitty-wardrobe/straight black trouser.webp" },
+            { name: "Ivory Column Skirt",     image: "images/kitty-wardrobe/ivory column skirt.webp" },
+            { name: "Tailored Grey Pants",    image: "images/kitty-wardrobe/tailored grey pants.webp" },
+            { name: "Cream Wide Leg",         image: "images/kitty-wardrobe/cream wide leg.webp" },
+            { name: "Simple Midi Skirt",      image: "images/kitty-wardrobe/simple midi skirt.webp" }
         ],
         shoes: [
-            { name: "White Flats",     image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80" },
-            { name: "Simple Sneakers", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80" },
-            { name: "Black Flats",     image: "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=400&q=80" },
-            { name: "Neutral Sandals", image: "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?w=400&q=80" },
-            { name: "Clean Loafers",   image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=400&q=80" }
+            { name: "Slim Black Flats", image: "images/kitty-wardrobe/slim black flats.webp" },
+            { name: "White Low Sneaker", image: "images/kitty-wardrobe/white low sneakres.webp" },
+            { name: "Square Toe Mule",   image: "images/kitty-wardrobe/square toe mule.webp" },
+            { name: "Matte Loafer",      image: "images/kitty-wardrobe/matte loafers.webp" },
+            { name: "Clean Ankle Boot",  image: "images/kitty-wardrobe/clean ankle boot.webp" }
         ],
         accessories: [
-            { name: "Simple Tote",    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&q=80" },
-            { name: "Gold Studs",     image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
-            { name: "Thin Belt",      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80" },
-            { name: "Minimal Watch",  image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" },
-            { name: "Small Necklace", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" }
+            { name: "Thin Gold Cuff", image: "images/kitty-wardrobe/thin gold cuff.webp" },
+            { name: "Small Hoop Set", image: "images/kitty-wardrobe/small hoop set.webp" },
+            { name: "Slim Belt",      image: "images/kitty-wardrobe/slim belt.webp" },
+            { name: "Mini Shoulder Bag", image: "images/kitty-wardrobe/mini shoulder bag.webp" },
+            { name: "Oval Sunglasses", image: "images/kitty-wardrobe/oval sunglasses.webp" }
         ]
     },
     casual: {
         tops: [
-            { name: "Basic Hoodie",   image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&q=80" },
-            { name: "Plain Tee",      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80" },
-            { name: "Flannel Shirt",  image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?w=400&q=80" },
-            { name: "Zip-Up Sweater", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=80" },
-            { name: "Casual Blouse",  image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" }
+            { name: "Soft Crewneck", image: "images/kitty-wardrobe/soft crew neck.webp" },
+            { name: "Relaxed Polo",  image: "images/kitty-wardrobe/relaxed polo.webp" },
+            { name: "Striped Tee",   image: "images/kitty-wardrobe/striped tee.webp" },
+            { name: "Denim Shirt",   image: "images/kitty-wardrobe/denim shirt.webp" },
+            { name: "Light Cardigan", image: "images/kitty-wardrobe/light cardiga.webp" }
         ],
         bottoms: [
-            { name: "Blue Jeans",   image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80" },
-            { name: "Leggings",     image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400&q=80" },
-            { name: "Joggers",      image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&q=80" },
-            { name: "Denim Shorts", image: "https://images.unsplash.com/photo-1591195853828-11db59a44f43?w=400&q=80" },
-            { name: "Casual Skirt", image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400&q=80" }
+            { name: "Relaxed Jeans",      image: "images/kitty-wardrobe/relaxed jeans.webp" },
+            { name: "Easy Linen Pants",   image: "images/kitty-wardrobe/easy linen pants.webp" },
+            { name: "Weekend Trousers",   image: "images/kitty-wardrobe/weekend trousers.webp" },
+            { name: "Casual Midi Skirt",  image: "images/kitty-wardrobe/casual midi skirt.webp" },
+            { name: "Soft Jogger Pants",  image: "images/kitty-wardrobe/soft jogger pants.webp" }
         ],
         shoes: [
-            { name: "White Sneakers", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80" },
-            { name: "Slip Ons",       image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80" },
-            { name: "Casual Boots",   image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&q=80" },
-            { name: "Canvas Shoes",   image: "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=400&q=80" },
-            { name: "Running Shoes",  image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80" }
+            { name: "Everyday Sneakers", image: "images/kitty-wardrobe/everyday sneakers.webp" },
+            { name: "Soft Loafers",      image: "images/kitty-wardrobe/soft loafers.webp" },
+            { name: "Simple Flats",      image: "images/kitty-wardrobe/simple flats.webp" },
+            { name: "Chelsea Boots",     image: "images/kitty-wardrobe/chelsea boots.webp" },
+            { name: "Canvas Trainers",   image: "images/kitty-wardrobe/canvas trainers.webp" }
         ],
         accessories: [
-            { name: "Backpack",        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80" },
-            { name: "Scrunchie",       image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80" },
-            { name: "Crossbody Bag",   image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" },
-            { name: "Casual Cap",      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&q=80" },
-            { name: "Simple Bracelet", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" }
+            { name: "Soft Tote",       image: "images/kitty-wardrobe/soft tote.webp" },
+            { name: "Weekend Scarf",   image: "images/kitty-wardrobe/wekend scar.webp" },
+            { name: "Leather Belt",    image: "images/kitty-wardrobe/leather belt.webp" },
+            { name: "Simple Watch",    image: "images/kitty-wardrobe/simple watch.webp" },
+            { name: "Tinted Sunglasses", image: "images/kitty-wardrobe/tinted sunglasses.webp" }
         ]
     },
     formal: {
         tops: [
-            { name: "White Blouse",    image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" },
-            { name: "Black Blazer",    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80" },
-            { name: "Satin Shirt",     image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&q=80" },
-            { name: "Dressy Top",      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" },
-            { name: "Tailored Jacket", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80" }
+            { name: "Structured Blazer", image: "images/kitty-wardrobe/structured blazer.webp" },
+            { name: "Silk Blouse",       image: "images/kitty-wardrobe/silk blouse.webp" },
+            { name: "Evening Bodice",    image: "images/kitty-wardrobe/evening bodice.webp" },
+            { name: "Tuxedo Shirt",      image: "images/kitty-wardrobe/tuxedo shirt.webp" },
+            { name: "Satin Wrap Top",    image: "images/kitty-wardrobe/satin wrap top.webp" }
         ],
         bottoms: [
-            { name: "Dress Pants",       image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&q=80" },
-            { name: "Pencil Skirt",      image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=400&q=80" },
-            { name: "Black Trousers",    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80" },
-            { name: "Midi Skirt",        image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400&q=80" },
-            { name: "Wide Leg Trousers", image: "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=400&q=80" }
+            { name: "Black Dress Pants", image: "images/kitty-wardrobe/black dress pants.webp" },
+            { name: "Satin Maxi Skirt",  image: "images/kitty-wardrobe/satin maxi skirt.webp" },
+            { name: "Tailored Tux Pant", image: "images/kitty-wardrobe/taiored tux pant.webp" },
+            { name: "Pleated Evening Skirt", image: "images/kitty-wardrobe/pleated evening skirt.webp" },
+            { name: "Ivory Formal Trouser", image: "images/kitty-wardrobe/ivory forml trouser.webp" }
         ],
         shoes: [
-            { name: "Black Heels",   image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80" },
-            { name: "Nude Heels",    image: "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=400&q=80" },
-            { name: "Pointed Flats", image: "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?w=400&q=80" },
-            { name: "Dress Loafers", image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=400&q=80" },
-            { name: "Ankle Boots",   image: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=400&q=80" }
+            { name: "Black Formal Loafer", image: "images/kitty-wardrobe/black formal loafer.webp" },
+            { name: "Satin Heel",          image: "images/kitty-wardrobe/satin heel.webp" },
+            { name: "Patent Pump",         image: "images/kitty-wardrobe/patent pump.webp" },
+            { name: "Dress Boot",          image: "images/kitty-wardrobe/dress boot.webp" },
+            { name: "Pointed Flat",        image: "images/kitty-wardrobe/pointed flat.webp" }
         ],
         accessories: [
-            { name: "Pearl Earrings", image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80" },
-            { name: "Clutch Bag",     image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" },
-            { name: "Gold Bracelet",  image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80" },
-            { name: "Elegant Watch",  image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" },
-            { name: "Silk Scarf",     image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80" }
+            { name: "Pearl Drop Necklace", image: "images/kitty-wardrobe/pearl drop necklace.webp" },
+            { name: "Gold Evening Watch",  image: "images/kitty-wardrobe/gold evening waatch.webp" },
+            { name: "Silk Evening Scarf",  image: "images/kitty-wardrobe/silk evening scarf.webp" },
+            { name: "Crystal Clutch",      image: "images/kitty-wardrobe/crystal clutch.webp" },
+            { name: "Statement Earrings",  image: "images/kitty-wardrobe/statemnet earings.webp" }
         ]
-    }
-};
+    }};
 
 const selectedOutfit = { top: null, bottom: null, shoes: null, accessories: [] };
 const themeLabels = { oldMoney: "Old Money", streetwear: "Streetwear", minimalist: "Minimalist", casual: "Casual", formal: "Formal" };
@@ -209,17 +207,25 @@ function getLocalStylistReply(question = "", history = []) {
         return "You’re welcome — I’m here to make your wardrobe feel sharper, calmer, and more effortless.";
     }
 
-    return "This is the kind of look that works best when it feels intentional: one strong silhouette, one rich tone, and one polished finish.";
+    const wardrobeContext = getCameraWardrobeContext?.() || "";
+    if (/why|how|can you|should i|do i|is it|does it|would it|when|where|which|what/.test(text)) {
+        return `Yes — I can help with that. For MZ LUX, keep the answer simple: choose one main piece, match it with a clean neutral, then add one polished accessory. ${wardrobeContext.includes("Uploaded") ? "From your uploads, I would focus on the strongest top-bottom contrast first." : "Upload pieces when you want advice based on your real closet."}`;
+    }
+
+    return "I can style this. Keep it polished with one strong silhouette, one rich neutral, and one intentional finish like a gold watch, clean bag, sleek loafers, or soft layered jacket.";
 }
 
 async function callAI(systemPrompt, messages) {
     const lastMessage = messages[messages.length - 1]?.content || "";
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8500);
 
     try {
         const res = await fetch(PROXY_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages })
+            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages }),
+            signal: controller.signal
         });
 
         if (!res.ok) throw new Error("Proxy unavailable");
@@ -230,7 +236,19 @@ async function callAI(systemPrompt, messages) {
         throw new Error("No ai response");
     } catch {
         return getLocalStylistReply(lastMessage, chatHistory);
+    } finally {
+        clearTimeout(timeout);
     }
+}
+
+function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    }[char]));
 }
 
 function initBuilder() {
@@ -285,7 +303,6 @@ function initScrollEffects() {
 document.addEventListener("DOMContentLoaded", initBuilder);
 document.addEventListener("DOMContentLoaded", () => setTimeout(initClosetRails, 250));
 document.addEventListener("DOMContentLoaded", initFeaturedCollectionIntro);
-document.addEventListener("DOMContentLoaded", initStylePreferencePopup);
 document.addEventListener("DOMContentLoaded", initThemeQuiz);
 document.addEventListener("DOMContentLoaded", initOpeningClosetCalendar);
 document.addEventListener("DOMContentLoaded", initReliableCategoryNavigation);
@@ -293,12 +310,23 @@ document.addEventListener("DOMContentLoaded", initReliableCategoryNavigation);
 if (document.readyState !== "loading") {
     initBuilder();
     setTimeout(initClosetRails, 250);
+    initFeaturedCollectionIntro();
+    initThemeQuiz();
+    initOpeningClosetCalendar();
+    initReliableCategoryNavigation();
 }
+
+setTimeout(() => {
+    initOpeningClosetCalendar();
+    initReliableCategoryNavigation();
+}, 0);
 
 window.showThemeItems = showThemeItems;
 
 function initReliableCategoryNavigation() {
     document.querySelectorAll('a[href="categories.html"]').forEach((link) => {
+        if (link.dataset.categoryNavReady === "true") return;
+        link.dataset.categoryNavReady = "true";
         link.addEventListener("click", (event) => {
             event.preventDefault();
             const target = new URL("categories.html", window.location.href).href;
@@ -411,11 +439,12 @@ function showThemeItems() {
 function applyStoredThemeSelection() {
     if (!themeSelect) return;
     const params = new URLSearchParams(window.location.search);
-    const urlTheme = params.get("theme");
-    const storedTheme = localStorage.getItem("selectedTheme");
+    const urlTheme = params.get("theme") || params.get("customized");
+    const storedTheme = localStorage.getItem("mzLuxSelectedTheme") || localStorage.getItem("selectedTheme");
     const nextTheme = urlTheme || storedTheme;
     if (nextTheme && outfits[nextTheme]) {
         themeSelect.value = nextTheme;
+        localStorage.setItem("mzLuxSelectedTheme", nextTheme);
         localStorage.setItem("selectedTheme", nextTheme);
     }
 }
@@ -450,7 +479,10 @@ function getPreferenceScore(item, type, preference, priority = "tailored") {
 }
 
 function initStylePreferencePopup() {
-    if (localStorage.getItem("mzLuxStylePreference") && localStorage.getItem("mzLuxStylePriority")) return;
+    if (!document.body.classList.contains("home-page")) return;
+    if (localStorage.getItem("mzLuxExperienceProfile")) return;
+    if (window.mzLuxPreferencePromptScheduled) return;
+    window.mzLuxPreferencePromptScheduled = true;
     const modal = document.createElement("section");
     modal.className = "style-preference-modal style-preference-drawer";
     modal.setAttribute("role", "dialog");
@@ -460,8 +492,19 @@ function initStylePreferencePopup() {
         <div class="style-preference-card">
             <span>Personalize MZ LUX</span>
             <h2>Would you like us to customize your experience?</h2>
-            <p>Answer two quick questions so your outfit rows feel more personal.</p>
+            <p>Answer three quick questions so your closet opens with pieces that feel more like you.</p>
             <form class="style-preference-form">
+                <label class="style-preference-name">
+                    Your name
+                    <input type="text" name="styleName" placeholder="Enter your name" autocomplete="name" required>
+                </label>
+                <fieldset>
+                    <legend>Style</legend>
+                    <label><input type="radio" name="styleTheme" value="minimalist" checked> Minimalist</label>
+                    <label><input type="radio" name="styleTheme" value="oldMoney"> Old money</label>
+                    <label><input type="radio" name="styleTheme" value="streetwear"> Streetwear</label>
+                    <label><input type="radio" name="styleTheme" value="formal"> Formal</label>
+                </fieldset>
                 <fieldset>
                     <legend>Gender</legend>
                     <label><input type="radio" name="stylePreference" value="female" checked> Female</label>
@@ -478,15 +521,28 @@ function initStylePreferencePopup() {
             </form>
         </div>
     `;
-    document.body.appendChild(modal);
-    requestAnimationFrame(() => modal.classList.add("is-visible"));
+    setTimeout(() => {
+        document.body.appendChild(modal);
+        requestAnimationFrame(() => modal.classList.add("is-visible"));
+    }, document.body.classList.contains("curtain-active") ? 3300 : 250);
     modal.querySelector(".style-preference-form")?.addEventListener("submit", (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const theme = data.get("styleTheme") || "minimalist";
+        localStorage.setItem("mzLuxExperienceProfile", JSON.stringify({
+            name: data.get("styleName") || "",
+            theme,
+            gender: data.get("stylePreference") || "neutral",
+            priority: data.get("stylePriority") || "tailored"
+        }));
+        localStorage.setItem("mzLuxSelectedTheme", theme);
         localStorage.setItem("mzLuxStylePreference", data.get("stylePreference") || "neutral");
         localStorage.setItem("mzLuxStylePriority", data.get("stylePriority") || "tailored");
         modal.classList.remove("is-visible");
-        setTimeout(() => modal.remove(), 360);
+        setTimeout(() => {
+            modal.remove();
+            window.location.href = `categories.html?customized=${encodeURIComponent(theme)}`;
+        }, 360);
         if (themeSelect && clothingDisplay) showThemeItems();
     });
 }
@@ -569,6 +625,10 @@ function getImageCandidates(item, type) {
     const candidates = [];
 
     if (safeItem.image) candidates.push(safeItem.image);
+    if (/^https?:\/\//i.test(safeItem.image || "")) {
+        candidates.push(getPlaceholderImage(type));
+        return Array.from(new Set(candidates.filter(Boolean)));
+    }
 
     (roots[type] || roots.top).forEach((root) => {
         baseNames.forEach((baseName) => {
@@ -620,7 +680,7 @@ function createCategory(title, type, items) {
                 <span class="closet-card-lock" role="button" tabindex="0" aria-label="Lock item" title="Lock item"></span>
                 <div class="clothing-card-media">
                     <img src="${imageSrc}" alt="${item.name}" loading="lazy"
-                         onerror="this.onerror=null;window.tryImageFallback && window.tryImageFallback(this,'${fallbackChain}');">
+                         onerror="window.tryImageFallback && window.tryImageFallback(this,'${fallbackChain}');">
                 </div>
                 <p>${item.name}</p>
             </button>`;
@@ -796,7 +856,19 @@ function shuffleUnlockedClosetRows() {
 function setClosetVibe(vibe) {
     const page = document.querySelector(".clueless-closet");
     if (!page) return;
-    page.dataset.vibe = vibe || "minimalist";
+    const activeVibe = vibe || "minimalist";
+    const vibeDetails = {
+        minimalist: ["Gallery Minimal", "Clean lines, sharp contrast, and polished gold details."],
+        brunch: ["Soft Brunch Glow", "Creamy layers, warm light, and relaxed brunch-ready styling."],
+        cocktail: ["After Dark Luxe", "Glossy evening energy with dramatic contrast and metallic accents."],
+        office: ["Chic Executive", "Sharper tailoring, confident structure, and expensive neutral polish."]
+    };
+    page.dataset.vibe = activeVibe;
+    const [label, copy] = vibeDetails[activeVibe] || vibeDetails.minimalist;
+    const vibeMoodLabel = document.getElementById("vibeMoodLabel");
+    const vibeMoodCopy = document.getElementById("vibeMoodCopy");
+    if (vibeMoodLabel) vibeMoodLabel.textContent = label;
+    if (vibeMoodCopy) vibeMoodCopy.textContent = copy;
 }
 
 function evaluateClosetMatch() {
@@ -865,7 +937,7 @@ function initCameraMode() {
 
         const userBubble = document.createElement("div");
         userBubble.className = "chat-bubble user";
-        userBubble.innerHTML = `<p>${question}</p>`;
+        userBubble.innerHTML = `<p>${escapeHTML(question)}</p>`;
         chatMessages.appendChild(userBubble);
         chatInput.value = "";
 
@@ -888,7 +960,7 @@ function initCameraMode() {
 
         const assistantBubble = document.createElement("div");
         assistantBubble.className = "chat-bubble assistant";
-        assistantBubble.innerHTML = `<p>${answer.replace(/\n/g, "<br>")}</p>`;
+        assistantBubble.innerHTML = `<p>${escapeHTML(answer).replace(/\n/g, "<br>")}</p>`;
         chatMessages.appendChild(assistantBubble);
         chatHistory.push({ question, answer });
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -960,27 +1032,68 @@ function getOutfitStyleComments(outfit, mood, tone) {
 }
 
 function generateCameraOutfits() {
-    const tops    = getCameraItems('[data-role="top-input"]',    "top");
-    const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom");
+    const tops    = getCameraItems('[data-role="top-input"]',    "top").filter((item) => item.fileName);
+    const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom").filter((item) => item.fileName);
     const results = document.getElementById("cameraResults");
+    const trigger = document.getElementById("generateCameraOutfits");
     if (!results) return;
-    const pairs = tops.slice(0,3).flatMap(top => bottoms.slice(0,2).map(bottom => ({ top, bottom, mood: getOutfitMood(top, bottom) })))
-        .sort((a,b) => { const s = m => m==="luxury tailoring"?3:m==="soft elegance"?2:m==="casual cool"?1:0; return s(b.mood)-s(a.mood); })
-        .slice(0,2).map((p,i) => ({ ...p, hats: getHatOptions(p.mood), comments: getOutfitStyleComments({top:p.top,bottom:p.bottom},p.mood,i===0?"luxurious":"fun") }));
-    if (!pairs.length) { results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>'; return; }
-    results.innerHTML = `<div class="camera-results-grid">${pairs.map(({top,bottom,mood,hats,comments}) => `
-        <article class="camera-outfit-card">
-            <div class="camera-outfit-media">
-                ${top.preview    ? `<img src="${top.preview}"    alt="${top.label}">` : ""}
-                ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
-            </div>
-            <div class="camera-outfit-copy">
-                <h4>${top.label} + ${bottom.label}</h4>
-                <p class="camera-mood">${mood}</p>
-                <div class="camera-ai-comments">${comments.map(c=>`<p>${c}</p>`).join("")}</div>
-                <div class="camera-hats"><span>Hat options</span><ul>${hats.map(h=>`<li>${h}</li>`).join("")}</ul></div>
-            </div>
-        </article>`).join("")}</div>`;
+    if (!tops.length || !bottoms.length) {
+        results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>';
+        return;
+    }
+    if (trigger) {
+        trigger.disabled = true;
+        trigger.textContent = "Generating 3 best options...";
+    }
+    results.innerHTML = '<div class="camera-empty">Generating 3 best options...</div>';
+    setTimeout(() => {
+        const firstBottom = bottoms[0];
+        const lastBottom = bottoms[bottoms.length - 1] || firstBottom;
+        const requestedPairs = [
+            { top: tops[0], bottom: firstBottom },
+            { top: tops[1] || tops[0], bottom: firstBottom },
+            { top: tops[0], bottom: lastBottom }
+        ];
+        const fallbackPairs = tops.flatMap(top => bottoms.map(bottom => ({
+            top,
+            bottom
+        })));
+        const bestPairs = [];
+        [...requestedPairs, ...fallbackPairs].forEach((pair) => {
+            if (!pair.top || !pair.bottom || bestPairs.length >= 3) return;
+            const key = `${pair.top.label}::${pair.bottom.label}`;
+            if (bestPairs.some((picked) => picked.key === key)) return;
+            bestPairs.push({
+                ...pair,
+                key,
+                mood: getOutfitMood(pair.top, pair.bottom)
+            });
+        });
+        const rankedPairs = bestPairs.map((pair, index) => ({
+            ...pair,
+            rank: index + 1,
+            hats: getHatOptions(pair.mood),
+            comments: getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, index < 2 ? "luxurious" : "fun")
+        }));
+        results.innerHTML = `<div class="camera-results-heading"><h3>3 best options</h3><p>One top + one bottom</p></div><div class="camera-results-grid">${rankedPairs.map(({top,bottom,mood,hats,comments,rank}) => `
+            <article class="camera-outfit-card">
+                ${rank === 1 ? `<span class="camera-best-badge">MZ LUX PICK</span>` : rank === 2 ? `<span class="camera-best-badge">BEST MATCH</span>` : `<span class="camera-best-badge">THIRD OPTION</span>`}
+                <div class="camera-outfit-media">
+                    ${top.preview ? `<img src="${top.preview}" alt="${top.label}">` : ""}
+                    ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
+                </div>
+                <div class="camera-outfit-copy">
+                    <h4>${top.label} + ${bottom.label}</h4>
+                    <p class="camera-mood">${mood}</p>
+                    <div class="camera-ai-comments">${comments.map(c=>`<p>${c}</p>`).join("")}</div>
+                    <div class="camera-hats"><span>Hat options</span><ul>${hats.map(h=>`<li>${h}</li>`).join("")}</ul></div>
+                </div>
+            </article>`).join("")}</div>`;
+        if (trigger) {
+            trigger.disabled = false;
+            trigger.textContent = "Generate 3 best options";
+        }
+    }, 520);
 }
 
 function selectItem(type, item) {
@@ -993,7 +1106,31 @@ function selectItem(type, item) {
     }
     saveCurrentOutfit();
     updatePreview(type, type === "accessory" ? selectedOutfit.accessories : item);
+    updateSelectedItemPanel(type, item);
     updateSelectionHighlights();
+}
+
+function updateSelectedItemPanel(type, item) {
+    const panel = document.getElementById("selectedItemPanel");
+    if (!panel || !item) return;
+    const img = document.getElementById("selectedItemImage");
+    const itemType = document.getElementById("selectedItemType");
+    const itemName = document.getElementById("selectedItemName");
+    const note = document.getElementById("selectedItemNote");
+    const label = getLabel(type);
+
+    if (img) {
+        img.src = item.image || getPlaceholderImage(type);
+        img.alt = item.name;
+    }
+    if (itemType) itemType.textContent = `${label} selected`;
+    if (itemName) itemName.textContent = item.name;
+    if (note) note.textContent = type === "accessory"
+        ? "Accessory added to the look. Tap another accessory to swap the detail."
+        : `This ${label.toLowerCase()} is now in the active outfit.`;
+    panel.classList.remove("is-pulsing");
+    void panel.offsetWidth;
+    panel.classList.add("is-active", "is-pulsing");
 }
 
 function updatePreview(type, item) {
@@ -1179,7 +1316,7 @@ function buildOutfitPalette(dominantColors) {
 
 function buildOutfitAdvice(items, palette) {
     if (!items.length) {
-        return "Center the rails to unlock a palette, hardware direction, and accessory recommendation for the active look.";
+        return "Click Style Me to build a full look, then use this color wheel for matching palette, hardware, and accessory suggestions.";
     }
 
     const names = items.map((item) => item.name.toLowerCase()).join(" ");
@@ -1196,7 +1333,7 @@ function buildOutfitAdvice(items, palette) {
         ? "let the outer layer be the strongest silhouette"
         : "add a structured black blazer for more depth";
 
-    return `${currentTheme} / ${vibe}: pairs best with ${hardware}, ${layerNote}, and ${shoeNote}. Keep accessories intentional so the center-frame outfit stays premium.`;
+    return `${currentTheme} / ${vibe}: this supports the Style Me outfit with ${hardware}, ${layerNote}, and ${shoeNote}. Keep accessories intentional so the center-frame look stays premium.`;
 }
 
 function renderOutfitInsights(palette, items) {
@@ -1245,6 +1382,8 @@ async function updateOutfitInsights() {
 function initOpeningClosetCalendar() {
     const calendar = document.getElementById("openingCalendar");
     if (!calendar) return;
+    if (calendar.dataset.plannerReady === "true") return;
+    calendar.dataset.plannerReady = "true";
 
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -1262,7 +1401,7 @@ function initOpeningClosetCalendar() {
         if (target.id === "plannerPrevMonth") shiftEventPlannerMonth(-1);
         if (target.id === "plannerNextMonth") shiftEventPlannerMonth(1);
         if (target.id === "plannerAddBtn") startPlannerAddMode();
-        if (target.id === "plannerExpandBtn") togglePlannerPanelSize();
+        if (target.id === "plannerExpandBtn") closePlannerPanel();
         if (target.id === "plannerCloseBtn") closePlannerPanel();
         if (target.id === "plannerDeleteEventBtn") deletePlannerSelectedEvent();
     });
@@ -1286,6 +1425,34 @@ function closePlannerPanel() {
     calendar.classList.add("is-hidden");
     calendar.setAttribute("aria-hidden", "true");
     document.querySelector(".builder-page.clueless-closet")?.classList.add("planner-panel-closed");
+    ensurePlannerMiniButton();
+}
+
+function ensurePlannerMiniButton() {
+    if (document.getElementById("plannerMiniButton")) return;
+    const button = document.createElement("button");
+    button.id = "plannerMiniButton";
+    button.className = "planner-mini-button";
+    button.type = "button";
+    button.setAttribute("aria-label", "Open closet calendar");
+    button.innerHTML = "<span>Calendar</span><strong>Open</strong>";
+    button.addEventListener("click", openPlannerPanel);
+    document.body.appendChild(button);
+    requestAnimationFrame(() => button.classList.add("is-visible"));
+}
+
+function openPlannerPanel() {
+    const calendar = document.getElementById("openingCalendar");
+    if (!calendar) return;
+    calendar.classList.remove("is-hidden");
+    calendar.classList.add("is-expanded");
+    calendar.removeAttribute("aria-hidden");
+    document.querySelector(".builder-page.clueless-closet")?.classList.remove("planner-panel-closed");
+    const expandButton = document.getElementById("plannerExpandBtn");
+    if (expandButton) expandButton.textContent = "−";
+    const button = document.getElementById("plannerMiniButton");
+    button?.classList.remove("is-visible");
+    setTimeout(() => button?.remove(), 220);
 }
 
 function updateOpeningCalendarSelection() {
