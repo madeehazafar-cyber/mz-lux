@@ -303,7 +303,6 @@ function initScrollEffects() {
 document.addEventListener("DOMContentLoaded", initBuilder);
 document.addEventListener("DOMContentLoaded", () => setTimeout(initClosetRails, 250));
 document.addEventListener("DOMContentLoaded", initFeaturedCollectionIntro);
-document.addEventListener("DOMContentLoaded", initStylePreferencePopup);
 document.addEventListener("DOMContentLoaded", initThemeQuiz);
 document.addEventListener("DOMContentLoaded", initOpeningClosetCalendar);
 document.addEventListener("DOMContentLoaded", initReliableCategoryNavigation);
@@ -312,14 +311,12 @@ if (document.readyState !== "loading") {
     initBuilder();
     setTimeout(initClosetRails, 250);
     initFeaturedCollectionIntro();
-    initStylePreferencePopup();
     initThemeQuiz();
     initOpeningClosetCalendar();
     initReliableCategoryNavigation();
 }
 
 setTimeout(() => {
-    initStylePreferencePopup();
     initOpeningClosetCalendar();
     initReliableCategoryNavigation();
 }, 0);
