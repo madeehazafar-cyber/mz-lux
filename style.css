@@ -9512,10 +9512,6 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     align-items: stretch;
 }
 
-.vip-tier-grid.has-current-tier {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-}
-
 .vip-tier {
     min-width: 0;
     min-height: 238px !important;
@@ -9542,7 +9538,8 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 }
 
 .vip-tier.is-current {
-    display: none;
+    border-color: rgba(252, 246, 186, 0.76) !important;
+    box-shadow: 0 0 34px rgba(191, 149, 63, 0.28), inset 0 0 0 1px rgba(252, 246, 186, 0.18);
 }
 
 .vip-offer-btn,
@@ -9680,23 +9677,77 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     text-transform: uppercase;
 }
 
+.vip-perks small {
+    color: rgba(255, 241, 190, 0.82);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.vip-perks article.is-unlocked small {
+    color: #fcf6ba;
+}
+
+.vip-perks article.is-unlocked {
+    border-color: rgba(252, 246, 186, 0.58) !important;
+    box-shadow: 0 0 18px rgba(252, 246, 186, 0.32), 0 0 56px rgba(191, 149, 63, 0.42);
+}
+
 .vip-accessibility {
     display: none !important;
 }
 
 .camera-studio-page,
 .camera-studio-page .camera-page {
-    background: #121212 !important;
+    background:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.88), transparent 26%),
+        linear-gradient(135deg, #f8efe1, #eadbc2) !important;
 }
 
 .studio-hero {
-    background: #121212 !important;
-    background-image: none !important;
+    background:
+        linear-gradient(115deg, rgba(18, 18, 18, 0.94), rgba(83, 60, 32, 0.86)),
+        radial-gradient(circle at 88% 12%, rgba(191, 149, 63, 0.32), transparent 30%) !important;
 }
 
 .studio-hero::after {
     content: none !important;
     display: none !important;
+}
+
+.camera-studio-page .camera-editorial-panel,
+.camera-studio-page .camera-chat-panel,
+.camera-studio-page .camera-outfit-card,
+.camera-studio-page .camera-empty {
+    background: rgba(20, 18, 15, 0.9) !important;
+    border-color: rgba(191, 149, 63, 0.28) !important;
+    color: #fffaf2 !important;
+    box-shadow: 0 24px 60px rgba(74, 47, 27, 0.16);
+}
+
+.camera-studio-page .camera-chat-header p,
+.camera-studio-page .studio-panel-heading p,
+.camera-studio-page .camera-ai-comments p,
+.camera-studio-page .camera-hats li {
+    color: rgba(255, 250, 242, 0.78) !important;
+}
+
+.camera-studio-page .camera-field {
+    background: rgba(255, 250, 242, 0.08) !important;
+    border-color: rgba(191, 149, 63, 0.24) !important;
+}
+
+.camera-studio-page .camera-chat-form input {
+    background: rgba(255, 250, 242, 0.92) !important;
+    color: #201912 !important;
+}
+
+.camera-studio-page .camera-chat-form button,
+.camera-studio-page .camera-actions button {
+    background: linear-gradient(135deg, #111111, #6f5422 52%, #d4af37) !important;
+    color: #fff8dc !important;
+    border: 1px solid rgba(252, 246, 186, 0.36) !important;
 }
 
 .camera-results-heading {
@@ -9763,7 +9814,6 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 @media (max-width: 900px) {
     .vip-tier-grid,
-    .vip-tier-grid.has-current-tier,
     .camera-results-grid {
         grid-template-columns: 1fr !important;
     }

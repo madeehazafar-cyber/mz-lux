@@ -33,122 +33,122 @@ const outfits = {
     },
     streetwear: {
         tops: [
-            { name: "Oversized Graphic Tee", image: "images/placeholders/top-placeholder.svg" },
-            { name: "Cropped Hoodie",        image: "images/placeholders/top-placeholder.svg" },
-            { name: "Varsity Jacket",        image: "images/placeholders/top-placeholder.svg" },
-            { name: "Mesh Layer Top",        image: "images/placeholders/top-placeholder.svg" },
-            { name: "Boxy Zip Jacket",       image: "images/placeholders/top-placeholder.svg" }
+            { name: "Oversized Graphic Tee", image: "images/kitty-wardrobe/oversized graphic tee 1.webp" },
+            { name: "Cropped Hoodie",        image: "images/kitty-wardrobe/cropped hoodie.webp" },
+            { name: "Varsity Jacket",        image: "images/kitty-wardrobe/varsity jacket.webp" },
+            { name: "Mesh Layer Top",        image: "images/kitty-wardrobe/mesh layer top.webp" },
+            { name: "Boxy Zip Jacket",       image: "images/kitty-wardrobe/boxy zip jacket.webp" }
         ],
         bottoms: [
-            { name: "Cargo Trousers",     image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Baggy Denim",        image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Parachute Pants",    image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Utility Mini Skirt", image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Wide Track Pants",   image: "images/placeholders/bottom-placeholder.svg" }
+            { name: "Cargo Trousers",     image: "images/kitty-wardrobe/cargo trousres.webp" },
+            { name: "Baggy Denim",        image: "images/kitty-wardrobe/baggy denim.webp" },
+            { name: "Parachute Pants",    image: "images/kitty-wardrobe/parachite pants.webp" },
+            { name: "Utility Mini Skirt", image: "images/kitty-wardrobe/utility mini skirt.webp" },
+            { name: "Wide Track Pants",   image: "images/kitty-wardrobe/wide track pants.webp" }
         ],
         shoes: [
-            { name: "Chunky Sneakers", image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Platform Boots",  image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Retro Trainers",  image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Skate Sneakers",  image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Combat Boots",    image: "images/placeholders/shoe-placeholder.svg" }
+            { name: "Chunky Sneakers", image: "images/kitty-wardrobe/chuky sneakers.webp" },
+            { name: "Platform Boots",  image: "images/kitty-wardrobe/platform boots.webp" },
+            { name: "Retro Trainers",  image: "images/kitty-wardrobe/retro trainers.webp" },
+            { name: "Skate Sneakers",  image: "images/kitty-wardrobe/skate sneakers.webp" },
+            { name: "Combat Boots",    image: "images/kitty-wardrobe/combat boots.webp" }
         ],
         accessories: [
-            { name: "Shield Sunglasses", image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Chain Belt",        image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Baseball Cap",      image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Mini Crossbody",    image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Stacked Rings",     image: "images/placeholders/accessory-placeholder.svg" }
+            { name: "Shield Sunglasses", image: "images/kitty-wardrobe/shield sunglasses.webp" },
+            { name: "Chain Belt",        image: "images/kitty-wardrobe/chai belts.webp" },
+            { name: "Baseball Cap",      image: "images/kitty-wardrobe/baseball cap.webp" },
+            { name: "Mini Crossbody",    image: "images/kitty-wardrobe/mini crossbody bag.webp" },
+            { name: "Stacked Rings",     image: "images/kitty-wardrobe/stacked rings.webp" }
         ]
     },
     minimalist: {
         tops: [
-            { name: "Ivory Tank",        image: "images/placeholders/top-placeholder.svg" },
-            { name: "Black Knit Top",    image: "images/placeholders/top-placeholder.svg" },
-            { name: "Clean Poplin Shirt", image: "images/placeholders/top-placeholder.svg" },
-            { name: "Soft Grey Tee",     image: "images/placeholders/top-placeholder.svg" },
-            { name: "Sleeveless Vest",   image: "images/placeholders/top-placeholder.svg" }
+            { name: "Ivory Tank",        image: "images/kitty-wardrobe/ivory tank.webp" },
+            { name: "Black Knit Top",    image: "images/kitty-wardrobe/black knit top.webp" },
+            { name: "Clean Poplin Shirt", image: "images/kitty-wardrobe/clean poplin shirt.webp" },
+            { name: "Soft Grey Tee",     image: "images/kitty-wardrobe/soft grey tee.webp" },
+            { name: "Sleeveless Vest",   image: "images/kitty-wardrobe/sleveless vest.webp" }
         ],
         bottoms: [
-            { name: "Straight Black Trouser", image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Ivory Column Skirt",     image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Tailored Grey Pants",    image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Cream Wide Leg",         image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Simple Midi Skirt",      image: "images/placeholders/bottom-placeholder.svg" }
+            { name: "Straight Black Trouser", image: "images/kitty-wardrobe/straight black trouser.webp" },
+            { name: "Ivory Column Skirt",     image: "images/kitty-wardrobe/ivory column skirt.webp" },
+            { name: "Tailored Grey Pants",    image: "images/kitty-wardrobe/tailored grey pants.webp" },
+            { name: "Cream Wide Leg",         image: "images/kitty-wardrobe/cream wide leg.webp" },
+            { name: "Simple Midi Skirt",      image: "images/kitty-wardrobe/simple midi skirt.webp" }
         ],
         shoes: [
-            { name: "Slim Black Flats", image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "White Low Sneaker", image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Square Toe Mule",   image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Matte Loafer",      image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Clean Ankle Boot",  image: "images/placeholders/shoe-placeholder.svg" }
+            { name: "Slim Black Flats", image: "images/kitty-wardrobe/slim black flats.webp" },
+            { name: "White Low Sneaker", image: "images/kitty-wardrobe/white low sneakres.webp" },
+            { name: "Square Toe Mule",   image: "images/kitty-wardrobe/square toe mule.webp" },
+            { name: "Matte Loafer",      image: "images/kitty-wardrobe/matte loafers.webp" },
+            { name: "Clean Ankle Boot",  image: "images/kitty-wardrobe/clean ankle boot.webp" }
         ],
         accessories: [
-            { name: "Thin Gold Cuff", image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Small Hoop Set", image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Slim Belt",      image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Mini Shoulder Bag", image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Oval Sunglasses", image: "images/placeholders/accessory-placeholder.svg" }
+            { name: "Thin Gold Cuff", image: "images/kitty-wardrobe/thin gold cuff.webp" },
+            { name: "Small Hoop Set", image: "images/kitty-wardrobe/small hoop set.webp" },
+            { name: "Slim Belt",      image: "images/kitty-wardrobe/slim belt.webp" },
+            { name: "Mini Shoulder Bag", image: "images/kitty-wardrobe/mini shoulder bag.webp" },
+            { name: "Oval Sunglasses", image: "images/kitty-wardrobe/oval sunglasses.webp" }
         ]
     },
     casual: {
         tops: [
-            { name: "Soft Crewneck", image: "images/placeholders/top-placeholder.svg" },
-            { name: "Relaxed Polo",  image: "images/placeholders/top-placeholder.svg" },
-            { name: "Striped Tee",   image: "images/placeholders/top-placeholder.svg" },
-            { name: "Denim Shirt",   image: "images/placeholders/top-placeholder.svg" },
-            { name: "Light Cardigan", image: "images/placeholders/top-placeholder.svg" }
+            { name: "Soft Crewneck", image: "images/kitty-wardrobe/soft crew neck.webp" },
+            { name: "Relaxed Polo",  image: "images/kitty-wardrobe/relaxed polo.webp" },
+            { name: "Striped Tee",   image: "images/kitty-wardrobe/striped tee.webp" },
+            { name: "Denim Shirt",   image: "images/kitty-wardrobe/denim shirt.webp" },
+            { name: "Light Cardigan", image: "images/kitty-wardrobe/light cardiga.webp" }
         ],
         bottoms: [
-            { name: "Relaxed Jeans",      image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Easy Linen Pants",   image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Weekend Trousers",   image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Casual Midi Skirt",  image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Soft Jogger Pants",  image: "images/placeholders/bottom-placeholder.svg" }
+            { name: "Relaxed Jeans",      image: "images/kitty-wardrobe/relaxed jeans.webp" },
+            { name: "Easy Linen Pants",   image: "images/kitty-wardrobe/easy linen pants.webp" },
+            { name: "Weekend Trousers",   image: "images/kitty-wardrobe/weekend trousers.webp" },
+            { name: "Casual Midi Skirt",  image: "images/kitty-wardrobe/casual midi skirt.webp" },
+            { name: "Soft Jogger Pants",  image: "images/kitty-wardrobe/soft jogger pants.webp" }
         ],
         shoes: [
-            { name: "Everyday Sneakers", image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Soft Loafers",      image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Simple Flats",      image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Chelsea Boots",     image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Canvas Trainers",   image: "images/placeholders/shoe-placeholder.svg" }
+            { name: "Everyday Sneakers", image: "images/kitty-wardrobe/everyday sneakers.webp" },
+            { name: "Soft Loafers",      image: "images/kitty-wardrobe/soft loafers.webp" },
+            { name: "Simple Flats",      image: "images/kitty-wardrobe/simple flats.webp" },
+            { name: "Chelsea Boots",     image: "images/kitty-wardrobe/chelsea boots.webp" },
+            { name: "Canvas Trainers",   image: "images/kitty-wardrobe/canvas trainers.webp" }
         ],
         accessories: [
-            { name: "Soft Tote",       image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Weekend Scarf",   image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Leather Belt",    image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Simple Watch",    image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Tinted Sunglasses", image: "images/placeholders/accessory-placeholder.svg" }
+            { name: "Soft Tote",       image: "images/kitty-wardrobe/soft tote.webp" },
+            { name: "Weekend Scarf",   image: "images/kitty-wardrobe/wekend scar.webp" },
+            { name: "Leather Belt",    image: "images/kitty-wardrobe/leather belt.webp" },
+            { name: "Simple Watch",    image: "images/kitty-wardrobe/simple watch.webp" },
+            { name: "Tinted Sunglasses", image: "images/kitty-wardrobe/tinted sunglasses.webp" }
         ]
     },
     formal: {
         tops: [
-            { name: "Structured Blazer", image: "images/placeholders/top-placeholder.svg" },
-            { name: "Silk Blouse",       image: "images/placeholders/top-placeholder.svg" },
-            { name: "Evening Bodice",    image: "images/placeholders/top-placeholder.svg" },
-            { name: "Tuxedo Shirt",      image: "images/placeholders/top-placeholder.svg" },
-            { name: "Satin Wrap Top",    image: "images/placeholders/top-placeholder.svg" }
+            { name: "Structured Blazer", image: "images/kitty-wardrobe/structured blazer.webp" },
+            { name: "Silk Blouse",       image: "images/kitty-wardrobe/silk blouse.webp" },
+            { name: "Evening Bodice",    image: "images/kitty-wardrobe/evening bodice.webp" },
+            { name: "Tuxedo Shirt",      image: "images/kitty-wardrobe/tuxedo shirt.webp" },
+            { name: "Satin Wrap Top",    image: "images/kitty-wardrobe/satin wrap top.webp" }
         ],
         bottoms: [
-            { name: "Black Dress Pants", image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Satin Maxi Skirt",  image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Tailored Tux Pant", image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Pleated Evening Skirt", image: "images/placeholders/bottom-placeholder.svg" },
-            { name: "Ivory Formal Trouser", image: "images/placeholders/bottom-placeholder.svg" }
+            { name: "Black Dress Pants", image: "images/kitty-wardrobe/black dress pants.webp" },
+            { name: "Satin Maxi Skirt",  image: "images/kitty-wardrobe/satin maxi skirt.webp" },
+            { name: "Tailored Tux Pant", image: "images/kitty-wardrobe/taiored tux pant.webp" },
+            { name: "Pleated Evening Skirt", image: "images/kitty-wardrobe/pleated evening skirt.webp" },
+            { name: "Ivory Formal Trouser", image: "images/kitty-wardrobe/ivory forml trouser.webp" }
         ],
         shoes: [
-            { name: "Black Formal Loafer", image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Satin Heel",          image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Patent Pump",         image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Dress Boot",          image: "images/placeholders/shoe-placeholder.svg" },
-            { name: "Pointed Flat",        image: "images/placeholders/shoe-placeholder.svg" }
+            { name: "Black Formal Loafer", image: "images/kitty-wardrobe/black formal loafer.webp" },
+            { name: "Satin Heel",          image: "images/kitty-wardrobe/satin heel.webp" },
+            { name: "Patent Pump",         image: "images/kitty-wardrobe/patent pump.webp" },
+            { name: "Dress Boot",          image: "images/kitty-wardrobe/dress boot.webp" },
+            { name: "Pointed Flat",        image: "images/kitty-wardrobe/pointed flat.webp" }
         ],
         accessories: [
-            { name: "Pearl Drop Necklace", image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Gold Evening Watch",  image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Silk Evening Scarf",  image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Crystal Clutch",      image: "images/placeholders/accessory-placeholder.svg" },
-            { name: "Statement Earrings",  image: "images/placeholders/accessory-placeholder.svg" }
+            { name: "Pearl Drop Necklace", image: "images/kitty-wardrobe/pearl drop necklace.webp" },
+            { name: "Gold Evening Watch",  image: "images/kitty-wardrobe/gold evening waatch.webp" },
+            { name: "Silk Evening Scarf",  image: "images/kitty-wardrobe/silk evening scarf.webp" },
+            { name: "Crystal Clutch",      image: "images/kitty-wardrobe/crystal clutch.webp" },
+            { name: "Statement Earrings",  image: "images/kitty-wardrobe/statemnet earings.webp" }
         ]
     }};
 
@@ -207,17 +207,25 @@ function getLocalStylistReply(question = "", history = []) {
         return "You’re welcome — I’m here to make your wardrobe feel sharper, calmer, and more effortless.";
     }
 
-    return "This is the kind of look that works best when it feels intentional: one strong silhouette, one rich tone, and one polished finish.";
+    const wardrobeContext = getCameraWardrobeContext?.() || "";
+    if (/why|how|can you|should i|do i|is it|does it|would it|when|where|which|what/.test(text)) {
+        return `Yes — I can help with that. For MZ LUX, keep the answer simple: choose one main piece, match it with a clean neutral, then add one polished accessory. ${wardrobeContext.includes("Uploaded") ? "From your uploads, I would focus on the strongest top-bottom contrast first." : "Upload pieces when you want advice based on your real closet."}`;
+    }
+
+    return "I can style this. Keep it polished with one strong silhouette, one rich neutral, and one intentional finish like a gold watch, clean bag, sleek loafers, or soft layered jacket.";
 }
 
 async function callAI(systemPrompt, messages) {
     const lastMessage = messages[messages.length - 1]?.content || "";
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8500);
 
     try {
         const res = await fetch(PROXY_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages })
+            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages }),
+            signal: controller.signal
         });
 
         if (!res.ok) throw new Error("Proxy unavailable");
@@ -228,7 +236,19 @@ async function callAI(systemPrompt, messages) {
         throw new Error("No ai response");
     } catch {
         return getLocalStylistReply(lastMessage, chatHistory);
+    } finally {
+        clearTimeout(timeout);
     }
+}
+
+function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    }[char]));
 }
 
 function initBuilder() {
@@ -879,7 +899,7 @@ function initCameraMode() {
 
         const userBubble = document.createElement("div");
         userBubble.className = "chat-bubble user";
-        userBubble.innerHTML = `<p>${question}</p>`;
+        userBubble.innerHTML = `<p>${escapeHTML(question)}</p>`;
         chatMessages.appendChild(userBubble);
         chatInput.value = "";
 
@@ -902,7 +922,7 @@ function initCameraMode() {
 
         const assistantBubble = document.createElement("div");
         assistantBubble.className = "chat-bubble assistant";
-        assistantBubble.innerHTML = `<p>${answer.replace(/\n/g, "<br>")}</p>`;
+        assistantBubble.innerHTML = `<p>${escapeHTML(answer).replace(/\n/g, "<br>")}</p>`;
         chatMessages.appendChild(assistantBubble);
         chatHistory.push({ question, answer });
         chatMessages.scrollTop = chatMessages.scrollHeight;

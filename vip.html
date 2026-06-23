@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260623-vip-buttons">
+    <link rel="stylesheet" href="style.css?v=20260623-rewards-camera">
 </head>
 <body class="vip-page">
 <header>
@@ -78,10 +78,10 @@
 
         <div class="vip-side-panel">
             <section class="vip-perks" aria-label="VIP perks">
-                <article><span>01</span><strong>Early Drops</strong></article>
-                <article><span>02</span><strong>Birthday Gift</strong></article>
-                <article><span>03</span><strong>Lux Points</strong></article>
-                <article><span>04</span><strong>Member Deals</strong></article>
+                <article data-reward-points="50"><span>01</span><strong>Early Drops</strong><small>50 points needed</small></article>
+                <article data-reward-points="100"><span>02</span><strong>Birthday Gift</strong><small>100 points needed</small></article>
+                <article data-reward-points="150"><span>03</span><strong>Lux Points</strong><small>150 points needed</small></article>
+                <article data-reward-points="200"><span>04</span><strong>Member Deals</strong><small>200 points needed</small></article>
             </section>
         </div>
     </section>
@@ -187,9 +187,21 @@
             card.classList.toggle("is-current", isCurrent);
             card.parentElement?.classList.toggle("has-current-tier", Boolean(activeTier));
             if (button) {
-                button.textContent = member ? "Change offer to this" : "Choose this offer";
-                button.setAttribute("aria-label", member ? `Change offer to ${tier}` : `Choose ${tier} offer`);
+                button.textContent = member
+                    ? isCurrent ? "Current VIP pass" : "Change offer to this"
+                    : "Choose this offer";
+                button.setAttribute("aria-label", isCurrent ? `${tier} is your current VIP pass` : member ? `Change offer to ${tier}` : `Choose ${tier} offer`);
             }
+        });
+    }
+
+    function updateRewardProgress(points) {
+        document.querySelectorAll(".vip-perks article").forEach((reward) => {
+            const needed = Number(reward.dataset.rewardPoints || "0");
+            const note = reward.querySelector("small");
+            const unlocked = points >= needed;
+            reward.classList.toggle("is-unlocked", unlocked);
+            if (note) note.textContent = unlocked ? "Unlocked" : `${needed - points} points left`;
         });
     }
 
@@ -241,6 +253,7 @@
             setVipSignedInState(false);
             renderVipProfile(null);
             updateVipOffers(null);
+            updateRewardProgress(0);
             return;
         }
         const membershipPoints = member.tier === "Diamond" ? "120" : member.tier === "Luxe" ? "85" : "50";
@@ -255,6 +268,7 @@
                 : "Welcome reward active: 50 / 200 points";
         renderVipProfile(member);
         updateVipOffers(member);
+        updateRewardProgress(Number(membershipPoints));
     }
 
     openVipModal.addEventListener("click", () => {
@@ -351,6 +365,7 @@
         openVipModal.textContent = "Sign In";
         renderVipProfile(null);
         updateVipOffers(null);
+        updateRewardProgress(0);
     });
 
     renderVipCard();
