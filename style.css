@@ -9459,6 +9459,30 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 .vip-page header,
 .vip-page nav {
     background: #121212 !important;
+    position: relative;
+    z-index: 1000;
+}
+
+.vip-page nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    min-height: 56px;
+    padding: 14px 24px !important;
+}
+
+.vip-page nav a {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    color: #fffaf0 !important;
 }
 
 .vip-shell {
@@ -9700,54 +9724,17 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 
 .camera-studio-page,
 .camera-studio-page .camera-page {
-    background:
-        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.88), transparent 26%),
-        linear-gradient(135deg, #f8efe1, #eadbc2) !important;
+    background: #121212 !important;
 }
 
 .studio-hero {
-    background:
-        linear-gradient(115deg, rgba(18, 18, 18, 0.94), rgba(83, 60, 32, 0.86)),
-        radial-gradient(circle at 88% 12%, rgba(191, 149, 63, 0.32), transparent 30%) !important;
+    background: #121212 !important;
+    background-image: none !important;
 }
 
 .studio-hero::after {
     content: none !important;
     display: none !important;
-}
-
-.camera-studio-page .camera-editorial-panel,
-.camera-studio-page .camera-chat-panel,
-.camera-studio-page .camera-outfit-card,
-.camera-studio-page .camera-empty {
-    background: rgba(20, 18, 15, 0.9) !important;
-    border-color: rgba(191, 149, 63, 0.28) !important;
-    color: #fffaf2 !important;
-    box-shadow: 0 24px 60px rgba(74, 47, 27, 0.16);
-}
-
-.camera-studio-page .camera-chat-header p,
-.camera-studio-page .studio-panel-heading p,
-.camera-studio-page .camera-ai-comments p,
-.camera-studio-page .camera-hats li {
-    color: rgba(255, 250, 242, 0.78) !important;
-}
-
-.camera-studio-page .camera-field {
-    background: rgba(255, 250, 242, 0.08) !important;
-    border-color: rgba(191, 149, 63, 0.24) !important;
-}
-
-.camera-studio-page .camera-chat-form input {
-    background: rgba(255, 250, 242, 0.92) !important;
-    color: #201912 !important;
-}
-
-.camera-studio-page .camera-chat-form button,
-.camera-studio-page .camera-actions button {
-    background: linear-gradient(135deg, #111111, #6f5422 52%, #d4af37) !important;
-    color: #fff8dc !important;
-    border: 1px solid rgba(252, 246, 186, 0.36) !important;
 }
 
 .camera-results-heading {
@@ -9774,7 +9761,7 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
 }
 
 .camera-results-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
 
 .camera-outfit-card {
@@ -9795,6 +9782,73 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     box-shadow: 0 0 24px rgba(191, 149, 63, 0.42);
+}
+
+.planner-mini-button {
+    position: fixed;
+    top: 108px;
+    right: 18px;
+    z-index: 9000;
+    display: grid;
+    gap: 2px;
+    min-width: 116px;
+    border: 1px solid rgba(221, 184, 101, 0.52);
+    border-radius: 999px;
+    padding: 10px 14px;
+    background:
+        linear-gradient(135deg, rgba(15, 13, 10, 0.94), rgba(66, 45, 22, 0.92));
+    color: #fffaf0;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.32), 0 0 24px rgba(221, 184, 101, 0.18);
+    cursor: pointer;
+    text-align: left;
+    transform: translate3d(14px, -8px, 0) scale(0.94);
+    opacity: 0;
+    transition: transform 220ms ease, opacity 220ms ease, box-shadow 220ms ease;
+}
+
+.planner-mini-button.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+.planner-mini-button span {
+    color: rgba(255, 250, 240, 0.72);
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.planner-mini-button strong {
+    color: #d4af37;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.planner-mini-button:hover,
+.planner-mini-button:focus-visible {
+    transform: translate3d(0, -2px, 0) scale(1.02);
+    outline: 3px solid rgba(221, 184, 101, 0.22);
+    outline-offset: 3px;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38), 0 0 34px rgba(221, 184, 101, 0.28);
+}
+
+.style-preference-name {
+    display: grid;
+    gap: 8px;
+    color: #3b2a1a;
+    font-weight: 800;
+}
+
+.style-preference-name input {
+    width: 100%;
+    border: 1px solid rgba(185, 145, 69, 0.28);
+    border-radius: 16px;
+    padding: 12px 14px;
+    background: #fffaf0;
+    color: #2f2217;
+    font: inherit;
 }
 
 @keyframes eclipseAura {

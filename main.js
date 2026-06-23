@@ -311,12 +311,25 @@ document.addEventListener("DOMContentLoaded", initReliableCategoryNavigation);
 if (document.readyState !== "loading") {
     initBuilder();
     setTimeout(initClosetRails, 250);
+    initFeaturedCollectionIntro();
+    initStylePreferencePopup();
+    initThemeQuiz();
+    initOpeningClosetCalendar();
+    initReliableCategoryNavigation();
 }
+
+setTimeout(() => {
+    initStylePreferencePopup();
+    initOpeningClosetCalendar();
+    initReliableCategoryNavigation();
+}, 0);
 
 window.showThemeItems = showThemeItems;
 
 function initReliableCategoryNavigation() {
     document.querySelectorAll('a[href="categories.html"]').forEach((link) => {
+        if (link.dataset.categoryNavReady === "true") return;
+        link.dataset.categoryNavReady = "true";
         link.addEventListener("click", (event) => {
             event.preventDefault();
             const target = new URL("categories.html", window.location.href).href;
@@ -429,11 +442,12 @@ function showThemeItems() {
 function applyStoredThemeSelection() {
     if (!themeSelect) return;
     const params = new URLSearchParams(window.location.search);
-    const urlTheme = params.get("theme");
-    const storedTheme = localStorage.getItem("selectedTheme");
+    const urlTheme = params.get("theme") || params.get("customized");
+    const storedTheme = localStorage.getItem("mzLuxSelectedTheme") || localStorage.getItem("selectedTheme");
     const nextTheme = urlTheme || storedTheme;
     if (nextTheme && outfits[nextTheme]) {
         themeSelect.value = nextTheme;
+        localStorage.setItem("mzLuxSelectedTheme", nextTheme);
         localStorage.setItem("selectedTheme", nextTheme);
     }
 }
@@ -468,7 +482,10 @@ function getPreferenceScore(item, type, preference, priority = "tailored") {
 }
 
 function initStylePreferencePopup() {
-    if (localStorage.getItem("mzLuxStylePreference") && localStorage.getItem("mzLuxStylePriority")) return;
+    if (!document.body.classList.contains("home-page")) return;
+    if (localStorage.getItem("mzLuxExperienceProfile")) return;
+    if (window.mzLuxPreferencePromptScheduled) return;
+    window.mzLuxPreferencePromptScheduled = true;
     const modal = document.createElement("section");
     modal.className = "style-preference-modal style-preference-drawer";
     modal.setAttribute("role", "dialog");
@@ -478,8 +495,19 @@ function initStylePreferencePopup() {
         <div class="style-preference-card">
             <span>Personalize MZ LUX</span>
             <h2>Would you like us to customize your experience?</h2>
-            <p>Answer two quick questions so your outfit rows feel more personal.</p>
+            <p>Answer three quick questions so your closet opens with pieces that feel more like you.</p>
             <form class="style-preference-form">
+                <label class="style-preference-name">
+                    Your name
+                    <input type="text" name="styleName" placeholder="Enter your name" autocomplete="name" required>
+                </label>
+                <fieldset>
+                    <legend>Style</legend>
+                    <label><input type="radio" name="styleTheme" value="minimalist" checked> Minimalist</label>
+                    <label><input type="radio" name="styleTheme" value="oldMoney"> Old money</label>
+                    <label><input type="radio" name="styleTheme" value="streetwear"> Streetwear</label>
+                    <label><input type="radio" name="styleTheme" value="formal"> Formal</label>
+                </fieldset>
                 <fieldset>
                     <legend>Gender</legend>
                     <label><input type="radio" name="stylePreference" value="female" checked> Female</label>
@@ -496,15 +524,28 @@ function initStylePreferencePopup() {
             </form>
         </div>
     `;
-    document.body.appendChild(modal);
-    requestAnimationFrame(() => modal.classList.add("is-visible"));
+    setTimeout(() => {
+        document.body.appendChild(modal);
+        requestAnimationFrame(() => modal.classList.add("is-visible"));
+    }, document.body.classList.contains("curtain-active") ? 3300 : 250);
     modal.querySelector(".style-preference-form")?.addEventListener("submit", (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const theme = data.get("styleTheme") || "minimalist";
+        localStorage.setItem("mzLuxExperienceProfile", JSON.stringify({
+            name: data.get("styleName") || "",
+            theme,
+            gender: data.get("stylePreference") || "neutral",
+            priority: data.get("stylePriority") || "tailored"
+        }));
+        localStorage.setItem("mzLuxSelectedTheme", theme);
         localStorage.setItem("mzLuxStylePreference", data.get("stylePreference") || "neutral");
         localStorage.setItem("mzLuxStylePriority", data.get("stylePriority") || "tailored");
         modal.classList.remove("is-visible");
-        setTimeout(() => modal.remove(), 360);
+        setTimeout(() => {
+            modal.remove();
+            window.location.href = `categories.html?customized=${encodeURIComponent(theme)}`;
+        }, 360);
         if (themeSelect && clothingDisplay) showThemeItems();
     });
 }
@@ -1014,7 +1055,8 @@ function generateCameraOutfits() {
             comments: getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, i < 2 ? "luxurious" : "fun")
         };
     });
-    results.innerHTML = `<div class="camera-results-heading"><h3>6 outfit combos</h3><p>These 2 are best ones</p></div><div class="camera-results-grid">${pairs.map(({top,bottom,mood,hats,comments,rank}) => `
+    const bestPairs = pairs.slice(0, 2);
+    results.innerHTML = `<div class="camera-results-heading"><h3>6 outfit combos</h3><p>The best ones</p></div><div class="camera-results-grid">${bestPairs.map(({top,bottom,mood,hats,comments,rank}) => `
         <article class="camera-outfit-card">
             ${rank <= 2 ? `<span class="camera-best-badge">${rank === 1 ? "MZ LUX PICK" : "BEST MATCH"}</span>` : ""}
             <div class="camera-outfit-media">
@@ -1316,6 +1358,8 @@ async function updateOutfitInsights() {
 function initOpeningClosetCalendar() {
     const calendar = document.getElementById("openingCalendar");
     if (!calendar) return;
+    if (calendar.dataset.plannerReady === "true") return;
+    calendar.dataset.plannerReady = "true";
 
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -1357,6 +1401,31 @@ function closePlannerPanel() {
     calendar.classList.add("is-hidden");
     calendar.setAttribute("aria-hidden", "true");
     document.querySelector(".builder-page.clueless-closet")?.classList.add("planner-panel-closed");
+    ensurePlannerMiniButton();
+}
+
+function ensurePlannerMiniButton() {
+    if (document.getElementById("plannerMiniButton")) return;
+    const button = document.createElement("button");
+    button.id = "plannerMiniButton";
+    button.className = "planner-mini-button";
+    button.type = "button";
+    button.setAttribute("aria-label", "Open closet calendar");
+    button.innerHTML = "<span>Calendar</span><strong>Open</strong>";
+    button.addEventListener("click", openPlannerPanel);
+    document.body.appendChild(button);
+    requestAnimationFrame(() => button.classList.add("is-visible"));
+}
+
+function openPlannerPanel() {
+    const calendar = document.getElementById("openingCalendar");
+    if (!calendar) return;
+    calendar.classList.remove("is-hidden");
+    calendar.removeAttribute("aria-hidden");
+    document.querySelector(".builder-page.clueless-closet")?.classList.remove("planner-panel-closed");
+    const button = document.getElementById("plannerMiniButton");
+    button?.classList.remove("is-visible");
+    setTimeout(() => button?.remove(), 220);
 }
 
 function updateOpeningCalendarSelection() {
