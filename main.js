@@ -1,4 +1,4 @@
-// Proxy URL for the hosted AI function. The secret API key stays on Vercel, not in this browser file.
+// ── PROXY URL ──
 const PROXY_URL = "https://mz-3i9crjfoy-mz5.vercel.app/api/proxy";
 const outfits = {
     oldMoney: {
@@ -168,27 +168,19 @@ const previewBoxes = {
     accessory: document.getElementById("previewAccessory")
 };
 
-
-function buildWardrobeSummary() {
-    if (!document.querySelector(".camera-studio-page")) return "";
-    return getCameraWardrobeContext();
-}
-
 function getLocalStylistReply(question = "", history = []) {
     const text = (question || "").toLowerCase().trim();
-    const wardrobe = buildWardrobeSummary();
-    const hasUploads = wardrobe && !wardrobe.startsWith("No uploaded");
 
     if (!text) {
-        return "I'm here. Tell me what you want to style and I'll make it feel sharper, cleaner, and more intentional.";
+        return "I’m here — tell me what you want to style and I’ll make it feel sharper and more intentional.";
     }
 
     if (/^(erm|erh|uh|um|hmm|hm|idk|i don'?t know|not sure|maybe|sort of|kind of)$/.test(text)) {
-        return "No worries. Start with the occasion: school, dinner, casual day, party, or photos. Then I can turn the outfit into something polished.";
+        return "No worries — tell me what you’re trying to style and I’ll turn it into something polished and elevated.";
     }
 
     if (/hello|hi|hey|good morning|good evening/.test(text)) {
-        return "Hi, I'm your MZ LUX stylist. Ask me about colors, matching, shoes, accessories, weather outfits, or how to make a look more expensive.";
+        return "Hello — I’m your MZ LUX stylist. Tell me what you’re wearing and I’ll sharpen it into something more polished and elevated.";
     }
 
     if (/bag|purse|handbag|tote/.test(text)) {
@@ -196,47 +188,26 @@ function getLocalStylistReply(question = "", history = []) {
     }
 
     if (/shoe|shoes|loafers|sneakers|boots|heels/.test(text)) {
-        return "Choose shoes that match the outfit's tone: loafers for tailoring, clean sneakers for relaxed polish, and sleek heels for a sculpted finish.";
+        return "Choose shoes that echo the outfit’s tone: loafers for tailoring, clean sneakers for relaxed polish, and sleek heels for a sculpted finish.";
     }
 
     if (/color|colour|match|works with|pair|pairing/.test(text)) {
-        return hasUploads
-            ? `Based on your uploads, keep the color story simple: one main neutral, one soft contrast, and one metal accent. ${wardrobe}`
-            : "For a luxe look, pair one rich neutral with one soft contrast: cream with camel, navy with ivory, or black with chocolate.";
+        return "For a luxe look, pair one rich neutral with one soft contrast — cream with camel, navy with ivory, or black with chocolate.";
     }
 
     if (/accessory|jewelry|jewellery|watch|belt|necklace/.test(text)) {
         return "One strong accessory does the most: a gold watch, sculptural earrings, or a slim belt instantly sharpens the whole look.";
     }
 
-    if (/weather|rain|cold|hot|snow|wind|temperature|forecast/.test(text)) {
-        return "For weather, style in layers: a clean base, one protective outer layer, and shoes that match the conditions. Rain needs leather-look boots or clean sneakers, cold needs a structured coat, and heat needs breathable linen or cotton.";
-    }
-
-    if (/school|class|college|university/.test(text)) {
-        return "For school, go polished but comfortable: fitted top, relaxed trousers or clean denim, simple sneakers or loafers, and one neat accessory. Avoid anything too fussy because it has to work all day.";
-    }
-
-    if (/date|dinner|party|event|wedding|birthday/.test(text)) {
-        return "For an event, pick one statement: neckline, fabric, shoe, or jewelry. Keep everything else quiet so the outfit looks expensive instead of busy.";
-    }
-
-    if (/avoid|bad|wrong|too much|messy/.test(text)) {
-        return "Avoid mixing too many loud pieces at once. If the outfit has a bold color, keep the accessories simple. If the clothes are simple, let the shoes or jewelry do the work.";
-    }
-
     if (/what should i wear|outfit|styling|style/.test(text)) {
-        return hasUploads
-            ? `Use your uploaded pieces as the base. Choose the cleanest top, pair it with the most structured bottom, then add simple shoes and one gold or black accessory. ${wardrobe}`
-            : "Build the outfit around one anchor piece, then add one elevated contrast: a blazer with relaxed trousers, or a crisp shirt with a sharp skirt.";
+        return "Build the outfit around one anchor piece, then add one elevated contrast: a blazer with relaxed trousers, or a crisp shirt with a sharp skirt.";
     }
 
     if (/thank|thanks/.test(text)) {
-        return "You're welcome. I'm here to make your wardrobe feel sharper, calmer, and more effortless.";
+        return "You’re welcome — I’m here to make your wardrobe feel sharper, calmer, and more effortless.";
     }
 
-    const previousTopic = history.at(-1)?.question ? ` Also, based on your last question about "${history.at(-1).question}", keep the answer connected to the same outfit.` : "";
-    return `My best styling answer: keep it intentional and practical. Use one strong silhouette, one main color story, and one polished finish.${previousTopic} If you want it to look more luxe, remove one extra detail and make the shoes, bag, or jewelry cleaner.`;
+    return "This is the kind of look that works best when it feels intentional: one strong silhouette, one rich tone, and one polished finish.";
 }
 
 async function callAI(systemPrompt, messages) {
@@ -255,8 +226,7 @@ async function callAI(systemPrompt, messages) {
         const text = data.content?.find((b) => b.type === "text")?.text;
         if (text) return text;
         throw new Error("No ai response");
-    } catch (error) {
-        console.warn("AI proxy unavailable, using local stylist reply:", error);
+    } catch {
         return getLocalStylistReply(lastMessage, chatHistory);
     }
 }
@@ -874,17 +844,6 @@ function saveClosetLook() {
 
 let chatHistory = [];
 
-function appendChatBubble(container, role, message) {
-    const bubble = document.createElement("div");
-    bubble.className = `chat-bubble ${role}`;
-    const paragraph = document.createElement("p");
-    paragraph.textContent = message;
-    bubble.appendChild(paragraph);
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
-    return bubble;
-}
-
 function initCameraMode() {
     const genBtn = document.getElementById("generateCameraOutfits");
     if (genBtn) genBtn.addEventListener("click", generateCameraOutfits);
@@ -903,7 +862,6 @@ function initCameraMode() {
     const chatForm     = document.getElementById("chatForm");
     const chatInput    = document.getElementById("chatInput");
     const chatMessages = document.getElementById("chatMessages");
-    const chatSubmit   = chatForm?.querySelector("button[type='submit']");
     if (!chatForm || !chatInput || !chatMessages) return;
 
     document.querySelectorAll(".chat-chip").forEach((chip) => {
@@ -919,13 +877,11 @@ function initCameraMode() {
         const question = chatInput.value.trim();
         if (!question) return;
 
-        appendChatBubble(chatMessages, "user", question);
+        const userBubble = document.createElement("div");
+        userBubble.className = "chat-bubble user";
+        userBubble.innerHTML = `<p>${question}</p>`;
+        chatMessages.appendChild(userBubble);
         chatInput.value = "";
-        chatInput.disabled = true;
-        if (chatSubmit) {
-            chatSubmit.disabled = true;
-            chatSubmit.textContent = "Thinking";
-        }
 
         const typingBubble = document.createElement("div");
         typingBubble.className = "chat-bubble assistant typing-indicator";
@@ -941,24 +897,15 @@ function initCameraMode() {
         ]);
         messages.push({ role: "user", content: question });
 
-        try {
-            const answer = await callAI(systemPrompt, messages);
-            typingBubble.remove();
-            appendChatBubble(chatMessages, "assistant", answer);
-            chatHistory.push({ question, answer });
-        } catch {
-            typingBubble.remove();
-            const answer = getLocalStylistReply(question, chatHistory);
-            appendChatBubble(chatMessages, "assistant", answer);
-            chatHistory.push({ question, answer });
-        } finally {
-            chatInput.disabled = false;
-            if (chatSubmit) {
-                chatSubmit.disabled = false;
-                chatSubmit.textContent = "Send";
-            }
-            chatInput.focus();
-        }
+        const answer = await callAI(systemPrompt, messages);
+        typingBubble.remove();
+
+        const assistantBubble = document.createElement("div");
+        assistantBubble.className = "chat-bubble assistant";
+        assistantBubble.innerHTML = `<p>${answer.replace(/\n/g, "<br>")}</p>`;
+        chatMessages.appendChild(assistantBubble);
+        chatHistory.push({ question, answer });
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     });
 }
 
