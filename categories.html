@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css?v=20260619-color-wheel">
 </head>
 <body>
+
 <header>
     <div class="logo"><span class="logo-initials">MZ</span></div>
     <div>
@@ -25,7 +26,9 @@
 </nav>
 
 <main class="builder-page clueless-closet" data-vibe="minimalist">
+    
     <div class="closet-destination-backdrop" aria-hidden="true"></div>
+    
     <section class="closet-hero">
         <div>
             <span class="closet-kicker">MZ LUX Digital Closet</span>
@@ -90,6 +93,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="outfit-advice-panel">
                 <span class="outfit-insights-label">Styling Direction</span>
                 <p id="outfitInsightAdvice" aria-live="polite">Center the rails to generate a palette and accessory direction for the look.</p>
@@ -113,16 +117,19 @@
 
     <section id="openingCalendar" class="opening-calendar event-planner-calendar" aria-label="MZ LUX event planner calendar">
         <div class="opening-calendar-frame" aria-hidden="true"></div>
+        
         <div class="event-planner-tabbar">
             <button id="plannerAddBtn" class="event-planner-icon-btn" type="button" aria-label="Add calendar event">+</button>
             <button id="plannerExpandBtn" class="event-planner-icon-btn" type="button" aria-label="Enlarge calendar">□</button>
             <button id="plannerCloseBtn" class="event-planner-icon-btn" type="button" aria-label="Close calendar">x</button>
         </div>
+        
         <div class="opening-calendar-head">
             <span>Closet Calendar</span>
             <h2>Event Planner</h2>
             <p id="openingCalendarLook">Choose an event type, then tap a date to reserve the outfit.</p>
         </div>
+        
         <div class="event-planner-toolbar" aria-label="Event planner controls">
             <button id="plannerPrevMonth" type="button" aria-label="Previous month">&lt;</button>
             <strong id="plannerMonthLabel">Month</strong>
@@ -135,10 +142,13 @@
                 <option value="Travel">Travel</option>
             </select>
         </div>
+        
         <div class="event-planner-weekdays" aria-hidden="true">
             <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
         </div>
+        
         <div id="plannerCalendarGrid" class="opening-calendar-grid event-planner-grid" role="grid" aria-label="Monthly event planner"></div>
+        
         <form id="plannerEventForm" class="event-planner-form" aria-label="Save event to calendar">
             <span id="plannerSelectedDate">Select a date</span>
             <input id="plannerEventName" type="text" placeholder="Wedding, gala, photoshoot..." aria-label="Event name">
@@ -147,6 +157,7 @@
                 <button id="plannerDeleteEventBtn" class="event-delete-btn" type="button">Delete</button>
             </div>
         </form>
+        
         <p id="plannerEventSummary" class="event-planner-summary" aria-live="polite">Tap a date to add your first event.</p>
     </section>
 
@@ -157,8 +168,12 @@
 </main>
 
 <script src="main.js?v=20260619-color-wheel"></script>
+
 <script>
 (function () {
+    /**
+     * Finds injected closet category elements and triggers a staggered entry transition.
+     */
     function revealCategorySections() {
         const display = document.getElementById("clothingDisplay");
         if (!display) return;
@@ -167,18 +182,24 @@
             section.classList.add("is-visible");
             section.style.opacity = "1";
             section.style.transform = "translateY(0)";
+            // Stagger animations based on item order index (60ms incremental delay)
             section.style.transitionDelay = `${index * 0.06}s`;
         });
     }
 
+    /**
+     * Intercepts `window.showThemeItems` defined in main.js to automatically 
+     * run the cascade animations right after new theme components render.
+     */
     const originalShowThemeItems = window.showThemeItems;
     if (typeof originalShowThemeItems === "function") {
         window.showThemeItems = function () {
-            originalShowThemeItems();
-            setTimeout(revealCategorySections, 0);
+            originalShowThemeItems(); // Run standard rendering logic
+            setTimeout(revealCategorySections, 0); // Trigger cascade immediately after render
         };
     }
 
+    // Run introduction sequence once the layout structure renders initially
     document.addEventListener("DOMContentLoaded", () => {
         setTimeout(revealCategorySections, 0);
     });
