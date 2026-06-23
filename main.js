@@ -1401,7 +1401,7 @@ function initOpeningClosetCalendar() {
         if (target.id === "plannerPrevMonth") shiftEventPlannerMonth(-1);
         if (target.id === "plannerNextMonth") shiftEventPlannerMonth(1);
         if (target.id === "plannerAddBtn") startPlannerAddMode();
-        if (target.id === "plannerExpandBtn") togglePlannerPanelSize();
+        if (target.id === "plannerExpandBtn") closePlannerPanel();
         if (target.id === "plannerCloseBtn") closePlannerPanel();
         if (target.id === "plannerDeleteEventBtn") deletePlannerSelectedEvent();
     });
@@ -1445,8 +1445,11 @@ function openPlannerPanel() {
     const calendar = document.getElementById("openingCalendar");
     if (!calendar) return;
     calendar.classList.remove("is-hidden");
+    calendar.classList.add("is-expanded");
     calendar.removeAttribute("aria-hidden");
     document.querySelector(".builder-page.clueless-closet")?.classList.remove("planner-panel-closed");
+    const expandButton = document.getElementById("plannerExpandBtn");
+    if (expandButton) expandButton.textContent = "−";
     const button = document.getElementById("plannerMiniButton");
     button?.classList.remove("is-visible");
     setTimeout(() => button?.remove(), 220);
