@@ -6,6 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
     <link rel="stylesheet" href="style.css?v=20260623-vip-visible-fix">
+    <style>
+        /* VIP fallback: keeps this page readable on GitHub even while cached CSS is updating. */
+        body.vip-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f4ead8 0%, #efe2c8 46%, #12100d 100%) !important;
+            color: #1c1712 !important;
+            overflow-x: hidden;
+        }
+
+        body.vip-page header,
+        body.vip-page nav,
+        body.vip-page .vip-shell {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        body.vip-page .vip-shell {
+            display: block !important;
+            position: relative;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body class="vip-page">
 <header>
