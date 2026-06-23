@@ -2114,7 +2114,8 @@ button:hover {
 }
 
 .camera-chat-form input:disabled,
-.camera-chat-form button:disabled {
+.camera-chat-form button:disabled,
+.chat-chip:disabled {
     cursor: wait;
     opacity: 0.64;
 }

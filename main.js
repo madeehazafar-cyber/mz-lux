@@ -239,25 +239,46 @@ function getLocalStylistReply(question = "", history = []) {
     return `My best styling answer: keep it intentional and practical. Use one strong silhouette, one main color story, and one polished finish.${previousTopic} If you want it to look more luxe, remove one extra detail and make the shoes, bag, or jewelry cleaner.`;
 }
 
+function isGenericStylistAnswer(question = "", answer = "") {
+    const q = question.toLowerCase();
+    const a = answer.toLowerCase();
+    const checks = [
+        { ask: /shoe|shoes|loafers|sneakers|boots|heels|bag|purse|handbag|tote/, reply: /shoe|shoes|loafers|sneakers|boots|heels|bag|purse|handbag|tote/ },
+        { ask: /weather|rain|cold|hot|snow|wind|temperature|forecast/, reply: /weather|rain|cold|hot|snow|wind|layer|coat|linen|cotton/ },
+        { ask: /avoid|bad|wrong|too much|messy/, reply: /avoid|remove|simple|busy|loud|clean/ },
+        { ask: /color|colour|match|pair|pairing/, reply: /color|neutral|cream|camel|navy|black|contrast|match|pair/ }
+    ];
+    return checks.some((check) => check.ask.test(q) && !check.reply.test(a));
+}
+
 async function callAI(systemPrompt, messages) {
     const lastMessage = messages[messages.length - 1]?.content || "";
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6500);
 
     try {
         const res = await fetch(PROXY_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages })
+            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages }),
+            signal: controller.signal
         });
 
         if (!res.ok) throw new Error("Proxy unavailable");
 
         const data = await res.json();
         const text = data.content?.find((b) => b.type === "text")?.text;
-        if (text) return text;
+        if (text) {
+            return isGenericStylistAnswer(lastMessage, text)
+                ? getLocalStylistReply(lastMessage, chatHistory)
+                : text;
+        }
         throw new Error("No ai response");
     } catch (error) {
         console.warn("AI proxy unavailable, using local stylist reply:", error);
         return getLocalStylistReply(lastMessage, chatHistory);
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 
@@ -873,6 +894,7 @@ function saveClosetLook() {
 }
 
 let chatHistory = [];
+let chatBusy = false;
 
 function appendChatBubble(container, role, message) {
     const bubble = document.createElement("div");
@@ -904,10 +926,24 @@ function initCameraMode() {
     const chatInput    = document.getElementById("chatInput");
     const chatMessages = document.getElementById("chatMessages");
     const chatSubmit   = chatForm?.querySelector("button[type='submit']");
+    const chatChips    = Array.from(document.querySelectorAll(".chat-chip"));
     if (!chatForm || !chatInput || !chatMessages) return;
 
-    document.querySelectorAll(".chat-chip").forEach((chip) => {
+    function setChatLoading(isLoading) {
+        chatBusy = isLoading;
+        chatInput.disabled = isLoading;
+        if (chatSubmit) {
+            chatSubmit.disabled = isLoading;
+            chatSubmit.textContent = isLoading ? "Thinking" : "Send";
+        }
+        chatChips.forEach((chip) => {
+            chip.disabled = isLoading;
+        });
+    }
+
+    chatChips.forEach((chip) => {
         chip.addEventListener("click", () => {
+            if (chatBusy) return;
             chatInput.value = chip.dataset.prompt || "";
             chatInput.focus();
             chatForm.requestSubmit();
@@ -916,16 +952,13 @@ function initCameraMode() {
 
     chatForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        if (chatBusy) return;
         const question = chatInput.value.trim();
         if (!question) return;
 
         appendChatBubble(chatMessages, "user", question);
         chatInput.value = "";
-        chatInput.disabled = true;
-        if (chatSubmit) {
-            chatSubmit.disabled = true;
-            chatSubmit.textContent = "Thinking";
-        }
+        setChatLoading(true);
 
         const typingBubble = document.createElement("div");
         typingBubble.className = "chat-bubble assistant typing-indicator";
@@ -952,11 +985,7 @@ function initCameraMode() {
             appendChatBubble(chatMessages, "assistant", answer);
             chatHistory.push({ question, answer });
         } finally {
-            chatInput.disabled = false;
-            if (chatSubmit) {
-                chatSubmit.disabled = false;
-                chatSubmit.textContent = "Send";
-            }
+            setChatLoading(false);
             chatInput.focus();
         }
     });
