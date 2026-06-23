@@ -33,122 +33,122 @@ const outfits = {
     },
     streetwear: {
         tops: [
-            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
-            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
-            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
-            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
-            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" }
+            { name: "Oversized Graphic Tee", image: "images/placeholders/top-placeholder.svg" },
+            { name: "Cropped Hoodie",        image: "images/placeholders/top-placeholder.svg" },
+            { name: "Varsity Jacket",        image: "images/placeholders/top-placeholder.svg" },
+            { name: "Mesh Layer Top",        image: "images/placeholders/top-placeholder.svg" },
+            { name: "Boxy Zip Jacket",       image: "images/placeholders/top-placeholder.svg" }
         ],
         bottoms: [
-            { name: "Black Pants",       image: "images/models/black pants.webp" },
-            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
-            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" },
-            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
-            { name: "White Linen Pants", image: "images/models/white linen pants.webp" }
+            { name: "Cargo Trousers",     image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Baggy Denim",        image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Parachute Pants",    image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Utility Mini Skirt", image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Wide Track Pants",   image: "images/placeholders/bottom-placeholder.svg" }
         ],
         shoes: [
-            { name: "White Sneakers", image: "images/models/white sneakers.webp" },
-            { name: "Leather Boots",  image: "images/models/leather boots.webp" },
-            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
-            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
-            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" }
+            { name: "Chunky Sneakers", image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Platform Boots",  image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Retro Trainers",  image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Skate Sneakers",  image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Combat Boots",    image: "images/placeholders/shoe-placeholder.svg" }
         ],
         accessories: [
-            { name: "Sunglasses",     image: "images/models/sunglasses.webp" },
-            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
-            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
-            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
-            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" }
+            { name: "Shield Sunglasses", image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Chain Belt",        image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Baseball Cap",      image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Mini Crossbody",    image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Stacked Rings",     image: "images/placeholders/accessory-placeholder.svg" }
         ]
     },
     minimalist: {
         tops: [
-            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
-            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
-            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
-            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
-            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" }
+            { name: "Ivory Tank",        image: "images/placeholders/top-placeholder.svg" },
+            { name: "Black Knit Top",    image: "images/placeholders/top-placeholder.svg" },
+            { name: "Clean Poplin Shirt", image: "images/placeholders/top-placeholder.svg" },
+            { name: "Soft Grey Tee",     image: "images/placeholders/top-placeholder.svg" },
+            { name: "Sleeveless Vest",   image: "images/placeholders/top-placeholder.svg" }
         ],
         bottoms: [
-            { name: "White Linen Pants", image: "images/models/white linen pants.webp" },
-            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
-            { name: "Black Pants",       image: "images/models/black pants.webp" },
-            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
-            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" }
+            { name: "Straight Black Trouser", image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Ivory Column Skirt",     image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Tailored Grey Pants",    image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Cream Wide Leg",         image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Simple Midi Skirt",      image: "images/placeholders/bottom-placeholder.svg" }
         ],
         shoes: [
-            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
-            { name: "White Sneakers", image: "images/models/white sneakers.webp" },
-            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
-            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
-            { name: "Leather Boots",  image: "images/models/leather boots.webp" }
+            { name: "Slim Black Flats", image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "White Low Sneaker", image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Square Toe Mule",   image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Matte Loafer",      image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Clean Ankle Boot",  image: "images/placeholders/shoe-placeholder.svg" }
         ],
         accessories: [
-            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
-            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" },
-            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
-            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
-            { name: "Sunglasses",     image: "images/models/sunglasses.webp" }
+            { name: "Thin Gold Cuff", image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Small Hoop Set", image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Slim Belt",      image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Mini Shoulder Bag", image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Oval Sunglasses", image: "images/placeholders/accessory-placeholder.svg" }
         ]
     },
     casual: {
         tops: [
-            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
-            { name: "Navy Polo",              image: "images/models/navy polo.webp" },
-            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
-            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
-            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" }
+            { name: "Soft Crewneck", image: "images/placeholders/top-placeholder.svg" },
+            { name: "Relaxed Polo",  image: "images/placeholders/top-placeholder.svg" },
+            { name: "Striped Tee",   image: "images/placeholders/top-placeholder.svg" },
+            { name: "Denim Shirt",   image: "images/placeholders/top-placeholder.svg" },
+            { name: "Light Cardigan", image: "images/placeholders/top-placeholder.svg" }
         ],
         bottoms: [
-            { name: "Black Pants",       image: "images/models/black pants.webp" },
-            { name: "White Linen Pants", image: "images/models/white linen pants.webp" },
-            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
-            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" },
-            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" }
+            { name: "Relaxed Jeans",      image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Easy Linen Pants",   image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Weekend Trousers",   image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Casual Midi Skirt",  image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Soft Jogger Pants",  image: "images/placeholders/bottom-placeholder.svg" }
         ],
         shoes: [
-            { name: "White Sneakers", image: "images/models/white sneakers.webp" },
-            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
-            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
-            { name: "Leather Boots",  image: "images/models/leather boots.webp" },
-            { name: "Black Loafers",  image: "images/models/black loafers.webp" }
+            { name: "Everyday Sneakers", image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Soft Loafers",      image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Simple Flats",      image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Chelsea Boots",     image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Canvas Trainers",   image: "images/placeholders/shoe-placeholder.svg" }
         ],
         accessories: [
-            { name: "Sunglasses",     image: "images/models/sunglasses.webp" },
-            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
-            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
-            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
-            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" }
+            { name: "Soft Tote",       image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Weekend Scarf",   image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Leather Belt",    image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Simple Watch",    image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Tinted Sunglasses", image: "images/placeholders/accessory-placeholder.svg" }
         ]
     },
     formal: {
         tops: [
-            { name: "Beige Blazer",           image: "images/models/beige blazer.webp" },
-            { name: "White Button-Up Shirt", image: "images/models/white button up shirt.webp" },
-            { name: "Cream Sweater",          image: "images/models/cream sweater.webp" },
-            { name: "Striped Shirt",          image: "images/models/striped shirt.webp" },
-            { name: "Navy Polo",              image: "images/models/navy polo.webp" }
+            { name: "Structured Blazer", image: "images/placeholders/top-placeholder.svg" },
+            { name: "Silk Blouse",       image: "images/placeholders/top-placeholder.svg" },
+            { name: "Evening Bodice",    image: "images/placeholders/top-placeholder.svg" },
+            { name: "Tuxedo Shirt",      image: "images/placeholders/top-placeholder.svg" },
+            { name: "Satin Wrap Top",    image: "images/placeholders/top-placeholder.svg" }
         ],
         bottoms: [
-            { name: "Navy Dress Pants",  image: "images/models/navy dress pants.webp" },
-            { name: "Black Pants",       image: "images/models/black pants.webp" },
-            { name: "Beige Trousers",    image: "images/models/beige trousers.webp" },
-            { name: "Pleated Skirt",     image: "images/models/pleated skirt.webp" },
-            { name: "White Linen Pants", image: "images/models/white linen pants.webp" }
+            { name: "Black Dress Pants", image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Satin Maxi Skirt",  image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Tailored Tux Pant", image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Pleated Evening Skirt", image: "images/placeholders/bottom-placeholder.svg" },
+            { name: "Ivory Formal Trouser", image: "images/placeholders/bottom-placeholder.svg" }
         ],
         shoes: [
-            { name: "Black Loafers",  image: "images/models/black loafers.webp" },
-            { name: "Leather Boots",  image: "images/models/leather boots.webp" },
-            { name: "Brown Loafers",  image: "images/models/brown loafers.webp" },
-            { name: "Ballet Flats",   image: "images/models/ballet flats.webp" },
-            { name: "White Sneakers", image: "images/models/white sneakers.webp" }
+            { name: "Black Formal Loafer", image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Satin Heel",          image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Patent Pump",         image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Dress Boot",          image: "images/placeholders/shoe-placeholder.svg" },
+            { name: "Pointed Flat",        image: "images/placeholders/shoe-placeholder.svg" }
         ],
         accessories: [
-            { name: "Pearl Necklace", image: "images/models/pearl necklace.webp" },
-            { name: "Gold Watch",     image: "images/models/gold watch.webp" },
-            { name: "Silk Scarf",     image: "images/models/silk scarf.webp" },
-            { name: "Leather Belt",   image: "images/models/leather belt.webp" },
-            { name: "Sunglasses",     image: "images/models/sunglasses.webp" }
+            { name: "Pearl Drop Necklace", image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Gold Evening Watch",  image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Silk Evening Scarf",  image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Crystal Clutch",      image: "images/placeholders/accessory-placeholder.svg" },
+            { name: "Statement Earrings",  image: "images/placeholders/accessory-placeholder.svg" }
         ]
     }};
 
@@ -974,16 +974,29 @@ function getOutfitStyleComments(outfit, mood, tone) {
 }
 
 function generateCameraOutfits() {
-    const tops    = getCameraItems('[data-role="top-input"]',    "top");
-    const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom");
+    const tops    = getCameraItems('[data-role="top-input"]',    "top").filter((item) => item.fileName);
+    const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom").filter((item) => item.fileName);
     const results = document.getElementById("cameraResults");
     if (!results) return;
-    const pairs = tops.slice(0,3).flatMap(top => bottoms.slice(0,2).map(bottom => ({ top, bottom, mood: getOutfitMood(top, bottom) })))
-        .sort((a,b) => { const s = m => m==="luxury tailoring"?3:m==="soft elegance"?2:m==="casual cool"?1:0; return s(b.mood)-s(a.mood); })
-        .slice(0,2).map((p,i) => ({ ...p, hats: getHatOptions(p.mood), comments: getOutfitStyleComments({top:p.top,bottom:p.bottom},p.mood,i===0?"luxurious":"fun") }));
-    if (!pairs.length) { results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>'; return; }
-    results.innerHTML = `<div class="camera-results-grid">${pairs.map(({top,bottom,mood,hats,comments}) => `
+    if (!tops.length || !bottoms.length) {
+        results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>';
+        return;
+    }
+    const moodScore = (mood) => mood === "luxury tailoring" ? 3 : mood === "soft elegance" ? 2 : mood === "casual cool" ? 1 : 0;
+    const sourcePairs = tops.flatMap(top => bottoms.map(bottom => ({ top, bottom, mood: getOutfitMood(top, bottom) })))
+        .sort((a,b) => moodScore(b.mood) - moodScore(a.mood));
+    const pairs = Array.from({ length: 6 }, (_, i) => {
+        const pair = sourcePairs[i % sourcePairs.length];
+        return {
+            ...pair,
+            rank: i + 1,
+            hats: getHatOptions(pair.mood),
+            comments: getOutfitStyleComments({ top: pair.top, bottom: pair.bottom }, pair.mood, i < 2 ? "luxurious" : "fun")
+        };
+    });
+    results.innerHTML = `<div class="camera-results-heading"><h3>6 outfit combos</h3><p>These 2 are best ones</p></div><div class="camera-results-grid">${pairs.map(({top,bottom,mood,hats,comments,rank}) => `
         <article class="camera-outfit-card">
+            ${rank <= 2 ? `<span class="camera-best-badge">${rank === 1 ? "MZ LUX PICK" : "BEST MATCH"}</span>` : ""}
             <div class="camera-outfit-media">
                 ${top.preview    ? `<img src="${top.preview}"    alt="${top.label}">` : ""}
                 ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
@@ -1217,7 +1230,7 @@ function buildOutfitPalette(dominantColors) {
 
 function buildOutfitAdvice(items, palette) {
     if (!items.length) {
-        return "Center the rails to unlock a palette, hardware direction, and accessory recommendation for the active look.";
+        return "Click Style Me to build a full look, then use this color wheel for matching palette, hardware, and accessory suggestions.";
     }
 
     const names = items.map((item) => item.name.toLowerCase()).join(" ");
@@ -1234,7 +1247,7 @@ function buildOutfitAdvice(items, palette) {
         ? "let the outer layer be the strongest silhouette"
         : "add a structured black blazer for more depth";
 
-    return `${currentTheme} / ${vibe}: pairs best with ${hardware}, ${layerNote}, and ${shoeNote}. Keep accessories intentional so the center-frame outfit stays premium.`;
+    return `${currentTheme} / ${vibe}: this supports the Style Me outfit with ${hardware}, ${layerNote}, and ${shoeNote}. Keep accessories intentional so the center-frame look stays premium.`;
 }
 
 function renderOutfitInsights(palette, items) {

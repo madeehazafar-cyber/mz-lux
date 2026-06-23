@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260621-polish">
+    <link rel="stylesheet" href="style.css?v=20260623-scoped-clean">
 </head>
 <body class="vip-page">
 <header>
@@ -82,11 +82,6 @@
                 <article><span>02</span><strong>Birthday Gift</strong></article>
                 <article><span>03</span><strong>Lux Points</strong></article>
                 <article><span>04</span><strong>Member Deals</strong></article>
-            </section>
-
-            <section class="vip-accessibility" aria-label="VIP accessibility controls">
-                <button type="button" id="vipTextToggle" aria-pressed="false">Bigger Text</button>
-                <button type="button" id="vipContrastToggle" aria-pressed="false">High Contrast</button>
             </section>
         </div>
     </section>
@@ -183,6 +178,20 @@
         vipFreeBadge.hidden = isSignedIn;
     }
 
+    function updateVipOffers(member) {
+        const activeTier = member?.tier || (member ? "Glow" : "");
+        document.querySelectorAll(".vip-tier").forEach((card) => {
+            const button = card.querySelector(".vip-offer-btn");
+            const tier = button?.dataset.vipTier || "";
+            const isCurrent = Boolean(activeTier && tier === activeTier);
+            card.classList.toggle("is-current", isCurrent);
+            if (button) {
+                button.textContent = member ? "Change offer to this" : "Choose this offer";
+                button.setAttribute("aria-label", member ? `Change offer to ${tier}` : `Choose ${tier} offer`);
+            }
+        });
+    }
+
     function launchVipConfetti() {
         const confetti = document.getElementById("vipConfetti");
         confetti.innerHTML = "";
@@ -230,6 +239,7 @@
         if (!member) {
             setVipSignedInState(false);
             renderVipProfile(null);
+            updateVipOffers(null);
             return;
         }
         const membershipPoints = member.tier === "Diamond" ? "120" : member.tier === "Luxe" ? "85" : "50";
@@ -243,6 +253,7 @@
                 ? "Google VIP pass active: 50 / 200 points"
                 : "Welcome reward active: 50 / 200 points";
         renderVipProfile(member);
+        updateVipOffers(member);
     }
 
     openVipModal.addEventListener("click", () => {
@@ -325,16 +336,6 @@
         }, 1450);
     });
 
-    document.getElementById("vipTextToggle").addEventListener("click", (event) => {
-        const enabled = document.body.classList.toggle("vip-large-text");
-        event.currentTarget.setAttribute("aria-pressed", String(enabled));
-    });
-
-    document.getElementById("vipContrastToggle").addEventListener("click", (event) => {
-        const enabled = document.body.classList.toggle("vip-high-contrast");
-        event.currentTarget.setAttribute("aria-pressed", String(enabled));
-    });
-
     vipProfileSignOut.addEventListener("click", async () => {
         try {
             await window.mzLuxVipSignOut?.();
@@ -347,6 +348,7 @@
         setVipSignedInState(false);
         openVipModal.textContent = "Sign In";
         renderVipProfile(null);
+        updateVipOffers(null);
     });
 
     renderVipCard();
