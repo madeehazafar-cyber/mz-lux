@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+<!-- This HTML file creates one page of the MZ LUX fashion website. -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,9 +8,7 @@
     <link rel="stylesheet" href="style.css?v=20260623-camera-beige-nav2">
 </head>
 <body class="home-page curtain-active">
-
 <div class="opening-flash" aria-hidden="true"></div>
-
 <div class="curtain-wrap" id="curtain" aria-hidden="true">
     <div class="curtain-panel curtain-left"></div>
     <div class="curtain-panel curtain-right"></div>
@@ -35,7 +34,6 @@
 </div>
 
 <div class="page-content" id="pageContent">
-    
     <header>
         <div class="logo">
             <div class="logo-shine"></div>
@@ -63,7 +61,6 @@
             <div class="spark-field" aria-hidden="true">
                 <span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
-            
             <div class="hero-copy-block">
                 <p class="hero-kicker">Digital luxury wardrobe</p>
                 <h2>MZ LUX</h2>
@@ -76,7 +73,6 @@
                 <div class="luxury-orbit luxury-orbit-one"></div>
                 <div class="luxury-orbit luxury-orbit-two"></div>
                 <div class="runway-line"></div>
-                
                 <article class="runway-card runway-card-top">
                     <img src="images/models/beige blazer.webp" alt="Beige blazer">
                     <span>Tailored Layer</span>
@@ -121,7 +117,6 @@
                 <p class="featured-card-description">Featured for its crisp tailoring and timeless versatility. It anchors refined outfits from daywear to evening styling.</p>
             </div>
         </article>
-        
         <article class="featured-card cinematic-card cinematic-card-secondary" tabindex="0" data-card="02">
             <figure class="cinematic-card-media">
                 <img src="images/models/pleated skirt.webp" alt="Pleated skirt">
@@ -132,7 +127,6 @@
                 <p class="featured-card-description">Chosen for its soft movement and elevated silhouette. The pleating adds dimension while keeping the look polished.</p>
             </div>
         </article>
-        
         <article class="featured-card cinematic-card cinematic-card-tertiary" tabindex="0" data-card="03">
             <figure class="cinematic-card-media">
                 <img src="images/models/brown loafers.webp" alt="Brown loafers">
@@ -150,23 +144,14 @@
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        // Step 1 [0.95s]: Part the left and right background split-curtain panels
         setTimeout(() => document.getElementById("curtain")?.classList.add("open"), 950);
-        
-        // Step 2 [1.70s]: Flash and fade in the editorial lines/magazine frame skeleton
         setTimeout(() => document.body.classList.add("wireframe-active"), 1700);
-        
-        // Step 3 [3.05s]: Transitions the true layout to viewable opacity, switches off introductory state filters
         setTimeout(() => {
             document.getElementById("pageContent")?.classList.add("visible");
             document.body.classList.add("wireframe-complete");
             document.body.classList.remove("curtain-active");
         }, 3050);
-        
-        // Step 4 [4.20s]: Final trigger to fire downstream layout states (e.g., runway orbits, card hover permissions)
         setTimeout(() => document.body.classList.add("collection-live"), 4200);
-        
-        // Step 5 [5.60s]: Complete clean up. Unbinds heavy curtain and wireframe DOM trees to preserve application performance
         setTimeout(() => {
             document.getElementById("curtain")?.remove();
             document.getElementById("curtainLogo")?.remove();
@@ -177,3 +162,4 @@
 <script src="main.js?v=20260623-camera-beige-nav2"></script>
 </body>
 </html>
+

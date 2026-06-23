@@ -1,20 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+<!-- This HTML file creates one page of the MZ LUX fashion website. -->
 <html lang="en">
 <head>
-    <!-- Basic page setup and responsive design -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Browser tab title -->
     <title>MZ LUX | Camera</title>
-
-    <!-- External stylesheet -->
     <link rel="stylesheet" href="style.css?v=20260623-camera-three-options">
 </head>
-
 <body class="camera-studio-page">
-
-<!-- Website Header -->
 <header>
     <div class="logo"><span class="logo-initials">MZ</span></div>
     <div>
@@ -23,7 +16,6 @@
     </div>
 </header>
 
-<!-- Navigation Menu -->
 <nav>
     <a href="index.html">Home</a>
     <a href="categories.html">Categories</a>
@@ -33,168 +25,97 @@
 </nav>
 
 <main class="camera-page studio-layout">
-
-    <!-- Hero section introducing the Camera feature -->
     <section class="camera-hero studio-hero">
         <p class="hero-kicker">AI wardrobe studio</p>
         <h2>Style Your Real Closet</h2>
-        <p>Upload your own tops and bottoms, then ask the stylist what to wear.</p>
+        <p>Upload your own tops and bottoms, then ask the stylist what to wear. MZ LUX gives polished outfit advice without showing any setup details on the page.</p>
     </section>
 
     <section class="studio-shell">
-
-        <!-- Clothing upload section -->
         <div class="camera-stack">
-
             <div class="camera-intake-grid">
-
-                <!-- Top clothing uploads -->
                 <div class="camera-editorial-panel">
                     <div class="studio-panel-heading">
                         <span>01</span>
                         <div>
                             <h3>Tops</h3>
-                            <p>Upload shirts, sweaters, jackets, or blouses.</p>
+                            <p>Upload clear photos of shirts, sweaters, jackets, or blouses.</p>
                         </div>
                     </div>
-
-                    <!-- Top image upload slots -->
                     <div class="camera-inputs">
-
-                        <!-- Top Upload 1 -->
                         <label class="camera-field" data-role="top-input" data-label="Top 1">
-                            <div class="camera-field-header">
-                                <span>Top 1</span>
-                                <span>Upload</span>
-                            </div>
+                            <div class="camera-field-header"><span>Top 1</span><span>Upload</span></div>
                             <div class="camera-field-preview" data-preview></div>
                             <input type="file" accept="image/*" capture="environment">
                         </label>
-
-                        <!-- Top Upload 2 -->
                         <label class="camera-field" data-role="top-input" data-label="Top 2">
-                            <div class="camera-field-header">
-                                <span>Top 2</span>
-                                <span>Upload</span>
-                            </div>
+                            <div class="camera-field-header"><span>Top 2</span><span>Upload</span></div>
                             <div class="camera-field-preview" data-preview></div>
                             <input type="file" accept="image/*" capture="environment">
                         </label>
-
-                        <!-- Top Upload 3 -->
                         <label class="camera-field" data-role="top-input" data-label="Top 3">
-                            <div class="camera-field-header">
-                                <span>Top 3</span>
-                                <span>Upload</span>
-                            </div>
+                            <div class="camera-field-header"><span>Top 3</span><span>Upload</span></div>
                             <div class="camera-field-preview" data-preview></div>
                             <input type="file" accept="image/*" capture="environment">
                         </label>
-
                     </div>
                 </div>
 
-                <!-- Bottom clothing uploads -->
                 <div class="camera-editorial-panel">
                     <div class="studio-panel-heading">
                         <span>02</span>
                         <div>
                             <h3>Bottoms</h3>
-                            <p>Add trousers, skirts, jeans, or shorts.</p>
+                            <p>Add trousers, skirts, denim, or anything you want styled.</p>
                         </div>
                     </div>
-
-                    <!-- Bottom image upload slots -->
                     <div class="camera-inputs">
-
-                        <!-- Bottom Upload 1 -->
                         <label class="camera-field" data-role="bottom-input" data-label="Bottom 1">
-                            <div class="camera-field-header">
-                                <span>Bottom 1</span>
-                                <span>Upload</span>
-                            </div>
+                            <div class="camera-field-header"><span>Bottom 1</span><span>Upload</span></div>
                             <div class="camera-field-preview" data-preview></div>
                             <input type="file" accept="image/*" capture="environment">
                         </label>
-
-                        <!-- Bottom Upload 2 -->
                         <label class="camera-field" data-role="bottom-input" data-label="Bottom 2">
-                            <div class="camera-field-header">
-                                <span>Bottom 2</span>
-                                <span>Upload</span>
-                            </div>
+                            <div class="camera-field-header"><span>Bottom 2</span><span>Upload</span></div>
                             <div class="camera-field-preview" data-preview></div>
                             <input type="file" accept="image/*" capture="environment">
                         </label>
-
                     </div>
                 </div>
-
             </div>
 
-            <!-- Button used to generate outfit suggestions -->
             <div class="camera-actions">
-                <button id="generateCameraOutfits" type="button">
-                    Generate 3 Best Options
-                </button>
+                <button id="generateCameraOutfits" type="button">Generate 3 best options</button>
             </div>
-
         </div>
 
-        <!-- AI Stylist Chat Section -->
         <section class="camera-chat-panel" aria-label="Style assistant chat">
-
-            <!-- Chat Header -->
             <div class="camera-chat-header">
-                <span>Live Stylist</span>
+                <span>Live stylist</span>
                 <h3>Ask What To Wear</h3>
-                <p>Receive outfit advice based on your uploaded clothing items.</p>
+                <p>Ask about matching, occasions, colors, shoes, bags, or how to make your uploaded pieces look more expensive.</p>
             </div>
-
-            <!-- Chat conversation area -->
             <div id="chatMessages" class="camera-chat-messages">
                 <div class="chat-bubble assistant">
-                    <p>Upload a few pieces, then ask me what works together.</p>
+                    <p>Upload a few pieces, then ask me what works together. I will give direct, real-life styling advice.</p>
                 </div>
             </div>
-
-            <!-- Quick suggestion buttons -->
             <div class="chat-suggestions" aria-label="Suggested style prompts">
-                <button type="button" class="chat-chip" data-prompt="Using my uploaded pieces, what should I wear today?">
-                    Style my uploads
-                </button>
-
-                <button type="button" class="chat-chip" data-prompt="Which shoes and bag would make this outfit look expensive?">
-                    Shoes and bag
-                </button>
-
-                <button type="button" class="chat-chip" data-prompt="What should I avoid with these pieces?">
-                    What to avoid
-                </button>
+                <button type="button" class="chat-chip" data-prompt="Using my uploaded pieces, what should I wear today?">Style my uploads</button>
+                <button type="button" class="chat-chip" data-prompt="Which shoes and bag would make this outfit look expensive?">Shoes and bag</button>
+                <button type="button" class="chat-chip" data-prompt="What should I avoid with these pieces?">What to avoid</button>
             </div>
-
-            <!-- User message input form -->
             <form id="chatForm" class="camera-chat-form">
-                <input
-                    id="chatInput"
-                    type="text"
-                    placeholder="Ask your stylist..."
-                    autocomplete="off">
+                <input id="chatInput" type="text" placeholder="Ask your stylist..." autocomplete="off">
                 <button type="submit">Send</button>
             </form>
-
         </section>
+    </section>
 
-    </s
-    ection>
-
-    <!-- Outfit recommendations will appear here -->
     <section id="cameraResults" class="camera-results"></section>
-
 </main>
 
-<!-- Main JavaScript file -->
 <script src="main.js?v=20260623-camera-three-options"></script>
-
 </body>
 </html>
+

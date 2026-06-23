@@ -1,15 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+<!-- This HTML file creates one page of the MZ LUX fashion website. -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | Preview</title>
-    <!-- Core Application Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- Global Brand Header -->
 <header>
     <div class="logo"><span class="logo-initials">MZ</span></div>
     <div>
@@ -18,7 +16,6 @@
     </div>
 </header>
 
-<!-- Main Navigation Bar -->
 <nav>
     <a href="index.html">Home</a>
     <a href="categories.html">Categories</a>
@@ -28,24 +25,16 @@
     <a href="favourites.html">Favourites</a>
 </nav>
 
-<!-- Core Preview Interface -->
 <main class="preview-page">
-    
-    <!-- Introduction Block: Set contextual tone for the editorial showcase -->
     <section class="builder-intro preview-intro">
         <h2>Your Selected Outfit</h2>
         <p>A polished full-look preview with the complete outfit kept in frame.</p>
     </section>
 
-    <!-- 
-      Target Grid Container: 
-      `main.js` targeting this ID pulls current items out of the global selection cache 
-      (`selectedOutfit`) and renders them here dynamically as flat cards.
-    -->
     <div id="finalPreview" class="preview-grid final-preview-grid"></div>
 </main>
 
-<!-- Core Script Core Engine handling local storage look retrieval & DOM generation -->
 <script src="main.js"></script>
 </body>
 </html>
+

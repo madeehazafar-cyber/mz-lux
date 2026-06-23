@@ -1,3 +1,4 @@
+﻿/* This CSS file styles the MZ LUX layout, colors, buttons, cards, animations, and mobile design. */
 * {
     margin: 0;
     padding: 0;
@@ -2634,7 +2635,7 @@ body.builder-scrolled .builder-intro p {
 }
 
 .preview-notes-card li::before {
-    content: "•";
+    content: "â€¢";
     position: absolute;
     left: 0;
     color: #b98920;
@@ -10511,3 +10512,4 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
         scroll-snap-align: start;
     }
 }
+

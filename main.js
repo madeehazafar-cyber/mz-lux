@@ -1,4 +1,4 @@
-// ── PROXY URL ──
+﻿// This JavaScript file controls the interactive wardrobe, VIP, calendar, camera, and chat features.
 const PROXY_URL = "https://mz-3i9crjfoy-mz5.vercel.app/api/proxy";
 const outfits = {
     oldMoney: {
@@ -172,15 +172,15 @@ function getLocalStylistReply(question = "", history = []) {
     const text = (question || "").toLowerCase().trim();
 
     if (!text) {
-        return "I’m here — tell me what you want to style and I’ll make it feel sharper and more intentional.";
+        return "Iâ€™m here â€” tell me what you want to style and Iâ€™ll make it feel sharper and more intentional.";
     }
 
     if (/^(erm|erh|uh|um|hmm|hm|idk|i don'?t know|not sure|maybe|sort of|kind of)$/.test(text)) {
-        return "No worries — tell me what you’re trying to style and I’ll turn it into something polished and elevated.";
+        return "No worries â€” tell me what youâ€™re trying to style and Iâ€™ll turn it into something polished and elevated.";
     }
 
     if (/hello|hi|hey|good morning|good evening/.test(text)) {
-        return "Hello — I’m your MZ LUX stylist. Tell me what you’re wearing and I’ll sharpen it into something more polished and elevated.";
+        return "Hello â€” Iâ€™m your MZ LUX stylist. Tell me what youâ€™re wearing and Iâ€™ll sharpen it into something more polished and elevated.";
     }
 
     if (/bag|purse|handbag|tote/.test(text)) {
@@ -188,11 +188,11 @@ function getLocalStylistReply(question = "", history = []) {
     }
 
     if (/shoe|shoes|loafers|sneakers|boots|heels/.test(text)) {
-        return "Choose shoes that echo the outfit’s tone: loafers for tailoring, clean sneakers for relaxed polish, and sleek heels for a sculpted finish.";
+        return "Choose shoes that echo the outfitâ€™s tone: loafers for tailoring, clean sneakers for relaxed polish, and sleek heels for a sculpted finish.";
     }
 
     if (/color|colour|match|works with|pair|pairing/.test(text)) {
-        return "For a luxe look, pair one rich neutral with one soft contrast — cream with camel, navy with ivory, or black with chocolate.";
+        return "For a luxe look, pair one rich neutral with one soft contrast â€” cream with camel, navy with ivory, or black with chocolate.";
     }
 
     if (/accessory|jewelry|jewellery|watch|belt|necklace/.test(text)) {
@@ -204,12 +204,12 @@ function getLocalStylistReply(question = "", history = []) {
     }
 
     if (/thank|thanks/.test(text)) {
-        return "You’re welcome — I’m here to make your wardrobe feel sharper, calmer, and more effortless.";
+        return "Youâ€™re welcome â€” Iâ€™m here to make your wardrobe feel sharper, calmer, and more effortless.";
     }
 
     const wardrobeContext = getCameraWardrobeContext?.() || "";
     if (/why|how|can you|should i|do i|is it|does it|would it|when|where|which|what/.test(text)) {
-        return `Yes — I can help with that. For MZ LUX, keep the answer simple: choose one main piece, match it with a clean neutral, then add one polished accessory. ${wardrobeContext.includes("Uploaded") ? "From your uploads, I would focus on the strongest top-bottom contrast first." : "Upload pieces when you want advice based on your real closet."}`;
+        return `Yes â€” I can help with that. For MZ LUX, keep the answer simple: choose one main piece, match it with a clean neutral, then add one polished accessory. ${wardrobeContext.includes("Uploaded") ? "From your uploads, I would focus on the strongest top-bottom contrast first." : "Upload pieces when you want advice based on your real closet."}`;
     }
 
     return "I can style this. Keep it polished with one strong silhouette, one rich neutral, and one intentional finish like a gold watch, clean bag, sleek loafers, or soft layered jacket.";
@@ -1013,7 +1013,7 @@ function getOutfitStyleComments(outfit, mood, tone) {
     const prof = getOutfitStyleProfile({label:top},{label:bot});
     const t = [];
     if (tone === "luxurious") {
-        t.push(`${top} + ${bot} feels polished — they balance each other beautifully.`);
+        t.push(`${top} + ${bot} feels polished â€” they balance each other beautifully.`);
         t.push("A sleek watch, structured bag, or sculptural jewelry lifts this further.");
     } else if (tone === "fun") {
         t.push(`${top} + ${bot} has a playful, confident energy.`);
@@ -1416,7 +1416,7 @@ function togglePlannerPanelSize() {
     const button = document.getElementById("plannerExpandBtn");
     if (!calendar) return;
     calendar.classList.toggle("is-expanded");
-    if (button) button.textContent = calendar.classList.contains("is-expanded") ? "−" : "□";
+    if (button) button.textContent = calendar.classList.contains("is-expanded") ? "âˆ’" : "â–¡";
 }
 
 function closePlannerPanel() {
@@ -1449,7 +1449,7 @@ function openPlannerPanel() {
     calendar.removeAttribute("aria-hidden");
     document.querySelector(".builder-page.clueless-closet")?.classList.remove("planner-panel-closed");
     const expandButton = document.getElementById("plannerExpandBtn");
-    if (expandButton) expandButton.textContent = "−";
+    if (expandButton) expandButton.textContent = "âˆ’";
     const button = document.getElementById("plannerMiniButton");
     button?.classList.remove("is-visible");
     setTimeout(() => button?.remove(), 220);
@@ -1611,7 +1611,7 @@ function startPlannerAddMode() {
     const input = document.getElementById("plannerEventName");
     const deleteButton = document.getElementById("plannerDeleteEventBtn");
     document.getElementById("openingCalendar")?.classList.add("is-adding", "is-expanded");
-    document.getElementById("plannerExpandBtn").textContent = "−";
+    document.getElementById("plannerExpandBtn").textContent = "âˆ’";
     if (form) form.classList.add("is-active");
     if (selected) selected.textContent = "Select a date";
     if (input) input.value = "";
@@ -2183,7 +2183,7 @@ function attachSaveBtn(container) {
     if (!btn) return;
     btn.addEventListener("click", () => {
         const ok = saveToFavourites();
-        btn.textContent = ok ? "✓ Saved to Favourites!" : "Please complete your outfit first";
+        btn.textContent = ok ? "âœ“ Saved to Favourites!" : "Please complete your outfit first";
         btn.disabled = true;
         if (ok) setTimeout(() => { btn.textContent = "Save to Favourites"; btn.disabled = false; }, 2500);
     });
@@ -2197,7 +2197,7 @@ function loadFavouritesPage() {
     list.innerHTML = saved.map((outfit, i) => `
         <article class="outfit-card favourite-entry lookbook-entry">
             <div class="outfit-card-header">
-                <h3>Look ${i+1} — ${themeLabels[outfit.theme] || outfit.theme || "Custom"}</h3>
+                <h3>Look ${i+1} â€” ${themeLabels[outfit.theme] || outfit.theme || "Custom"}</h3>
                 <span class="pill">${outfit.savedAt || ""}</span>
                 <button class="delete-fav-btn" data-index="${i}" style="background:transparent;border:1px solid rgba(176,141,87,0.3);color:#8a623a;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:0.75rem;letter-spacing:0.1em;">Remove</button>
             </div>
@@ -2225,7 +2225,7 @@ function buildVisualPreviewMarkup(outfit, themeName) {
     const styleLabel = prof==="menswear"?"Structured finish":prof==="womenswear"?"Elevated finish":"Versatile finish";
     return `
         <div class="preview-summary visual-preview-card">
-            <div class="visual-preview-title"><h3>${themeName} Look</h3><p>${mood} • ${styleLabel}</p></div>
+            <div class="visual-preview-title"><h3>${themeName} Look</h3><p>${mood} â€¢ ${styleLabel}</p></div>
             <div class="preview-hero-row">
                 <div class="preview-chip-row">
                     ${previewChip("Top", outfit.top)}${previewChip("Bottom", outfit.bottom)}${previewChip("Shoes", outfit.shoes)}
@@ -2295,3 +2295,5 @@ function buildVisualPreviewMarkup(outfit, themeName) {
             <button class="save-to-favs-btn">Save to Favourites</button>
         </div>`;
 }
+
+

@@ -1,3 +1,4 @@
+﻿# This helper file crops one sweater image asset for the website.
 from PIL import Image
 from pathlib import Path
 
@@ -15,3 +16,4 @@ lower = int(h * 0.75)
 cropped = img.crop((left, upper, right, lower))
 cropped.save(dst)
 print(dst)
+
