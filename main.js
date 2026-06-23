@@ -156,6 +156,7 @@ const selectedOutfit = { top: null, bottom: null, shoes: null, accessories: [] }
 const themeLabels = { oldMoney: "Old Money", streetwear: "Streetwear", minimalist: "Minimalist", casual: "Casual", formal: "Formal" };
 const DEFAULT_INSIGHT_COLORS = ["#0B0B0B", "#18130D", "#DDB865", "#F8EFE0", "#4A3A22"];
 let outfitInsightsRequest = 0;
+const themeDomCache = new Map();
 const themeSelect     = document.getElementById("themeSelect");
 const clothingDisplay = document.getElementById("clothingDisplay");
 const instructionBox  = document.getElementById("instructionBox");
@@ -436,9 +437,23 @@ function initFeaturedCollectionIntro() {
 function showThemeItems() {
     if (!clothingDisplay) return;
     const theme = themeSelect ? themeSelect.value : "";
-    clothingDisplay.innerHTML = "";
+    const previousTheme = clothingDisplay.dataset.activeTheme;
+    if (previousTheme && clothingDisplay.children.length) {
+        themeDomCache.set(previousTheme, Array.from(clothingDisplay.children));
+    }
+    clothingDisplay.replaceChildren();
     if (!theme) { if (instructionBox) instructionBox.style.display = "block"; return; }
     if (instructionBox) instructionBox.style.display = "none";
+    clothingDisplay.dataset.activeTheme = theme;
+
+    if (themeDomCache.has(theme)) {
+        clothingDisplay.append(...themeDomCache.get(theme));
+        updateSelectionHighlights();
+        initClosetRails();
+        requestAnimationFrame(syncCenteredClosetSelections);
+        return;
+    }
+
     const t = getPersonalizedThemeOutfits(outfits[theme] || outfits.oldMoney);
     const cats = [
         { title: "Tops",        type: "top",       items: t.tops        },
@@ -446,7 +461,9 @@ function showThemeItems() {
         { title: "Shoes",       type: "shoes",     items: t.shoes       },
         { title: "Accessories", type: "accessory", items: t.accessories }
     ];
-    clothingDisplay.innerHTML = cats.map(c => createCategory(c.title, c.type, c.items)).join("");
+    const template = document.createElement("template");
+    template.innerHTML = cats.map(c => createCategory(c.title, c.type, c.items)).join("");
+    clothingDisplay.append(template.content);
     clothingDisplay.querySelectorAll(".category-section").forEach((s, i) => {
         s.classList.add("is-visible");
         s.style.opacity = "1";
@@ -1060,12 +1077,30 @@ function generateCameraOutfits() {
     const bottoms = getCameraItems('[data-role="bottom-input"]', "bottom");
     const results = document.getElementById("cameraResults");
     if (!results) return;
-    const pairs = tops.slice(0,3).flatMap(top => bottoms.slice(0,2).map(bottom => ({ top, bottom, mood: getOutfitMood(top, bottom) })))
-        .sort((a,b) => { const s = m => m==="luxury tailoring"?3:m==="soft elegance"?2:m==="casual cool"?1:0; return s(b.mood)-s(a.mood); })
-        .slice(0,2).map((p,i) => ({ ...p, hats: getHatOptions(p.mood), comments: getOutfitStyleComments({top:p.top,bottom:p.bottom},p.mood,i===0?"luxurious":"fun") }));
-    if (!pairs.length) { results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>'; return; }
-    results.innerHTML = `<div class="camera-results-grid">${pairs.map(({top,bottom,mood,hats,comments}) => `
-        <article class="camera-outfit-card">
+    const uploadedTops = tops.filter((item) => item.fileName);
+    const uploadedBottoms = bottoms.filter((item) => item.fileName);
+    if (!uploadedTops.length || !uploadedBottoms.length) {
+        results.innerHTML = '<div class="camera-empty">Upload at least one top and one bottom to start styling.</div>';
+        return;
+    }
+    const moodScore = (mood) => mood === "luxury tailoring" ? 4 : mood === "soft elegance" ? 3 : mood === "polished street style" ? 2 : 1;
+    const pairs = uploadedTops
+        .flatMap((top) => uploadedBottoms.map((bottom) => ({ top, bottom, mood: getOutfitMood(top, bottom) })))
+        .sort((a, b) => moodScore(b.mood) - moodScore(a.mood));
+    while (pairs.length < 6 && pairs.length) {
+        const seed = pairs[pairs.length % Math.max(uploadedTops.length * uploadedBottoms.length, 1)];
+        pairs.push({ ...seed, mood: seed.mood === "casual cool" ? "polished street style" : seed.mood });
+    }
+    const finalPairs = pairs.slice(0, 6).map((p, i) => ({
+        ...p,
+        rank: i + 1,
+        isBest: i < 3,
+        hats: getHatOptions(p.mood),
+        comments: getOutfitStyleComments({ top: p.top, bottom: p.bottom }, p.mood, i < 3 ? "luxurious" : "fun")
+    }));
+    results.innerHTML = `<div class="camera-results-grid">${finalPairs.map(({top,bottom,mood,hats,comments,isBest,rank}) => `
+        <article class="camera-outfit-card ${isBest ? "is-best-match" : ""}">
+            ${isBest ? `<span class="camera-pick-badge">${rank === 1 ? "MZ LUX PICK" : "BEST MATCH"}</span>` : ""}
             <div class="camera-outfit-media">
                 ${top.preview    ? `<img src="${top.preview}"    alt="${top.label}">` : ""}
                 ${bottom.preview ? `<img src="${bottom.preview}" alt="${bottom.label}">` : ""}
@@ -1372,13 +1407,19 @@ function initOpeningClosetCalendar() {
     updateOpeningCalendarSelection();
     renderEventPlannerCalendar();
     hydrateOpeningCalendarWeather();
+    hydrateExternalCalendarFeeds();
     requestAnimationFrame(() => {
         setTimeout(() => calendar.classList.add("is-visible"), 120);
     });
 
     calendar.addEventListener("click", (event) => {
         const target = event.target.closest("button");
+        if (calendar.classList.contains("is-mini") && !target) {
+            openPlannerPanel();
+            return;
+        }
         if (!target) return;
+        if (calendar.classList.contains("is-mini")) openPlannerPanel();
         if (target.id === "plannerPrevMonth") shiftEventPlannerMonth(-1);
         if (target.id === "plannerNextMonth") shiftEventPlannerMonth(1);
         if (target.id === "plannerAddBtn") startPlannerAddMode();
@@ -1390,6 +1431,7 @@ function initOpeningClosetCalendar() {
     window.startPlannerAddMode = startPlannerAddMode;
     window.togglePlannerPanelSize = togglePlannerPanelSize;
     window.closePlannerPanel = closePlannerPanel;
+    window.openPlannerPanel = openPlannerPanel;
 }
 
 function togglePlannerPanelSize() {
@@ -1403,9 +1445,19 @@ function togglePlannerPanelSize() {
 function closePlannerPanel() {
     const calendar = document.getElementById("openingCalendar");
     if (!calendar) return;
-    calendar.classList.add("is-hidden");
-    calendar.setAttribute("aria-hidden", "true");
+    calendar.classList.remove("is-expanded", "is-adding");
+    calendar.classList.add("is-mini");
+    calendar.removeAttribute("aria-hidden");
     document.querySelector(".builder-page.clueless-closet")?.classList.add("planner-panel-closed");
+}
+
+function openPlannerPanel() {
+    const calendar = document.getElementById("openingCalendar");
+    if (!calendar) return;
+    calendar.classList.remove("is-mini", "is-hidden");
+    calendar.removeAttribute("aria-hidden");
+    document.querySelector(".builder-page.clueless-closet")?.classList.remove("planner-panel-closed");
+    requestAnimationFrame(() => calendar.classList.add("is-visible"));
 }
 
 function updateOpeningCalendarSelection() {
@@ -1454,6 +1506,48 @@ async function hydrateOpeningCalendarWeather() {
         eventPlannerWeather = createFallbackPlannerWeather();
         renderEventPlannerCalendar();
     }
+}
+
+async function hydrateExternalCalendarFeeds() {
+    const feeds = Array.isArray(window.MZ_LUX_CALENDAR_FEEDS) ? window.MZ_LUX_CALENDAR_FEEDS : [];
+    if (!feeds.length) return;
+    const events = getPlannerEvents();
+    const responses = await Promise.allSettled(feeds.map((url) => fetch(url).then((res) => res.ok ? res.text() : "")));
+    responses.forEach((result) => {
+        if (result.status !== "fulfilled" || !result.value) return;
+        parseCalendarFeed(result.value).forEach((event) => {
+            if (event.date && event.type) events[event.date] = event;
+        });
+    });
+    localStorage.setItem(EVENT_PLANNER_STORAGE_KEY, JSON.stringify(events));
+    renderEventPlannerCalendar();
+}
+
+function parseCalendarFeed(feedText) {
+    try {
+        const json = JSON.parse(feedText);
+        const items = Array.isArray(json.items) ? json.items : Array.isArray(json.events) ? json.events : [];
+        return items.map((item) => ({
+            date: (item.start?.date || item.start?.dateTime || item.date || "").slice(0, 10),
+            type: normalizePlannerEventType(item.summary || item.subject || item.title || item.type || "Event")
+        })).filter((event) => event.date);
+    } catch {
+        return feedText.split("BEGIN:VEVENT").slice(1).map((block) => {
+            const date = (block.match(/DTSTART(?:;VALUE=DATE)?:([0-9]{8})/)?.[1] || "").replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+            const title = block.match(/SUMMARY:(.+)/)?.[1]?.trim() || "Event";
+            return { date, type: normalizePlannerEventType(title) };
+        }).filter((event) => event.date);
+    }
+}
+
+function normalizePlannerEventType(text = "") {
+    const clean = text.toUpperCase();
+    if (clean.includes("WEDDING")) return "Wedding";
+    if (clean.includes("DINNER")) return "Dinner";
+    if (clean.includes("GALA")) return "Gala";
+    if (clean.includes("PHOTO")) return "Photoshoot";
+    if (clean.includes("TRAVEL")) return "Travel";
+    return text.split(/\s+/).slice(0, 2).join(" ") || "Event";
 }
 
 function getForecastCoordinates() {

@@ -2055,6 +2055,473 @@ button:hover {
     font-size: 0.95rem;
 }
 
+/* Final luxury override: keep the latest visual system winning over older page blocks. */
+.vip-page,
+.camera-studio-page,
+.home-page,
+body:has(.clueless-closet),
+body:has(.favorites-page) {
+    background:
+        radial-gradient(circle at 12% 0%, rgba(191, 149, 63, 0.16), transparent 28%),
+        radial-gradient(circle at 92% 8%, rgba(252, 246, 186, 0.08), transparent 26%),
+        #121212 !important;
+    color: var(--mz-text, #f7f1e4) !important;
+}
+
+header,
+.vip-page header,
+.lux-header {
+    background: linear-gradient(135deg, rgba(18,18,18,0.98), rgba(29,26,18,0.94)) !important;
+    border-color: rgba(191,149,63,0.38) !important;
+}
+
+.brand-name,
+.vip-page .brand-name,
+.logo-initials,
+.vip-card-label,
+.vip-tier span,
+.vip-kicker,
+.camera-chat-header span {
+    background: linear-gradient(105deg, #bf953f 0%, #fcf6ba 24%, #b38728 48%, #fbf5b7 72%, #aa771c 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.86) !important;
+}
+
+.vip-tier-active {
+    max-width: 180px;
+    opacity: 0.58;
+    transform: scale(0.96);
+}
+
+.vip-tier-active .vip-offer-btn {
+    cursor: default;
+    filter: grayscale(0.2);
+}
+
+.vip-perks {
+    display: flex !important;
+    gap: 10px !important;
+    overflow-x: auto !important;
+}
+
+.vip-perks article {
+    position: relative;
+    min-width: 150px;
+    overflow: hidden;
+    padding: 12px !important;
+    border: 1px solid rgba(191,149,63,0.32) !important;
+    background: rgba(255,255,255,0.055) !important;
+}
+
+.vip-perks article::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: var(--reward-progress);
+    height: 3px;
+    background: linear-gradient(90deg, #bf953f, #fcf6ba, #aa771c);
+    transition: width 0.45s ease;
+}
+
+.vip-perks svg {
+    width: 30px;
+    height: 30px;
+    margin-top: 8px;
+    fill: none;
+    stroke: #fcf6ba;
+    stroke-width: 1.7;
+    filter: drop-shadow(0 8px 14px rgba(191,149,63,0.28));
+    animation: rewardFloat 3.4s ease-in-out infinite;
+}
+
+.vip-perks small {
+    display: block;
+    margin-top: 4px;
+    color: rgba(247,241,228,0.62);
+    font-size: 0.72rem;
+}
+
+.opening-calendar.is-mini {
+    position: fixed !important;
+    top: 92px !important;
+    right: 14px !important;
+    z-index: 9500 !important;
+    width: min(210px, calc(100vw - 28px)) !important;
+    max-height: 118px !important;
+    overflow: hidden !important;
+    padding: 12px !important;
+    cursor: pointer;
+    transform: translate3d(0,0,0) scale(1) !important;
+    opacity: 1 !important;
+}
+
+.opening-calendar.is-mini .event-planner-toolbar,
+.opening-calendar.is-mini .event-planner-weekdays,
+.opening-calendar.is-mini .event-planner-grid,
+.opening-calendar.is-mini .event-planner-form,
+.opening-calendar.is-mini .event-planner-summary {
+    display: none !important;
+}
+
+.opening-calendar.is-mini .opening-calendar-head {
+    margin: 0 !important;
+    padding-right: 42px !important;
+}
+
+.opening-calendar.is-mini .opening-calendar-head h2 {
+    font-size: 1rem !important;
+}
+
+.opening-calendar.is-mini .opening-calendar-head p {
+    display: block !important;
+    max-height: 2.7em;
+    overflow: hidden;
+    font-size: 0.7rem !important;
+}
+
+.opening-calendar.is-mini #plannerCloseBtn {
+    display: none !important;
+}
+
+.opening-calendar.is-mini #plannerExpandBtn {
+    display: inline-grid !important;
+}
+
+.camera-outfit-card.is-best-match {
+    border-color: rgba(252,246,186,0.58) !important;
+    box-shadow: 0 18px 42px rgba(191,149,63,0.18) !important;
+}
+
+@keyframes rewardFloat {
+    0%, 100% { transform: translate3d(0,0,0); }
+    50% { transform: translate3d(0,-4px,0); }
+}
+
+/* 2026 unified luxury system: compact dark/gold interface across the app */
+:root {
+    --mz-black: #121212;
+    --mz-panel: rgba(22, 22, 22, 0.84);
+    --mz-panel-soft: rgba(255, 255, 255, 0.055);
+    --mz-gold: #bf953f;
+    --mz-gold-bright: #fcf6ba;
+    --mz-gold-deep: #aa771c;
+    --mz-metal: linear-gradient(105deg, #bf953f 0%, #fcf6ba 24%, #b38728 48%, #fbf5b7 72%, #aa771c 100%);
+    --mz-line: rgba(191, 149, 63, 0.36);
+    --mz-text: #f7f1e4;
+    --mz-muted: rgba(247, 241, 228, 0.68);
+    --mz-shadow: 0 18px 48px rgba(0, 0, 0, 0.38);
+}
+
+body,
+.vip-page,
+.camera-studio-page,
+.home-page {
+    background:
+        radial-gradient(circle at 14% 0%, rgba(191, 149, 63, 0.12), transparent 30%),
+        radial-gradient(circle at 86% 10%, rgba(252, 246, 186, 0.08), transparent 28%),
+        var(--mz-black) !important;
+    color: var(--mz-text) !important;
+}
+
+header,
+.vip-page header,
+.lux-header {
+    width: min(1180px, calc(100% - 24px)) !important;
+    min-height: 72px !important;
+    margin: 10px auto 8px !important;
+    padding: 10px 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    border: 1px solid var(--mz-line) !important;
+    background: linear-gradient(135deg, rgba(18, 18, 18, 0.96), rgba(29, 26, 18, 0.92)) !important;
+    box-shadow: var(--mz-shadow) !important;
+    backdrop-filter: blur(18px);
+}
+
+.logo,
+.vip-page .logo,
+.mini-logo {
+    width: 52px !important;
+    height: 52px !important;
+    flex: 0 0 52px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(252, 246, 186, 0.42) !important;
+    background:
+        radial-gradient(circle at 35% 25%, rgba(252, 246, 186, 0.42), transparent 24%),
+        linear-gradient(145deg, #050505, #241b11 58%, #0a0908) !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 10px 28px rgba(0,0,0,0.32) !important;
+}
+
+.logo-initials,
+.mini-logo,
+.brand-name,
+.vip-page .brand-name,
+.lux-header h1,
+.vip-card-label,
+.vip-kicker,
+.vip-tier span,
+.hero-kicker,
+.closet-kicker {
+    background: var(--mz-metal) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.78) !important;
+}
+
+.brand-name,
+.vip-page .brand-name,
+.lux-header h1 {
+    font-size: clamp(1.35rem, 2.3vw, 2rem) !important;
+    letter-spacing: 0.08em !important;
+}
+
+.tagline,
+.vip-page .tagline,
+.lux-header p {
+    color: var(--mz-muted) !important;
+}
+
+nav {
+    width: min(1180px, calc(100% - 24px)) !important;
+    margin: 0 auto 10px !important;
+    padding: 8px !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    border: 1px solid rgba(191, 149, 63, 0.22) !important;
+    background: rgba(8, 8, 8, 0.86) !important;
+    backdrop-filter: blur(14px);
+}
+
+nav a {
+    flex: 0 0 auto;
+    padding: 8px 13px !important;
+    border: 1px solid transparent !important;
+    color: var(--mz-muted) !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.16em !important;
+    text-decoration: none !important;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+    border-color: rgba(252, 246, 186, 0.38) !important;
+    color: var(--mz-gold-bright) !important;
+    background: rgba(191, 149, 63, 0.12) !important;
+}
+
+.hero-shell,
+.vip-shell,
+.camera-page,
+.builder-page,
+.favorites-page {
+    width: min(1180px, calc(100% - 24px)) !important;
+    margin: 0 auto !important;
+    padding: 0 0 18px !important;
+}
+
+.luxury-hero,
+.closet-hero,
+.camera-hero,
+.lookbook-hero,
+.vip-hero,
+.vip-dashboard,
+.closet-controls,
+.instruction-box,
+.selected-item-panel,
+.outfit-insights-card,
+.opening-calendar,
+.camera-editorial-panel,
+.camera-chat-panel,
+.favorites-list {
+    border: 1px solid var(--mz-line) !important;
+    background: var(--mz-panel) !important;
+    color: var(--mz-text) !important;
+    box-shadow: var(--mz-shadow) !important;
+    backdrop-filter: blur(18px);
+}
+
+.closet-hero,
+.camera-hero,
+.lookbook-hero,
+.vip-hero {
+    min-height: 0 !important;
+    margin-bottom: 10px !important;
+    padding: clamp(14px, 2.2vw, 22px) !important;
+}
+
+.camera-hero h2,
+.lookbook-hero h2,
+.closet-hero h2,
+.vip-copy h2,
+.luxury-hero h2 {
+    color: var(--mz-text) !important;
+    font-size: clamp(1.65rem, 4vw, 3rem) !important;
+}
+
+.camera-hero p,
+.lookbook-hero p,
+.closet-hero p,
+.vip-copy p,
+.camera-chat-header p,
+.studio-panel-heading p,
+.selected-item-copy p,
+.outfit-advice-panel p {
+    color: var(--mz-muted) !important;
+}
+
+.cinematic-featured-grid,
+.favorites-list,
+.camera-results-grid {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(230px, 1fr);
+    overflow-x: auto;
+    gap: 10px !important;
+    scroll-snap-type: x proximity;
+}
+
+.featured-card,
+.favorite-card,
+.camera-outfit-card,
+.clothing-card,
+.vip-tier {
+    scroll-snap-align: start;
+    border-color: var(--mz-line) !important;
+}
+
+.camera-studio-page .studio-shell {
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.75fr) !important;
+    align-items: start !important;
+}
+
+.camera-studio-page .camera-intake-grid,
+.vip-tier-grid {
+    gap: 10px !important;
+}
+
+.camera-studio-page .camera-editorial-panel,
+.camera-studio-page .camera-chat-panel {
+    padding: 12px !important;
+}
+
+.camera-studio-page .camera-field {
+    border: 1px solid rgba(191, 149, 63, 0.34) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.035), 0 10px 26px rgba(0,0,0,0.24) !important;
+}
+
+.camera-field-header,
+.studio-panel-heading h3,
+.camera-chat-header h3,
+.camera-chat-header span {
+    color: var(--mz-gold-bright) !important;
+}
+
+.camera-field-preview {
+    min-height: clamp(86px, 15vh, 130px) !important;
+    background: rgba(0, 0, 0, 0.24) !important;
+    border-color: rgba(191, 149, 63, 0.28) !important;
+}
+
+.camera-chat-messages {
+    max-height: clamp(210px, 36vh, 330px) !important;
+    background: rgba(0, 0, 0, 0.22) !important;
+    border-color: rgba(191, 149, 63, 0.24) !important;
+}
+
+.chat-bubble.assistant {
+    color: var(--mz-text) !important;
+    background: rgba(191, 149, 63, 0.13) !important;
+}
+
+.chat-bubble.user {
+    background: linear-gradient(135deg, #bf953f, #6e4c17) !important;
+}
+
+.camera-actions button,
+.vip-primary-btn,
+.save-look-btn,
+.style-me-btn,
+.camera-chat-form button {
+    border-radius: 999px !important;
+    background: var(--mz-metal) !important;
+    color: #111 !important;
+    box-shadow: 0 12px 28px rgba(191, 149, 63, 0.2) !important;
+}
+
+.camera-results-grid {
+    grid-auto-flow: initial !important;
+    grid-auto-columns: initial !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.camera-outfit-card {
+    position: relative;
+    min-width: 0 !important;
+    background: rgba(14, 14, 14, 0.88) !important;
+}
+
+.camera-pick-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    padding: 6px 9px;
+    border: 1px solid rgba(252, 246, 186, 0.46);
+    background: var(--mz-metal);
+    color: #111;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+}
+
+.favorites-list {
+    min-height: 180px !important;
+    padding: 12px !important;
+}
+
+.empty-message {
+    color: var(--mz-muted) !important;
+}
+
+@media (max-width: 860px) {
+    .camera-studio-page .studio-shell,
+    .vip-hero,
+    .vip-dashboard {
+        grid-template-columns: 1fr !important;
+    }
+
+    .camera-results-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 620px) {
+    header,
+    .vip-page header {
+        min-height: 62px !important;
+    }
+
+    nav {
+        justify-content: flex-start !important;
+    }
+
+    .camera-results-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 .chat-bubble p {
     white-space: pre-line;
 }
@@ -9540,6 +10007,176 @@ body:has(.clueless-closet) .event-planner-calendar.opening-calendar {
         white-space: normal;
         min-height: 42px;
     }
+}
+
+/* Logo readability: the round emblem should always show a clear MZ mark. */
+.logo .logo-initials,
+.vip-page .logo .logo-initials,
+.curtain-logo-box span {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    color: #fcf6ba !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Last-pass guard: this block intentionally sits at EOF so the luxury theme wins. */
+body,
+.vip-page,
+.camera-studio-page,
+.home-page {
+    background: radial-gradient(circle at 14% 0%, rgba(191,149,63,0.16), transparent 30%), #121212 !important;
+    color: #f7f1e4 !important;
+}
+
+header,
+.vip-page header,
+.lux-header {
+    background: linear-gradient(135deg, rgba(18,18,18,0.98), rgba(29,26,18,0.94)) !important;
+    border: 1px solid rgba(191,149,63,0.38) !important;
+}
+
+.logo,
+.vip-page .logo,
+.mini-logo {
+    border-radius: 50% !important;
+    background: radial-gradient(circle at 35% 25%, rgba(252,246,186,0.38), transparent 25%), linear-gradient(145deg, #050505, #241b11 58%, #0a0908) !important;
+}
+
+.brand-name,
+.vip-page .brand-name,
+.logo-initials,
+.vip-card-label,
+.vip-tier span,
+.vip-kicker {
+    background: linear-gradient(105deg, #bf953f 0%, #fcf6ba 24%, #b38728 48%, #fbf5b7 72%, #aa771c 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.86) !important;
+}
+
+.camera-studio-page .camera-editorial-panel,
+.camera-studio-page .camera-chat-panel,
+.camera-studio-page .camera-hero,
+.vip-hero,
+.vip-dashboard,
+.favorites-list,
+.lookbook-hero,
+.closet-hero {
+    background: rgba(18,18,18,0.86) !important;
+    border-color: rgba(191,149,63,0.36) !important;
+    color: #f7f1e4 !important;
+}
+
+.opening-calendar.is-mini {
+    position: fixed !important;
+    top: 92px !important;
+    right: 14px !important;
+    z-index: 9500 !important;
+    width: min(210px, calc(100vw - 28px)) !important;
+    max-height: 118px !important;
+    overflow: hidden !important;
+    padding: 12px !important;
+    cursor: pointer;
+}
+
+/* Readability fix: keep metallic treatment for the brand, not every small label. */
+header .brand-name,
+.vip-page header .brand-name,
+.logo-initials,
+.mini-logo {
+    background: linear-gradient(105deg, #bf953f 0%, #fcf6ba 24%, #b38728 48%, #fbf5b7 72%, #aa771c 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.86) !important;
+}
+
+.hero-kicker,
+.closet-kicker,
+.vip-kicker,
+.vip-free-badge,
+.vip-tier span,
+.vip-card-label,
+.outfit-insights-kicker,
+.outfit-insights-label,
+.camera-chat-header span,
+.studio-panel-heading span,
+.small-title,
+.item-label,
+.current-look-label {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    color: #fcf6ba !important;
+    text-shadow: none !important;
+}
+
+p,
+small,
+label,
+.tagline,
+.vip-page .tagline,
+.camera-hero p,
+.lookbook-hero p,
+.closet-hero p,
+.vip-copy p,
+.camera-chat-header p,
+.studio-panel-heading p,
+.selected-item-copy p,
+.outfit-advice-panel p,
+.featured-card-description,
+.camera-ai-comments p,
+.camera-hats li,
+.preview-notes-card li {
+    color: rgba(247, 241, 228, 0.82) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+.vip-member-card h3,
+.vip-tier h3,
+.selected-item-copy h2,
+.camera-outfit-copy h4,
+.featured-card-copy h3,
+.item-name {
+    color: #fff8df !important;
+}
+
+.vip-tier:not(.vip-tier-featured) h3,
+.vip-tier:not(.vip-tier-featured) p,
+.vip-tier:not(.vip-tier-featured) strong,
+.vip-tier:not(.vip-tier-featured) small {
+    color: #21170c !important;
+}
+
+.vip-tier:not(.vip-tier-featured) .vip-offer-btn {
+    color: #14100a !important;
+}
+
+.vip-member-card,
+.vip-tier-featured,
+.camera-chat-panel,
+.camera-editorial-panel,
+.camera-outfit-card,
+.favorite-card,
+.selected-item-panel,
+.outfit-insights-card {
+    color: #f7f1e4 !important;
+}
+
+.logo,
+.vip-page .logo,
+.mini-logo {
+    display: grid !important;
+    place-items: center !important;
+    width: 52px !important;
+    height: 52px !important;
+    flex: 0 0 52px !important;
+    border-radius: 50% !important;
 }
 
 @media (max-width: 620px) {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZ LUX | VIP Club</title>
-    <link rel="stylesheet" href="style.css?v=20260622-vip-comments">
+    <link rel="stylesheet" href="style.css?v=20260623-lux-unified">
 </head>
 <body class="vip-page">
 <!-- Top branding area. The profile chip stays hidden until someone signs in or buys a plan. -->
@@ -83,10 +83,10 @@
         <div class="vip-side-panel">
             <!-- Quick perk cards make the membership benefits easy to scan. -->
             <section class="vip-perks" aria-label="VIP perks">
-                <article><span>01</span><strong>Early Drops</strong></article>
-                <article><span>02</span><strong>Birthday Gift</strong></article>
-                <article><span>03</span><strong>Lux Points</strong></article>
-                <article><span>04</span><strong>Member Deals</strong></article>
+                <article style="--reward-progress:25%"><span>01</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16v11H4z"/><path d="M3 6h18v4H3z"/><path d="M12 6v14M8 6c-2-2 1-4 4 0M16 6c2-2-1-4-4 0"/></svg><strong>Early Drops</strong><small>50 pts</small></article>
+                <article style="--reward-progress:42%"><span>02</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9h10l1 11H6z"/><path d="M9 9c0-5 6-5 6 0"/></svg><strong>Birthday Gift</strong><small>85 pts</small></article>
+                <article style="--reward-progress:60%"><span>03</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8l2 5-3 11H9L6 9z"/><path d="M8 4l4 5 4-5"/></svg><strong>Lux Points</strong><small>120 pts</small></article>
+                <article style="--reward-progress:100%"><span>04</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 6 6 2.2-6 2.2-2.2 6-2.2-6-6-2.2 6-2.2z"/></svg><strong>Member Deals</strong><small>200 pts</small></article>
             </section>
 
             <!-- Accessibility buttons let users quickly change text size or contrast. -->
@@ -186,6 +186,7 @@
     const vipProfileEmail = document.getElementById("vipProfileEmail");
     const vipProfileSignOut = document.getElementById("vipProfileSignOut");
     const vipFreeBadge = document.getElementById("vipFreeBadge");
+    const vipTierCards = Array.from(document.querySelectorAll(".vip-tier"));
     let selectedVipOffer = { tier: "Luxe", price: "$5/mo" };
 
     // Hide the sign-in button after the member is already active.
@@ -239,12 +240,30 @@
         vipProfileAvatar.classList.toggle("has-photo", Boolean(member.photo));
     }
 
+    function updateVipTierChoices(member) {
+        const activeTier = member?.tier || "";
+        vipTierCards.forEach((card) => {
+            const button = card.querySelector(".vip-offer-btn");
+            const tier = button?.dataset.vipTier || "";
+            const isActive = Boolean(activeTier && tier === activeTier);
+            card.classList.toggle("vip-tier-active", isActive);
+            card.classList.toggle("vip-tier-alternative", Boolean(activeTier && !isActive));
+            if (button) {
+                button.textContent = activeTier
+                    ? isActive ? "Current VIP Pass" : "Change offer to this"
+                    : "Choose this offer";
+                button.disabled = isActive;
+            }
+        });
+    }
+
     // Reads saved member info and refreshes the points card on the page.
     function renderVipCard() {
         const member = JSON.parse(localStorage.getItem("mzLuxVipMember") || "null");
         if (!member) {
             setVipSignedInState(false);
             renderVipProfile(null);
+            updateVipTierChoices(null);
             return;
         }
         const membershipPoints = member.tier === "Diamond" ? "120" : member.tier === "Luxe" ? "85" : "50";
@@ -258,6 +277,7 @@
                 ? "Google VIP pass active: 50 / 200 points"
                 : "Welcome reward active: 50 / 200 points";
         renderVipProfile(member);
+        updateVipTierChoices(member);
     }
 
     // Open and close behavior for the regular VIP sign-in modal.
@@ -371,6 +391,7 @@
         setVipSignedInState(false);
         openVipModal.textContent = "Sign In";
         renderVipProfile(null);
+        updateVipTierChoices(null);
     });
 
     renderVipCard();
@@ -417,7 +438,9 @@
             name: user.displayName || "VIP Member",
             email: user.email || "",
             photo: user.photoURL || "",
-            provider: "google"
+            provider: "google",
+            tier: "Glow",
+            price: "Free"
         };
         localStorage.setItem("mzLuxVipMember", JSON.stringify(member));
         renderGoogleVipCard(member);
